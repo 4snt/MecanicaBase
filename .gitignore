@@ -1,0 +1,16 @@
+# Ignorar arquivos de build
+build/
+dist/
+nbbuild/
+nbdist/
+target/
+
+# Ignorar configurações privadas do NetBeans
+nbproject/private/
+
+# Ignorar classes compiladas
+*.class
+
+# Ignorar arquivos de log e temporários
+*.log
+*.tmp

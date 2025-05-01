@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import core.Entity;
+import domain.entities.operacao.Elevador;
 import domain.entities.operacao.Servico;
 import domain.entities.operacao.Veiculo;
 import domain.entities.usuarios.Cliente;
@@ -21,8 +22,9 @@ public class Agendamento extends Entity {
     private LocalDateTime data;               // Data e hora do agendamento
     private String descricaoProblema;         // Problema relatado
     private StatusAgendamento status;         // Status atual do agendamento
-    private Servico servico;                  // Serviço associado
     private OrdemDeServico ordemDeServico;    // Ordem de serviço vinculada
+    private Servico servico;
+    private Elevador elevador;
     private Funcionario funcionario;          // Funcionário responsável
     private Cliente cliente;                  // Cliente que solicitou
     private Veiculo veiculo;                  // Veículo envolvido
@@ -35,11 +37,24 @@ public class Agendamento extends Entity {
      * @param cliente Cliente que solicitou
      * @param veiculo Veículo envolvido
      */
-    public Agendamento(LocalDateTime data, String descricaoProblema, Cliente cliente, Veiculo veiculo) {
+    public Agendamento(
+        LocalDateTime data,
+        String descricaoProblema,
+        Cliente cliente,
+        Veiculo veiculo,
+        Elevador elevador,
+        Funcionario funcionario,
+        Servico servico,
+        OrdemDeServico ordemDeServico
+    ) {
         this.data = data;
         this.descricaoProblema = descricaoProblema;
         this.cliente = cliente;
         this.veiculo = veiculo;
+        this.elevador = elevador;
+        this.funcionario = funcionario;
+        this.servico = servico;
+        this.ordemDeServico = ordemDeServico;
     }
 
     // Getters e Setters
@@ -106,5 +121,41 @@ public class Agendamento extends Entity {
 
     public void setVeiculo(Veiculo veiculo) {
         this.veiculo = veiculo;
+    }
+
+    public Elevador getElevador() {
+        return elevador;
+    }
+
+    public void setElevador(Elevador elevador) {
+        this.elevador = elevador;
+    }
+
+    public Agendamento finalizarAgendamento(Agendamento agendamento) {
+        agendamento.setStatus(StatusAgendamento.CONCLUIDO);
+
+        ServicoItem servicoItem = new ServicoItem(
+            servico,
+            servico.getPreco(),
+            agendamento.getOrdemDeServico()    
+        );
+
+        ServicoItem.instances.add(servicoItem);
+
+        return agendamento;
+    }
+
+    public Agendamento cancelarAgendamento(Agendamento agendamento) {
+        agendamento.setStatus(StatusAgendamento.CANCELADO);
+
+        ServicoItem servicoItem = new ServicoItem(
+            servico,
+            servico.getPreco() * 0.2f,
+            agendamento.getOrdemDeServico()    
+        );
+
+        ServicoItem.instances.add(servicoItem);
+
+        return agendamento;
     }
 }

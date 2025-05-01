@@ -3,11 +3,13 @@ package domain.entities.operacao;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Entity;
+
 /**
  * Representa um veículo cadastrado no sistema.
  * Essa classe é parte do modelo de domínio e armazena os dados essenciais do veículo.
  */
-public class Veiculo {
+public class Veiculo extends Entity {
 
     /**
      * Lista que armazena todas as instâncias de veículos.

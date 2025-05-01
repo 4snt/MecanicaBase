@@ -1,32 +1,46 @@
 package infra.db;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.*;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import core.*;
-import domain.entities.financeiro.*;
-import domain.entities.operacao.*;
-import domain.entities.usuarios.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import core.Entity;
+import domain.entities.financeiro.Agendamento;
+import domain.entities.financeiro.Despesa;
+import domain.entities.financeiro.PecaItem;
+import domain.entities.financeiro.ServicoItem;
+import domain.entities.operacao.Elevador;
+import domain.entities.operacao.Oficina;
+import domain.entities.operacao.Peca;
+import domain.entities.operacao.Servico;
+import domain.entities.operacao.Veiculo;
+import domain.entities.usuarios.Administrador;
+import domain.entities.usuarios.Cliente;
+import domain.entities.usuarios.Funcionario;
 
 public class Database {
-    private static final List<Class<? extends Entity>> entities = Arrays.asList(
-            Agendamento.class,
-            Caixa.class,
-            Despesa.class,
-            PecaItem.class,
-            ServicoItem.class,
-            Elevador.class,
-            Oficina.class,
-            Peca.class,
-            Servico.class,
-            Veiculo.class,
-            Administrador.class,
-            Funcionario.class,
-            Cliente.class
+    private static final List<Class<? extends Entity>> entities = List.of((Class<? extends Entity>)
+           (Class<? extends Entity>) Agendamento.class,
+           (Class<? extends Entity>) Despesa.class,
+           (Class<? extends Entity>) PecaItem.class,
+           (Class<? extends Entity>) ServicoItem.class,
+           (Class<? extends Entity>) Elevador.class,
+           (Class<? extends Entity>) Oficina.class,
+           (Class<? extends Entity>) Peca.class,
+           (Class<? extends Entity>) Servico.class,
+           (Class<? extends Entity>) Veiculo.class,
+           (Class<? extends Entity>) Administrador.class,
+           (Class<? extends Entity>) Funcionario.class,
+           (Class<? extends Entity>) Cliente.class
     );
 
     private static final Gson gson = new Gson();
@@ -68,16 +82,14 @@ public class Database {
                         List<Entity> lista = (List<Entity>) field.get(null);
                         lista.clear();
                         lista.addAll(carregadas);
-                    } catch (Exception e) {
+                    } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
                         System.out.println("Erro ao preencher instâncias de " + className);
-                        e.printStackTrace();
                     }
                 }
             }
 
-        } catch (Exception e) {
+        } catch (JsonSyntaxException | IOException e) {
             System.out.println("Erro ao carregar banco de dados:");
-            e.printStackTrace();
         }
     }
 
@@ -92,9 +104,8 @@ public class Database {
                     field.setAccessible(true);
                     List<? extends Entity> lista = (List<? extends Entity>) field.get(null);
                     entidades.put(clazz.getName(), lista);
-                } catch (Exception e) {
+                } catch (IllegalAccessException | IllegalArgumentException | NoSuchFieldException | SecurityException e) {
                     System.out.println("Erro ao acessar instâncias de " + clazz.getSimpleName());
-                    e.printStackTrace();
                 }
             }
 
@@ -103,9 +114,8 @@ public class Database {
             String json = gson.toJson(exportData);
             Files.write(Paths.get(FILE_PATH), json.getBytes());
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Erro ao salvar banco de dados:");
-            e.printStackTrace();
         }
     }
 }

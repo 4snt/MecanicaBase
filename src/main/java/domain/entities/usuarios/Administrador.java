@@ -8,7 +8,7 @@ public class Administrador extends Funcionario {
     private static List<Administrador> instances = new ArrayList<>();
 
     public Administrador(String nome, String login, String senha) {
-        super(nome, "Administrador", login, senha);
+        super(nome, TipoFuncionario.ADMINISTRADOR, login, senha);
     }
 
     // Métodos específicos de gerente

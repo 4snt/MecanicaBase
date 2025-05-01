@@ -1,7 +1,11 @@
 // Funcionario.java
-package model;
+package domain.entities.usuarios;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Funcionario extends Pessoa {
+    private static List<Funcionario> instances = new ArrayList<>();
     protected String funcao;
     protected String login;
     protected String senha;

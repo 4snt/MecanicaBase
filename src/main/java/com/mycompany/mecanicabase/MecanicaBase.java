@@ -4,13 +4,19 @@
 
 package com.mycompany.mecanicabase;
 
+import infra.db.Database;
+import presentation.router.TerminalRouter;;
+
 /**
- *
+ * @author Luis Claudio Prado
  * @author Murilo Santiago
+ * @author Pávila Cardoso
  */
 public class MecanicaBase {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Database.load();
+        new TerminalRouter().start();
+        Database.save();
     }
 }

@@ -1,5 +1,6 @@
 package domain.entities.financeiro;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +13,9 @@ public class OrdemDeServico extends Entity {
     public static List<OrdemDeServico> instances = new ArrayList<>();
 
     private UUID clienteId;
+
     private StatusOrdemDeServico status;
+    private LocalDateTime finalizadoEm;
 
     private final List<UUID> servicos;
     private final List<UUID> pecas;
@@ -36,39 +39,48 @@ public class OrdemDeServico extends Entity {
 
     public List<ServicoItem> getServicos() {
         return servicos.stream()
-            .map(id -> ServicoItem.instances.stream()
+                .map(id -> ServicoItem.instances.stream()
                 .filter(s -> s.getId().equals(id))
                 .findFirst()
                 .orElse(null))
-            .filter(s -> s != null)
-            .collect(Collectors.toList());
+                .filter(s -> s != null)
+                .collect(Collectors.toList());
     }
 
     public List<PecaItem> getPecas() {
         return pecas.stream()
-            .map(id -> PecaItem.instances.stream()
+                .map(id -> PecaItem.instances.stream()
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null))
-            .filter(p -> p != null)
-            .collect(Collectors.toList());
+                .filter(p -> p != null)
+                .collect(Collectors.toList());
     }
 
     public List<Agendamento> getAgendamentos() {
         return agendamentos.stream()
-            .map(id -> Agendamento.instances.stream()
+                .map(id -> Agendamento.instances.stream()
                 .filter(a -> a.getId().equals(id))
                 .findFirst()
                 .orElse(null))
-            .filter(a -> a != null)
-            .collect(Collectors.toList());
+                .filter(a -> a != null)
+                .collect(Collectors.toList());
     }
 
     public StatusOrdemDeServico getStatus() {
         return status;
     }
 
+    public LocalDateTime getFinalizadoEm() {
+        return this.finalizadoEm;
+    }
+
     public void setStatus(StatusOrdemDeServico status) {
+        List<StatusOrdemDeServico> statusFinalizados = List.of(StatusOrdemDeServico.CANCELADO, StatusOrdemDeServico.CONCLUIDO);
+        boolean osFinalizada = statusFinalizados.contains(status);
+        if (osFinalizada) {
+            this.finalizadoEm = LocalDateTime.now();
+        }
         this.status = status;
     }
 
@@ -102,10 +114,10 @@ public class OrdemDeServico extends Entity {
         return this.agendamentos.removeIf(a -> a.equals(id));
     }
 
-    public static OrdemDeServico buscarPorId(UUID Id){
+    public static OrdemDeServico buscarPorId(UUID Id) {
         return OrdemDeServico.instances.stream()
-        .filter(s -> s.getId().equals(Id))
-        .findFirst()
-        .orElse(null);
+                .filter(s -> s.getId().equals(Id))
+                .findFirst()
+                .orElse(null);
     }
 }

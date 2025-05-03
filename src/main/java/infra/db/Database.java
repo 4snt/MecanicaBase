@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 
 import core.Entity;
 import domain.entities.financeiro.Agendamento;
+import domain.entities.financeiro.CategoriaDespesa;
 import domain.entities.financeiro.Despesa;
 import domain.entities.financeiro.PecaItem;
 import domain.entities.financeiro.ServicoItem;
@@ -28,19 +29,20 @@ import domain.entities.usuarios.Cliente;
 import domain.entities.usuarios.Funcionario;
 
 public class Database {
-    private static final List<Class<? extends Entity>> entities = List.of((Class<? extends Entity>)
-           (Class<? extends Entity>) Agendamento.class,
-           (Class<? extends Entity>) Despesa.class,
-           (Class<? extends Entity>) PecaItem.class,
-           (Class<? extends Entity>) ServicoItem.class,
-           (Class<? extends Entity>) Elevador.class,
-        //    (Class<? extends Entity>) Oficina.class,
-           (Class<? extends Entity>) Peca.class,
-           (Class<? extends Entity>) Servico.class,
-           (Class<? extends Entity>) Veiculo.class,
-           (Class<? extends Entity>) Administrador.class,
-           (Class<? extends Entity>) Funcionario.class,
-           (Class<? extends Entity>) Cliente.class
+
+    private static final List<Class<? extends Entity>> entities = List.of((Class<? extends Entity>) (Class<? extends Entity>) Agendamento.class,
+            (Class<? extends Entity>) CategoriaDespesa.class,
+            (Class<? extends Entity>) Despesa.class,
+            (Class<? extends Entity>) PecaItem.class,
+            (Class<? extends Entity>) ServicoItem.class,
+            (Class<? extends Entity>) Elevador.class,
+            //    (Class<? extends Entity>) Oficina.class,
+            (Class<? extends Entity>) Peca.class,
+            (Class<? extends Entity>) Servico.class,
+            (Class<? extends Entity>) Veiculo.class,
+            (Class<? extends Entity>) Administrador.class,
+            (Class<? extends Entity>) Funcionario.class,
+            (Class<? extends Entity>) Cliente.class
     );
 
     private static final Gson gson = new Gson();
@@ -67,8 +69,9 @@ public class Database {
                 for (Class<? extends Entity> clazz : entities) {
                     String className = clazz.getName();
                     List<Map<String, Object>> objetos = entidades.get(className);
-                    if (objetos == null)
+                    if (objetos == null) {
                         continue;
+                    }
 
                     List<Entity> carregadas = new ArrayList<>();
                     for (Map<String, Object> obj : objetos) {

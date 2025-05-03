@@ -1,10 +1,13 @@
 package domain.usecases.usuarios.administrador;
+
 import domain.entities.usuarios.Administrador;
 import infra.auth.Session;
+
 public class LoginAdministradorUseCase {
 
     /**
      * Tenta realizar o login de um funcionário com e-mail e senha.
+     *
      * @param email E-mail fornecido.
      * @param senha Senha fornecida.
      * @return true se o login for bem-sucedido, false caso contrário.

@@ -1,11 +1,13 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.mecanicabase;
 
 import infra.db.Database;
-import presentation.router.TerminalRouter;;
+import javafx.application.Application;
+import presentation.view.MainView;
+
+;
 
 /**
  * @author Luis Claudio Prado
@@ -16,7 +18,7 @@ public class MecanicaBase {
 
     public static void main(String[] args) {
         Database.load();
-        new TerminalRouter().start();
+        Application.launch(MainView.class, args);
         Database.save();
     }
 }

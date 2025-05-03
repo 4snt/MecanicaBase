@@ -1,6 +1,8 @@
 package domain.entities.financeiro;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
 
@@ -9,14 +11,17 @@ import core.Entity;
  */
 public class Despesa extends Entity {
 
+    public static List<Despesa> instances = new ArrayList<>();
+
     private String descricao;
     private float valor;
-    private LocalDate data;
 
-    public Despesa(String descricao, float valor, LocalDate data) {
+    private final UUID categoriaId;
+
+    public Despesa(UUID categoriaId, String descricao, float valor) {
         this.descricao = descricao;
         this.valor = valor;
-        this.data = data;
+        this.categoriaId = categoriaId;
     }
 
     public String getDescricao() {
@@ -35,11 +40,7 @@ public class Despesa extends Entity {
         this.valor = valor;
     }
 
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
+    public CategoriaDespesa getCategoria() {
+        return CategoriaDespesa.buscarPorId(this.categoriaId);
     }
 }

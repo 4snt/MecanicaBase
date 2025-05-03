@@ -1,31 +1,33 @@
 package core;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class Entity<T> {
-    private UUID id;
-    private Date criadoEm;
-    private Date atualizadoEm;
+
+    private final UUID id;
+    private final LocalDateTime criadoEm;
+    private LocalDateTime atualizadoEm;
 
     public Entity() {
         this.id = UUID.randomUUID();
-        this.criadoEm = new Date();
-        this.atualizadoEm = new Date();
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
     }
 
     protected void touch() {
-        this.atualizadoEm = new Date();
+        this.atualizadoEm = LocalDateTime.now();
     }
 
     public UUID getId() {
         return id;
     }
 
-    public Date getCriadoEm() {
+    public LocalDateTime getCriadoEm() {
         return criadoEm;
     }
 
-    public Date getAtualizadoEm() {
+    public LocalDateTime getAtualizadoEm() {
         return atualizadoEm;
     }
 }

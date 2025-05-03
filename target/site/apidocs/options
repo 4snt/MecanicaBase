@@ -1,0 +1,24 @@
+-classpath
+'C:/Users/Murilo Santiago/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar;C:/Users/Murilo Santiago/.m2/repository/org/jasypt/jasypt/1.9.3/jasypt-1.9.3.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-controls/21/javafx-controls-21-win.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-graphics/21/javafx-graphics-21-win.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-base/21/javafx-base-21-win.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21.jar;C:/Users/Murilo Santiago/.m2/repository/org/openjfx/javafx-fxml/21/javafx-fxml-21-win.jar;C:/Users/Murilo Santiago/.m2/repository/io/github/palexdev/materialfx/11.13.5/materialfx-11.13.5.jar;C:/Users/Murilo Santiago/.m2/repository/io/github/palexdev/virtualizedfx/11.2.6/virtualizedfx-11.2.6.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+21
+-sourcepath
+'C:/Users/Murilo Santiago/Documents/NetBeansProjects/MecanicaBase/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/Murilo Santiago/Documents/NetBeansProjects/MecanicaBase/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'MecanicaBase 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'MecanicaBase 1.0-SNAPSHOT API'

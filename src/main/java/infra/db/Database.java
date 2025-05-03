@@ -20,7 +20,6 @@ import domain.entities.financeiro.Despesa;
 import domain.entities.financeiro.PecaItem;
 import domain.entities.financeiro.ServicoItem;
 import domain.entities.operacao.Elevador;
-import domain.entities.operacao.Oficina;
 import domain.entities.operacao.Peca;
 import domain.entities.operacao.Servico;
 import domain.entities.operacao.Veiculo;
@@ -36,7 +35,6 @@ public class Database {
             (Class<? extends Entity>) PecaItem.class,
             (Class<? extends Entity>) ServicoItem.class,
             (Class<? extends Entity>) Elevador.class,
-            //    (Class<? extends Entity>) Oficina.class,
             (Class<? extends Entity>) Peca.class,
             (Class<? extends Entity>) Servico.class,
             (Class<? extends Entity>) Veiculo.class,
@@ -53,7 +51,6 @@ public class Database {
             if (!Files.exists(Paths.get(FILE_PATH))) {
                 System.out.println("Arquivo não encontrado, iniciando com dados fixos.");
                 Elevador.init();
-                Oficina.init();
                 Administrador.init();
                 return;
             }

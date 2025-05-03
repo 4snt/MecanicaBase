@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import domain.entities.financeiro.OrdemDeServico;
 
-public class GerarBalançoUseCase {
+public class GerarBalanCoUseCase {
 
     public String use(LocalDateTime dataInicio, LocalDateTime dataFinal) {
 

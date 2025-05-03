@@ -6,11 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
 import domain.entities.financeiro.Agendamento;
 import domain.entities.financeiro.StatusAgendamento;
 
-public class Funcionario extends colaborador {
+public class Funcionario extends Colaborador {
     public static List<Funcionario> instances = new ArrayList<>();
 
     private TipoFuncionario funcao;

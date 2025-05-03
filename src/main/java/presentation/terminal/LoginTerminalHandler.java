@@ -2,7 +2,7 @@ package presentation.terminal;
 
 import java.util.Scanner;
 
-import domain.entities.usuarios.colaborador;
+import domain.entities.usuarios.Colaborador;
 import domain.usecases.usuarios.administrador.LoginAdministradorUseCase;
 import domain.usecases.usuarios.funcionario.LoginFuncionarioUseCase;
 import infra.auth.Session;
@@ -39,7 +39,7 @@ public class LoginTerminalHandler {
         }
 
         if (sucesso) {
-            colaborador pessoa = Session.getPessoaLogado();
+            Colaborador pessoa = Session.getPessoaLogado();
             System.out.println("Login realizado com sucesso. Bem-vindo, " + pessoa.getNome() + "!");
             return true;
         } else {

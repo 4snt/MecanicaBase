@@ -1,6 +1,6 @@
 package infra.auth;
 
-import domain.entities.usuarios.colaborador;
+import domain.entities.usuarios.Colaborador;
 
 /**
  * Gerencia a sessão do usuário logado no sistema.
@@ -8,13 +8,13 @@ import domain.entities.usuarios.colaborador;
  * como Funcionário, Administrador, etc.
  */
 public class Session {
-    private static colaborador pessoaLogado;
+    private static Colaborador pessoaLogado;
 
-    public static void setPessoaLogado(colaborador pessoa) {
+    public static void setPessoaLogado(Colaborador pessoa) {
         pessoaLogado = pessoa;
     }
 
-    public static colaborador getPessoaLogado() {
+    public static Colaborador getPessoaLogado() {
         return pessoaLogado;
     }
 

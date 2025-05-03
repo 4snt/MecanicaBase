@@ -4,7 +4,7 @@ package domain.entities.usuarios;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Administrador extends colaborador {
+public class Administrador extends Colaborador {
     public static List<Administrador> instances = new ArrayList<>();
 
     public Administrador(String nome, String email, String senha, String cpf, String telefone, String endereco) {

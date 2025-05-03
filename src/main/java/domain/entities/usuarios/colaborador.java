@@ -3,11 +3,11 @@ package domain.entities.usuarios;
 
 import infra.crypto.JasyptCrypto;
 
-public class colaborador extends Pessoa {
+public class Colaborador extends Pessoa {
 
     private String senha;
 
-    public colaborador(String nome, String email, String senha, String cpf, String telefone, String endereco) {
+    public Colaborador(String nome, String email, String senha, String cpf, String telefone, String endereco) {
         super(nome, email, cpf, telefone, endereco);
 
         String senhaEncriptada = JasyptCrypto.encrypt(senha);

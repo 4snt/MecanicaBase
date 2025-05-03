@@ -89,4 +89,18 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
 
     public static final Comparator<Cliente> porEmail
             = Comparator.comparing(Cliente::getEmail, String.CASE_INSENSITIVE_ORDER);
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Cliente [ID=%s, Nome='%s', Email='%s', CPF='%s', Telefone='%s', Endereço='%s', Veículos=%d]",
+                getId(),
+                getNome(),
+                getEmail(),
+                getCpf(),
+                getTelefone(),
+                getEndereco(),
+                veiculos.size()
+        );
+    }
 }

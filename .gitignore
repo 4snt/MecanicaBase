@@ -3,8 +3,11 @@ build/
 dist/
 nbbuild/
 nbdist/
-target/
+# Ignorar tudo dentro de target
+target/*
 
+# Mas não ignore o conteúdo de target/site
+!target/site/
 # Ignorar configurações privadas do NetBeans
 nbproject/private/
 

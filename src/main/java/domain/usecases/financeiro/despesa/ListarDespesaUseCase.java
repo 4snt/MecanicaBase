@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import domain.entities.financeiro.Despesa;
 
 /**
- * Caso de uso responsável por listar as despesas cadastradas,
- * com possibilidade de aplicar filtros por data, categoria e valor.
+ * Caso de uso responsável por listar as despesas cadastradas, com possibilidade
+ * de aplicar filtros por data, categoria e valor.
  */
 public class ListarDespesaUseCase {
 

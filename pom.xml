@@ -59,7 +59,34 @@
 
     <build>
         <plugins>
-            <!-- Empacotar tudo num .jar único -->
+            <!-- Plugin para gerar o Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Incluir dependências externas no Javadoc -->
+                            <aggregate>true</aggregate>
+
+                            <!-- Incluir dependências do projeto -->
+                            <dependencies>true</dependencies>
+
+                            <!-- Outras configurações -->
+                            <doclet>org.apache.maven.plugins.javadoc.DefaultJavadocDoclet</doclet>
+                            <additionalJOptions>
+                                <additionalJOption>-Xdoclint:none</additionalJOption>
+                            </additionalJOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin para empacotar tudo num .jar único -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -85,7 +112,7 @@
                 </executions>
             </plugin>
 
-            <!-- Permitir rodar com mvn exec:java -->
+            <!-- Plugin para rodar o projeto -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

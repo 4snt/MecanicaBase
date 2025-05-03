@@ -57,4 +57,17 @@ public class Administrador extends Colaborador {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Administrador [ID=%s, Nome='%s', Email='%s', CPF='%s', Telefone='%s', Endereço='%s']",
+                getId(),
+                getNome(),
+                getEmail(),
+                getCpf() != null ? getCpf() : "N/A",
+                getTelefone() != null ? getTelefone() : "N/A",
+                getEndereco() != null ? getEndereco() : "N/A"
+        );
+    }
 }

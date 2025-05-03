@@ -50,4 +50,9 @@ public class Sistema {
         Sistema.totalVeiculos = quantidade;
         return Sistema.totalVeiculos;
     }
+
+    @Override
+    public String toString() {
+        return "Total de veículos registrados: " + totalVeiculos;
+    }
 }

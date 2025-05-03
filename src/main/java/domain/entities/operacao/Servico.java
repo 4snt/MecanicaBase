@@ -179,4 +179,18 @@ public class Servico extends Entity {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Servico [ID=%s, Tipo='%s', Preço=%.2f, Duração=%d min, UsaElevador=%s, TipoElevador=%s, TipoFuncionario=%s]",
+                getId(),
+                tipo,
+                preco,
+                duracao,
+                usaElevador ? "Sim" : "Não",
+                tipoElevador != null ? tipoElevador.name() : "N/A",
+                tipoFuncionario != null ? tipoFuncionario.name() : "N/A"
+        );
+    }
 }

@@ -110,26 +110,15 @@ public class Veiculo extends Entity {
      */
     @Override
     public String toString() {
-        Cliente cliente = getCliente();
         return String.format(
-                "Veículo {\n"
-                + "  ID: %s\n"
-                + "  Modelo: %s\n"
-                + "  Placa: %s\n"
-                + "  Ano de Fabricação: %d\n"
-                + "  Cor: %s\n"
-                + "  Status: %s\n"
-                + "  Cliente: %s\n"
-                + "}",
+                "Veiculo [ID=%s, Modelo='%s', Placa='%s', Ano=%d, Cor='%s', Status=%s, Cliente='%s']",
                 getId(),
                 modelo,
                 placa,
                 anoFabricacao,
                 cor,
-                status,
-                cliente != null
-                        ? String.format("%s (ID: %s)", cliente.getNome(), cliente.getId())
-                        : "Desconhecido"
+                status != null ? status.name() : "N/A",
+                getCliente() != null ? getCliente().getNome() : "Desconhecido"
         );
     }
 }

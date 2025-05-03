@@ -140,4 +140,19 @@ public class Funcionario extends Colaborador {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Funcionario [ID=%s, Nome='%s', Função=%s, Salário=%.2f, Email='%s', CPF='%s', Telefone='%s', Endereço='%s']",
+                getId(),
+                getNome(),
+                funcao != null ? funcao.name() : "N/A",
+                salario,
+                getEmail(),
+                getCpf(),
+                getTelefone(),
+                getEndereco()
+        );
+    }
 }

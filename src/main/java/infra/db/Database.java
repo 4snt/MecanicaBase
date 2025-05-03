@@ -4,12 +4,18 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
@@ -43,7 +49,18 @@ public class Database {
             (Class<? extends Entity>) Cliente.class
     );
 
-    private static final Gson gson = new Gson();
+    //private static final Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDateTime.class,
+                    (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context)
+                    -> new JsonPrimitive(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+            )
+            .registerTypeAdapter(LocalDateTime.class,
+                    (JsonDeserializer<LocalDateTime>) (json, typeOfT, context)
+                    -> LocalDateTime.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+            )
+            .setPrettyPrinting()
+            .create();
     private static final String FILE_PATH = "database.json";
 
     public static void load() {

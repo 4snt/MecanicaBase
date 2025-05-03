@@ -2,6 +2,7 @@ package presentation.view;
 
 import domain.usecases.usuarios.administrador.LoginAdministradorUseCase;
 import domain.usecases.usuarios.funcionario.LoginFuncionarioUseCase;
+import infra.db.Database;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -9,6 +10,7 @@ import io.github.palexdev.materialfx.font.MFXFontIcon;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -20,6 +22,8 @@ public class MainView extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private static BorderPane staticRoot;
+    private Label errorLabel;
 
     @Override
     public void start(Stage stage) {
@@ -53,7 +57,7 @@ public class MainView extends Application {
         loginFuncBtn.setPrefWidth(250);
         loginFuncBtn.setStyle(buttonStyle());
 
-        Label errorLabel = new Label();
+        errorLabel = new Label();
         errorLabel.setStyle("-fx-text-fill: red;");
 
         loginAdminBtn.setOnAction(e -> fazerLogin(emailField.getText(), senhaField.getText(), true));
@@ -76,12 +80,15 @@ public class MainView extends Application {
                     ? new LoginAdministradorUseCase().login(email, senha)
                     : new LoginFuncionarioUseCase().login(email, senha);
         } catch (RuntimeException e) {
+            errorLabel.setText("Erro interno ao tentar logar.");
             e.printStackTrace();
             return;
         }
 
         if (sucesso) {
             showMainMenu();
+        } else {
+            errorLabel.setText("❌ Login inválido. Verifique suas credenciais.");
         }
     }
 
@@ -110,6 +117,7 @@ public class MainView extends Application {
         sidebar.getChildren().addAll(clienteBtn, oficinaBtn, sairBtn);
 
         rootLayout = new BorderPane();
+        staticRoot = rootLayout;
         rootLayout.setLeft(sidebar);
         rootLayout.setCenter(new Label("Selecione uma opção no menu."));
 
@@ -129,7 +137,14 @@ public class MainView extends Application {
         """;
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void setConteudoCentral(Node node) {
+        if (staticRoot != null) {
+            staticRoot.setCenter(node);
+        }
+    }
+
+    @Override
+    public void stop() {
+        Database.save();
     }
 }

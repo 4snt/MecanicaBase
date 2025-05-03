@@ -1,0 +1,59 @@
+{
+  "entidades": {
+    "domain.entities.usuarios.Administrador": [
+      {
+        "senha": "eXlYJFrkB7x/kX3AqrM2ww\u003d\u003d",
+        "nome": "Admin",
+        "email": "Admin",
+        "id": "16589e4c-7a86-47d5-9ab6-be9106cb7518",
+        "criadoEm": "2025-05-03T02:52:14.8135889",
+        "atualizadoEm": "2025-05-03T02:52:14.8135889"
+      }
+    ],
+    "domain.entities.financeiro.ServicoItem": [],
+    "domain.entities.financeiro.Despesa": [],
+    "domain.entities.operacao.Peca": [],
+    "domain.entities.operacao.Veiculo": [],
+    "domain.entities.usuarios.Funcionario": [],
+    "domain.entities.operacao.Servico": [],
+    "domain.entities.financeiro.CategoriaDespesa": [],
+    "domain.entities.operacao.Elevador": [
+      null,
+      null,
+      null,
+      {
+        "tipo": "ALINHAMENTO_E_BALANCEAMENTO",
+        "id": "a229d62d-2fe1-4230-b7c5-21816bea9282",
+        "criadoEm": "2025-05-03T02:52:14.8135889",
+        "atualizadoEm": "2025-05-03T02:52:14.8135889"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "7f914d6e-7f65-4699-86cc-dead18e84299",
+        "criadoEm": "2025-05-03T02:52:14.8135889",
+        "atualizadoEm": "2025-05-03T02:52:14.8135889"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "d6e6d386-d7e3-4550-bd7f-ef7f8681206c",
+        "criadoEm": "2025-05-03T02:52:14.8135889",
+        "atualizadoEm": "2025-05-03T02:52:14.8135889"
+      }
+    ],
+    "domain.entities.financeiro.Agendamento": [],
+    "domain.entities.financeiro.PecaItem": [],
+    "domain.entities.usuarios.Cliente": [
+      {
+        "veiculos": [],
+        "nome": "MURILO",
+        "email": "murilo@teste.com",
+        "cpf": "J9bUBvM87hDG2nIBsqQU7b6nNtnzIVhU0w6f+JyIEvHwU6MofoguFKnm6ttC1OE5",
+        "telefone": "aaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa, aaaaaaaaaaa - mg",
+        "endereco": ", , ,  - ",
+        "id": "866fc924-62c7-41a0-bbab-e2e5d96963b2",
+        "criadoEm": "2025-05-03T02:53:44.2954842",
+        "atualizadoEm": "2025-05-03T02:53:44.2954842"
+      }
+    ]
+  }
+}

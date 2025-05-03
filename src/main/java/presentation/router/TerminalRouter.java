@@ -3,11 +3,19 @@ package presentation.router;
 import java.util.Scanner;
 
 import presentation.terminal.ClienteTerminalHandler;
+import presentation.terminal.LoginTerminalHandler;
 
 public class TerminalRouter {
     private final Scanner scanner = new Scanner(System.in);
 
     public void start() {
+        LoginTerminalHandler loginHandler = new LoginTerminalHandler(scanner);
+
+        boolean loggedIn = false;
+        while (!loggedIn) {
+            loggedIn = loginHandler.login();
+        }
+
         while (true) {
             System.out.println("\n=== MENU PRINCIPAL ===");
             System.out.println("1 - Clientes");

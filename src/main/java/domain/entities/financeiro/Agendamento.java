@@ -134,4 +134,11 @@ public class Agendamento extends Entity {
     public void setElevador(UUID elevador) {
         this.elevador = elevador;
     }
+
+    public static Agendamento buscarPorId(UUID id) {
+        return Agendamento.instances.stream()
+            .filter(a -> a.getId().equals(id))
+            .findFirst()
+            .orElse(null);
+    }
 }

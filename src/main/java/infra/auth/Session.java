@@ -1,19 +1,24 @@
 package infra.auth;
 
-import domain.entities.usuarios.Funcionario;
+import domain.entities.usuarios.colaborador;
 
+/**
+ * Gerencia a sessão do usuário logado no sistema.
+ * Pode armazenar qualquer entidade que estenda colaborador,
+ * como Funcionário, Administrador, etc.
+ */
 public class Session {
-    private static Funcionario clienteLogado;
+    private static colaborador pessoaLogado;
 
-    public static void setFuncionarioLogado(Funcionario cliente) {
-        clienteLogado = cliente;
+    public static void setPessoaLogado(colaborador pessoa) {
+        pessoaLogado = pessoa;
     }
 
-    public static Funcionario getFuncionarioLogado() {
-        return clienteLogado;
+    public static colaborador getPessoaLogado() {
+        return pessoaLogado;
     }
 
     public static void logout() {
-        clienteLogado = null;
+        pessoaLogado = null;
     }
 }

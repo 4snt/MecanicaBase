@@ -2,6 +2,7 @@ package domain.entities.operacao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
 import domain.entities.usuarios.TipoFuncionario;
@@ -96,5 +97,12 @@ public class Servico extends Entity {
 
     public void setUsaElevador(boolean usaElevador) {
         this.usaElevador = usaElevador;
+    }
+
+    public static Servico buscarPorId(UUID id) {
+        return Servico.instances.stream()
+            .filter(s -> s.getId().equals(id))
+            .findFirst()
+            .orElse(null);
     }
 }

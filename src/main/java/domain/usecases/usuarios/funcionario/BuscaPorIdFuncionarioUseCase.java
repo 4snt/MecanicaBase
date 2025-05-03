@@ -7,14 +7,6 @@ import domain.entities.usuarios.Funcionario;
 public class BuscaPorIdFuncionarioUseCase {
 
     public Funcionario use(String id) {
-        UUID uuid = UUID.fromString(id);
-
-        for (Funcionario Funcionario : Funcionario.instances) {
-            if (Funcionario.getId().equals(uuid)) {
-                return Funcionario;
-            }
-        }
-
-        return null;
+        return Funcionario.buscarPorId(UUID.fromString(id));
     }
 }

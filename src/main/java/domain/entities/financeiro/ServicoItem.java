@@ -2,6 +2,7 @@ package domain.entities.financeiro;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
 import domain.entities.operacao.Servico;
@@ -13,21 +14,24 @@ public class ServicoItem extends Entity {
     
     public static List<ServicoItem> instances = new ArrayList<>();
 
-    private Servico servico;
+    private UUID servico;
     private float valorUnitario;
-    private final OrdemDeServico ordemDeServico;
+    private final UUID ordemDeServico;
 
-    public ServicoItem(Servico servico, float valorUnitario, OrdemDeServico ordemDeServico) {
+    public ServicoItem(UUID servico, float valorUnitario, UUID ordemDeServico) {
         this.servico = servico;
         this.valorUnitario = valorUnitario;
         this.ordemDeServico = ordemDeServico;
     }
 
     public Servico getServico() {
-        return servico;
+        return Servico.instances.stream()
+            .filter(s -> s.getId().equals(this.servico))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setServico(Servico servico) {
+    public void setServico(UUID servico) {
         this.servico = servico;
     }
 
@@ -40,6 +44,9 @@ public class ServicoItem extends Entity {
     }
 
     public OrdemDeServico getOrdemDeServico() {
-      return this.ordemDeServico;
+        return OrdemDeServico.instances.stream()
+            .filter(o -> o.getId().equals(this.ordemDeServico))
+            .findFirst()
+            .orElse(null);
     }
 }

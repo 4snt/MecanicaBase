@@ -1,11 +1,17 @@
 package domain.entities.operacao;
 
+import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
+
 import core.Entity;
 
 /**
  * Representa uma peça disponível para uso em ordens de serviço.
  */
 public class Peca extends Entity {
+
+    public static List<Peca> instances = new ArrayList<>();
 
     private String nome;
     private float valor;
@@ -51,5 +57,12 @@ public class Peca extends Entity {
 
     public void adicionarEstoque(int quantidade) {
         this.quantidade += quantidade;
+    }
+
+     public static Peca buscarPorId(UUID Id){
+        return Peca.instances.stream()
+        .filter(s -> s.getId().equals(Id))
+        .findFirst()
+        .orElse(null);
     }
 }

@@ -4,20 +4,23 @@ package domain.entities.usuarios;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import domain.entities.financeiro.Agendamento;
 import domain.entities.financeiro.StatusAgendamento;
 
-public class Funcionario extends PessoaComLogin {
+public class Funcionario extends colaborador {
     public static List<Funcionario> instances = new ArrayList<>();
 
     private TipoFuncionario funcao;
+    private float salario; 
 
-    public Funcionario(String nome, TipoFuncionario funcao, String email, String senha, String cpf, String telefone, String endereco) {
+    public Funcionario(String nome, TipoFuncionario funcao, String email, String senha, String cpf, String telefone, String endereco, float salario) {
+        
         super(nome, email, senha, cpf, telefone, endereco);
-
         this.funcao = funcao;
+        this.salario = salario;
     }
 
     public TipoFuncionario getFuncao() {
@@ -27,7 +30,13 @@ public class Funcionario extends PessoaComLogin {
     public void setFuncao(TipoFuncionario funcao) {
         this.funcao = funcao;
     }
+    public float getSalario() {
+        return salario;
+    }
 
+    public void setSalario(float salario) {
+        this.salario = salario;
+    }
     public static List<Funcionario> buscarFuncionariosDisponiveis(
         TipoFuncionario tipo,
         LocalDateTime dataInicio,
@@ -52,5 +61,18 @@ public class Funcionario extends PessoaComLogin {
                 return !conflita;
             })
             .collect(Collectors.toList());
+
+    }
+    public static Funcionario buscarPorEmail(String email) {
+        return Funcionario.instances.stream()
+            .filter(s -> s.getEmail().equals(email))
+            .findFirst()
+            .orElse(null);
+    }
+    public static Funcionario buscarPorId(UUID Id){
+        return Funcionario.instances.stream()
+        .filter(s -> s.getId().equals(Id))
+        .findFirst()
+        .orElse(null);
     }
 }

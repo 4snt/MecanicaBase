@@ -34,7 +34,7 @@ public class Database {
            (Class<? extends Entity>) PecaItem.class,
            (Class<? extends Entity>) ServicoItem.class,
            (Class<? extends Entity>) Elevador.class,
-           (Class<? extends Entity>) Oficina.class,
+        //    (Class<? extends Entity>) Oficina.class,
            (Class<? extends Entity>) Peca.class,
            (Class<? extends Entity>) Servico.class,
            (Class<? extends Entity>) Veiculo.class,
@@ -52,6 +52,7 @@ public class Database {
                 System.out.println("Arquivo não encontrado, iniciando com dados fixos.");
                 Elevador.init();
                 Oficina.init();
+                Administrador.init();
                 return;
             }
 

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import domain.entities.financeiro.Agendamento;
-import domain.entities.financeiro.OrdemDeServico;
+import domain.entities.financeiro.ServicoItem;
 import domain.entities.financeiro.StatusAgendamento;
 import domain.entities.operacao.Elevador;
 import domain.entities.operacao.Servico;
@@ -13,13 +13,18 @@ import domain.entities.usuarios.Funcionario;
 
 public class AtualizaAgendamentoUseCase {
 
-    public Agendamento use(String id, LocalDateTime data, String descricaoProblema,
+    public Agendamento use(UUID agendamentoId, LocalDateTime data, String descricaoProblema,
                            Veiculo veiculo, Elevador elevador, Funcionario funcionario,
-                           Servico servico, OrdemDeServico ordem, StatusAgendamento status) {
-        UUID uuid = UUID.fromString(id);
+                           Servico servico, StatusAgendamento status) {
+
+        Agendamento agendamentoExiste = Agendamento.buscarPorId(agendamentoId);
+
+        if (agendamentoExiste == null) {
+            throw new RuntimeException("Agendamento não encontrado");
+        }
 
         for (Agendamento ag : Agendamento.instances) {
-            if (ag.getId().equals(uuid)) {
+            if (ag.getId().equals(agendamentoId)) {
                 if (data != null) ag.setData(data);
                 if (descricaoProblema != null) ag.setDescricaoProblema(descricaoProblema);
 
@@ -55,15 +60,29 @@ public class AtualizaAgendamentoUseCase {
                     ag.setServico(servico.getId());
                 }
 
-                if (ordem != null) {
-                    boolean ordemExiste = OrdemDeServico.instances.contains(ordem);
-                    if (!ordemExiste) {
-                        throw new RuntimeException("Ordem de Serviço não existe");
+                if (status != null) {
+                    if (status == StatusAgendamento.CANCELADO) {
+                        ServicoItem servicoItem = new ServicoItem(
+                            agendamentoExiste.getServico().getId(),
+                            agendamentoExiste.getServico().getPreco() * 0.2f,
+                            agendamentoExiste.getOrdemDeServico().getId()
+                        );
+                        ServicoItem.instances.add(servicoItem);
+                        agendamentoExiste.getOrdemDeServico().addServico(servicoItem.getId());
                     }
-                    ag.setOrdemDeServico(ordem.getId());
-                }
 
-                if (status != null) ag.setStatus(status);
+                    if (status == StatusAgendamento.CONCLUIDO) {
+                        ServicoItem servicoItem = new ServicoItem(
+                            agendamentoExiste.getServico().getId(),
+                            agendamentoExiste.getServico().getPreco(),
+                            agendamentoExiste.getOrdemDeServico().getId()
+                        );
+                        ServicoItem.instances.add(servicoItem);
+                        agendamentoExiste.getOrdemDeServico().addServico(servicoItem.getId());
+                    }
+
+                    ag.setStatus(status);
+                }
 
                 return ag;
             }

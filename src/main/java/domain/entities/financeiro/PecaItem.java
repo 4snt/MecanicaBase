@@ -2,32 +2,36 @@ package domain.entities.financeiro;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
 import domain.entities.operacao.Peca;
 
-/**
- * Representa um item de peça associado a uma Ordem de Serviço.
- */
 public class PecaItem extends Entity {
 
     public static List<PecaItem> instances = new ArrayList<>();
 
-    private Peca peca;
+    private UUID peca;
     private int quantidade;
     private float valorUnitario;
 
-    public PecaItem(Peca peca, int quantidade, float valorUnitario) {
+    private final UUID ordemDeServico;
+
+    public PecaItem(UUID peca, int quantidade, float valorUnitario, UUID ordemDeServico) {
         this.peca = peca;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
+        this.ordemDeServico = ordemDeServico;
     }
 
     public Peca getPeca() {
-        return peca;
+        return Peca.instances.stream()
+            .filter(p -> p.getId().equals(this.peca))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setPeca(Peca peca) {
+    public void setPeca(UUID peca) {
         this.peca = peca;
     }
 
@@ -45,5 +49,9 @@ public class PecaItem extends Entity {
 
     public void setValorUnitario(float valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    public OrdemDeServico getOrdemDeServico() {
+        return OrdemDeServico.buscarPorId(this.ordemDeServico);
     }
 }

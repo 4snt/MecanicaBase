@@ -110,10 +110,13 @@ public class Veiculo extends Entity {
         }
         return null;
     }
+
     @Override
-        public String toString() {
-            return """
-                Veículo {
+    public String toString() {
+        Cliente cliente = getCliente();
+
+        return """
+            Veículo {
                 ID: %s
                 Modelo: %s
                 Placa: %s
@@ -121,16 +124,17 @@ public class Veiculo extends Entity {
                 Cor: %s
                 Status: %s
                 Cliente: %s
-                }
-                """.formatted(
-                    getId(),
-                    modelo,
-                    placa,
-                    anoFabricacao,
-                    cor,
-                    status,
-                    getCliente() != null ? getCliente().getNome() : "Desconhecido"
-                );
-        }
-
+            }
+            """.formatted(
+                getId(),
+                modelo,
+                placa,
+                anoFabricacao,
+                cor,
+                status,
+                cliente != null
+                    ? "%s (ID: %s)".formatted(cliente.getNome(), cliente.getId())
+                    : "Desconhecido"
+            );
+    }
 }

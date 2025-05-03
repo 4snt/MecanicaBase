@@ -101,4 +101,11 @@ public class OrdemDeServico extends Entity {
     public boolean removeAgendamento(UUID id) {
         return this.agendamentos.removeIf(a -> a.equals(id));
     }
+
+    public static OrdemDeServico buscarPorId(UUID Id){
+        return OrdemDeServico.instances.stream()
+        .filter(s -> s.getId().equals(Id))
+        .findFirst()
+        .orElse(null);
+    }
 }

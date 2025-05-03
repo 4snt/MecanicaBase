@@ -15,7 +15,7 @@ public class LoginFuncionarioUseCase {
         for (Funcionario funcionario : Funcionario.instances) {
             if (funcionario.getEmail().equalsIgnoreCase(email) &&
                 funcionario.compararSenha(senha)) {
-                Session.setFuncionarioLogado(funcionario);
+                Session.setPessoaLogado(funcionario);
                 return true;
             }
         }

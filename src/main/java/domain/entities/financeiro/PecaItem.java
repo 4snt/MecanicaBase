@@ -1,5 +1,8 @@
 package domain.entities.financeiro;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import core.Entity;
 import domain.entities.operacao.Peca;
 
@@ -7,6 +10,8 @@ import domain.entities.operacao.Peca;
  * Representa um item de peça associado a uma Ordem de Serviço.
  */
 public class PecaItem extends Entity {
+
+    public static List<PecaItem> instances = new ArrayList<>();
 
     private Peca peca;
     private int quantidade;

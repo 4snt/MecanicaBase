@@ -11,11 +11,11 @@ public class AtualizaClienteUseCase {
 
         for (Cliente cliente : Cliente.instances) {
             if (cliente.getId().equals(uuid)) {
-                cliente.setNome(nome);
-                cliente.setEndereco(endereco);
-                cliente.setTelefone(telefone);
-                cliente.setEmail(email);
-                cliente.setCpf(cpf);
+                if (nome != null) cliente.setNome(nome);
+                if (endereco != null) cliente.setEndereco(endereco);
+                if (telefone != null) cliente.setTelefone(telefone);
+                if (email != null) cliente.setEmail(email);
+                if (cpf != null) cliente.setCpf(cpf);
                 return cliente;
             }
         }

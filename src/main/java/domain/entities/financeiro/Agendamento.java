@@ -3,12 +3,12 @@ package domain.entities.financeiro;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
 import domain.entities.operacao.Elevador;
 import domain.entities.operacao.Servico;
 import domain.entities.operacao.Veiculo;
-import domain.entities.usuarios.Cliente;
 import domain.entities.usuarios.Funcionario;
 
 /**
@@ -22,12 +22,11 @@ public class Agendamento extends Entity {
     private LocalDateTime data;               // Data e hora do agendamento
     private String descricaoProblema;         // Problema relatado
     private StatusAgendamento status;         // Status atual do agendamento
-    private OrdemDeServico ordemDeServico;    // Ordem de serviço vinculada
-    private Servico servico;
-    private Elevador elevador;
-    private Funcionario funcionario;          // Funcionário responsável
-    private Cliente cliente;                  // Cliente que solicitou
-    private Veiculo veiculo;                  // Veículo envolvido
+    private UUID ordemDeServico;    // Ordem de serviço vinculada
+    private UUID servico;
+    private UUID elevador;
+    private UUID funcionario;          // Funcionário responsável
+    private UUID veiculo;                  // Veículo envolvido
 
     /**
      * Construtor do agendamento.
@@ -40,16 +39,14 @@ public class Agendamento extends Entity {
     public Agendamento(
         LocalDateTime data,
         String descricaoProblema,
-        Cliente cliente,
-        Veiculo veiculo,
-        Elevador elevador,
-        Funcionario funcionario,
-        Servico servico,
-        OrdemDeServico ordemDeServico
+        UUID veiculo,
+        UUID elevador,
+        UUID funcionario,
+        UUID servico,
+        UUID ordemDeServico
     ) {
         this.data = data;
         this.descricaoProblema = descricaoProblema;
-        this.cliente = cliente;
         this.veiculo = veiculo;
         this.elevador = elevador;
         this.funcionario = funcionario;
@@ -84,78 +81,57 @@ public class Agendamento extends Entity {
     }
 
     public Servico getServico() {
-        return servico;
+        return Servico.instances.stream()
+            .filter(s -> s.getId().equals(this.servico))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setServico(Servico servico) {
+    public void setServico(UUID servico) {
         this.servico = servico;
     }
 
     public OrdemDeServico getOrdemDeServico() {
-        return ordemDeServico;
+        return OrdemDeServico.instances.stream()
+            .filter(o -> o.getId().equals(this.ordemDeServico))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setOrdemDeServico(OrdemDeServico ordemDeServico) {
+    public void setOrdemDeServico(UUID ordemDeServico) {
         this.ordemDeServico = ordemDeServico;
     }
 
     public Funcionario getFuncionario() {
-        return funcionario;
+        return Funcionario.instances.stream()
+            .filter(f -> f.getId().equals(this.funcionario))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setFuncionario(Funcionario funcionario) {
+    public void setFuncionario(UUID funcionario) {
         this.funcionario = funcionario;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public Veiculo getVeiculo() {
-        return veiculo;
+        return Veiculo.instances.stream()
+            .filter(v -> v.getId().equals(this.veiculo))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setVeiculo(Veiculo veiculo) {
+    public void setVeiculo(UUID veiculo) {
         this.veiculo = veiculo;
     }
 
     public Elevador getElevador() {
-        return elevador;
+        return Elevador.instances.stream()
+            .filter(e -> e.getId().equals(this.elevador))
+            .findFirst()
+            .orElse(null);
     }
 
-    public void setElevador(Elevador elevador) {
+    public void setElevador(UUID elevador) {
         this.elevador = elevador;
-    }
-
-    public Agendamento finalizarAgendamento(Agendamento agendamento) {
-        agendamento.setStatus(StatusAgendamento.CONCLUIDO);
-
-        ServicoItem servicoItem = new ServicoItem(
-            servico,
-            servico.getPreco(),
-            agendamento.getOrdemDeServico()    
-        );
-
-        ServicoItem.instances.add(servicoItem);
-
-        return agendamento;
-    }
-
-    public Agendamento cancelarAgendamento(Agendamento agendamento) {
-        agendamento.setStatus(StatusAgendamento.CANCELADO);
-
-        ServicoItem servicoItem = new ServicoItem(
-            servico,
-            servico.getPreco() * 0.2f,
-            agendamento.getOrdemDeServico()    
-        );
-
-        ServicoItem.instances.add(servicoItem);
-
-        return agendamento;
     }
 }

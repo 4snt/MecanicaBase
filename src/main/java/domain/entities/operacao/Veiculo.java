@@ -2,8 +2,10 @@ package domain.entities.operacao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import core.Entity;
+import domain.entities.usuarios.Cliente;
 
 /**
  * Representa um veículo cadastrado no sistema.
@@ -26,7 +28,8 @@ public class Veiculo extends Entity {
     private String placa;          // Placa do veículo (ex: "ABC-1234")
     private int anoFabricacao;     // Ano de fabricação (ex: 2015)
     private String cor;            // Cor do veículo (ex: "Branco", "Preto")
-    private String status;         // Status do veículo (ex: "Disponível", "Em manutenção")
+    private StatusVeiculo status;         // Status do veículo (ex: "Disponível", "Em manutenção")
+    private UUID clienteId;
 
     // =========================
     // Construtor
@@ -41,12 +44,14 @@ public class Veiculo extends Entity {
      * @param cor Cor do veículo
      * @param status Status atual do veículo
      */
-    public Veiculo(String modelo, String placa, int anoFabricacao, String cor, String status) {
+    public Veiculo(UUID clienteId, String modelo, String placa, int anoFabricacao, String cor) {
         this.modelo = modelo;
         this.placa = placa;
         this.anoFabricacao = anoFabricacao;
         this.cor = cor;
-        this.status = status;
+        this.clienteId = clienteId;
+
+        this.status = StatusVeiculo.RECEBIDO;
     }
 
     // =========================
@@ -85,11 +90,47 @@ public class Veiculo extends Entity {
         this.cor = cor;
     }
 
-    public String getStatus() {
+    public StatusVeiculo getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusVeiculo status) {
         this.status = status;
     }
+
+    public void setCliente(UUID clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public Cliente getCliente() {
+        for (Cliente c : Cliente.instances) {
+            if (c.getId().equals(this.clienteId)) {
+                return c;
+            }
+        }
+        return null;
+    }
+    @Override
+        public String toString() {
+            return """
+                Veículo {
+                ID: %s
+                Modelo: %s
+                Placa: %s
+                Ano de Fabricação: %d
+                Cor: %s
+                Status: %s
+                Cliente: %s
+                }
+                """.formatted(
+                    getId(),
+                    modelo,
+                    placa,
+                    anoFabricacao,
+                    cor,
+                    status,
+                    getCliente() != null ? getCliente().getNome() : "Desconhecido"
+                );
+        }
+
 }

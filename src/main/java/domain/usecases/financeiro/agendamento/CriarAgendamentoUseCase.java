@@ -1,7 +1,8 @@
-package domain.usecases.operacao.agendamento;
+package domain.usecases.financeiro.agendamento;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import domain.entities.financeiro.Agendamento;
 import domain.entities.financeiro.OrdemDeServico;
@@ -9,7 +10,6 @@ import domain.entities.financeiro.StatusOrdemDeServico;
 import domain.entities.operacao.Elevador;
 import domain.entities.operacao.Servico;
 import domain.entities.operacao.Veiculo;
-import domain.entities.usuarios.Cliente;
 import domain.entities.usuarios.Funcionario;
 
 public class CriarAgendamentoUseCase {
@@ -18,7 +18,6 @@ public class CriarAgendamentoUseCase {
         LocalDateTime horarioDesejado,
         Servico servico,
         String descricaoProblema,
-        Cliente cliente,
         Veiculo veiculo,
         OrdemDeServico ordemDeServico
     ) {
@@ -40,7 +39,8 @@ public class CriarAgendamentoUseCase {
 
         Funcionario funcionarioAlocado = funcionariosDisponiveis.get(0);
 
-        Elevador elevadorAlocado = null;
+        UUID elevadorId = null;
+
         if (servico.usaElevador()) {
             List<Elevador> elevadoresDisponiveis = Elevador.buscarElevadoresDisponiveis(
               servico.getTipoElevador(), 
@@ -52,21 +52,23 @@ public class CriarAgendamentoUseCase {
                 throw new RuntimeException("Nenhum elevador do tipo " + servico.getTipoElevador() + " disponível.");
             }
 
-            elevadorAlocado = elevadoresDisponiveis.get(0);
+            elevadorId = elevadoresDisponiveis.get(0).getId();
         }
 
         Agendamento agendamento = new Agendamento(
             horarioDesejado,
             descricaoProblema,
-            cliente,
-            veiculo,
-            elevadorAlocado,
-            funcionarioAlocado,
-            servico,
-            ordemDeServico
+            veiculo.getId(),
+            elevadorId,
+            funcionarioAlocado.getId(),
+            servico.getId(),
+            ordemDeServico.getId()
         );
 
         Agendamento.instances.add(agendamento);
+
+        ordemDeServico.addAgendamento(agendamento.getId());
+
         return agendamento;
     }
 }

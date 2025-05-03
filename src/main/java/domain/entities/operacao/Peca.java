@@ -125,4 +125,15 @@ public class Peca extends Entity {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Peca [ID=%s, Nome='%s', Valor=%.2f, Quantidade=%d]",
+                getId(),
+                nome,
+                valor,
+                quantidade
+        );
+    }
 }

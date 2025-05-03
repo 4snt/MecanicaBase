@@ -40,4 +40,14 @@ public class Sistema {
         Sistema.totalVeiculos -= 1;
         return Sistema.totalVeiculos;
     }
+
+    /**
+     * Insere um novo valor para total de veículos.
+     *
+     * @return Novo total de veículos
+     */
+    public static int setTotalVeiculos(int quantidade) {
+        Sistema.totalVeiculos = quantidade;
+        return Sistema.totalVeiculos;
+    }
 }

@@ -43,4 +43,15 @@ public class Despesa extends Entity {
     public CategoriaDespesa getCategoria() {
         return CategoriaDespesa.buscarPorId(this.categoriaId);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Despesa [ID=%s, Descrição='%s', Valor=%.2f, Categoria='%s']",
+                getId(),
+                descricao,
+                valor,
+                getCategoria() != null ? getCategoria().getTitulo() : "N/A"
+        );
+    }
 }

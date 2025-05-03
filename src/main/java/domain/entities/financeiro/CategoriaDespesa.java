@@ -29,4 +29,9 @@ public class CategoriaDespesa extends Entity {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format("CategoriaDespesa [ID=%s, Título='%s']", getId(), titulo);
+    }
 }

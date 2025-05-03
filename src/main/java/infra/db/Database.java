@@ -21,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
 
 import core.Entity;
 import domain.entities.financeiro.Agendamento;
-import domain.entities.financeiro.Caixa;
 import domain.entities.financeiro.CategoriaDespesa;
 import domain.entities.financeiro.Despesa;
 import domain.entities.financeiro.PecaItem;
@@ -29,6 +28,7 @@ import domain.entities.financeiro.ServicoItem;
 import domain.entities.operacao.Elevador;
 import domain.entities.operacao.Peca;
 import domain.entities.operacao.Servico;
+import domain.entities.operacao.Sistema;
 import domain.entities.operacao.Veiculo;
 import domain.entities.usuarios.Administrador;
 import domain.entities.usuarios.Cliente;
@@ -38,7 +38,6 @@ public class Database {
 
     private static final List<Class<? extends Entity>> entities = List.of((Class<? extends Entity>) (Class<? extends Entity>) Agendamento.class,
             (Class<? extends Entity>) CategoriaDespesa.class,
-            (Class<? extends Entity>) Caixa.class,
             (Class<? extends Entity>) Despesa.class,
             (Class<? extends Entity>) PecaItem.class,
             (Class<? extends Entity>) ServicoItem.class,
@@ -107,7 +106,7 @@ public class Database {
                     }
                 }
             }
-
+            Sistema.setTotalVeiculos(Veiculo.instances.size());
         } catch (JsonSyntaxException | IOException e) {
             System.out.println("Erro ao carregar banco de dados:");
         }

@@ -108,4 +108,13 @@ public class Elevador extends Entity {
         Elevador.instances.add(new Elevador(TipoElevador.GERAL));
         Elevador.instances.add(new Elevador(TipoElevador.GERAL));
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Elevador [ID=%s, Tipo=%s]",
+                getId(),
+                tipo != null ? tipo.name() : "N/A"
+        );
+    }
 }

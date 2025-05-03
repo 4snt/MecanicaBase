@@ -116,4 +116,16 @@ public class PecaItem extends Entity {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "PecaItem [ID=%s, Peça='%s', Quantidade=%d, Valor Unitário=%.2f, Ordem de Serviço=%s]",
+                getId(),
+                getPeca() != null ? getPeca().getNome() : "N/A",
+                quantidade,
+                valorUnitario,
+                ordemDeServico
+        );
+    }
 }

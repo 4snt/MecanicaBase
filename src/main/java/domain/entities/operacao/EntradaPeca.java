@@ -84,18 +84,13 @@ public class EntradaPeca extends Entity {
      */
     @Override
     public String toString() {
-        Peca pecaObj = getPeca();
         return String.format(
-                "EntradaPeca {\n"
-                + "  ID: %s\n"
-                + "  Peca: %s\n"
-                + "  Quantidade: %d\n"
-                + "  Custo: %.2f\n"
-                + "}",
+                "EntradaPeca [ID=%s, Peça='%s', Quantidade=%d, Custo=%.2f, Fornecedor='%s']",
                 getId(),
-                pecaObj != null ? pecaObj.getNome() : "Desconhecida",
+                getPeca() != null ? getPeca().getNome() : "Desconhecida",
                 quantidade,
-                custo
+                custo,
+                nomeFornecedor
         );
     }
 }

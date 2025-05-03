@@ -4,8 +4,17 @@ import java.util.UUID;
 
 import domain.entities.financeiro.OrdemDeServico;
 
+/**
+ * Caso de uso responsável por buscar uma Ordem de Serviço a partir de seu ID.
+ */
 public class BuscaPorIdOrdemDeServicoUseCase {
 
+    /**
+     * Busca uma instância de Ordem de Serviço pelo seu identificador.
+     *
+     * @param id ID da Ordem de Serviço (formato UUID em string).
+     * @return A Ordem de Serviço correspondente ou null se não encontrada.
+     */
     public OrdemDeServico use(String id) {
         UUID uuid = UUID.fromString(id);
 

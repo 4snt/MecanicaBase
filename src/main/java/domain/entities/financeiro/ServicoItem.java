@@ -11,7 +11,7 @@ import domain.entities.operacao.Servico;
  * Representa um item de serviço associado a uma Ordem de Serviço.
  */
 public class ServicoItem extends Entity {
-    
+
     public static List<ServicoItem> instances = new ArrayList<>();
 
     private UUID servico;
@@ -26,9 +26,9 @@ public class ServicoItem extends Entity {
 
     public Servico getServico() {
         return Servico.instances.stream()
-            .filter(s -> s.getId().equals(this.servico))
-            .findFirst()
-            .orElse(null);
+                .filter(s -> s.getId().equals(this.servico))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setServico(UUID servico) {
@@ -45,8 +45,19 @@ public class ServicoItem extends Entity {
 
     public OrdemDeServico getOrdemDeServico() {
         return OrdemDeServico.instances.stream()
-            .filter(o -> o.getId().equals(this.ordemDeServico))
-            .findFirst()
-            .orElse(null);
+                .filter(o -> o.getId().equals(this.ordemDeServico))
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "ServicoItem [ID=%s, Serviço='%s', Valor Unitário=%.2f, Ordem de Serviço=%s]",
+                getId(),
+                getServico() != null ? getServico().getTipo() : "N/A",
+                valorUnitario,
+                ordemDeServico
+        );
     }
 }

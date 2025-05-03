@@ -142,4 +142,18 @@ public class OrdemDeServico extends Entity {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "OrdemDeServico [ID=%s, ClienteID=%s, Status=%s, FinalizadoEm=%s, Serviços=%d, Peças=%d, Agendamentos=%d]",
+                getId(),
+                clienteId,
+                status.name(),
+                finalizadoEm != null ? finalizadoEm.toString() : "N/A",
+                servicos.size(),
+                pecas.size(),
+                agendamentos.size()
+        );
+    }
 }

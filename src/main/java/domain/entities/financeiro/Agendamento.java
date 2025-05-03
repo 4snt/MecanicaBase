@@ -162,4 +162,18 @@ public class Agendamento extends Entity implements Comparable<Agendamento> {
     // Comparador por descrição do problema
     public static final Comparator<Agendamento> porDescricaoProblema
             = Comparator.comparing(Agendamento::getDescricaoProblema, String.CASE_INSENSITIVE_ORDER);
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Agendamento [ID=%s, Data=%s, Problema='%s', Funcionário='%s', Veículo='%s', Serviço='%s', Status='%s']",
+                getId(),
+                data,
+                descricaoProblema,
+                getFuncionario() != null ? getFuncionario().getNome() : "N/A",
+                getVeiculo() != null ? getVeiculo().getModelo() : "N/A",
+                getServico() != null ? getServico().getTipo() : "N/A",
+                status != null ? status.name() : "N/A"
+        );
+    }
 }

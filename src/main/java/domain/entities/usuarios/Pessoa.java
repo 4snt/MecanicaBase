@@ -5,6 +5,7 @@ import core.Entity;
 import infra.crypto.JasyptCrypto;
 
 public abstract class Pessoa extends Entity {
+
     private String nome;
     private String email;
     private String cpf;
@@ -61,4 +62,3 @@ public abstract class Pessoa extends Entity {
         this.endereco = endereco;
     }
 }
-

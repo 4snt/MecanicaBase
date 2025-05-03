@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Cliente extends Pessoa {
+
     public static List<Cliente> instances = new ArrayList<>();
 
     private final List<UUID> veiculos;
@@ -24,5 +25,12 @@ public class Cliente extends Pessoa {
 
     public List<UUID> getVeiculos() {
         return veiculos;
+    }
+
+    public static Administrador buscarPorEmail(String email) {
+        return Administrador.instances.stream()
+                .filter(s -> s.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
     }
 }

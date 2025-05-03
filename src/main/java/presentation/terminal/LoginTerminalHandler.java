@@ -8,6 +8,7 @@ import domain.usecases.usuarios.funcionario.LoginFuncionarioUseCase;
 import infra.auth.Session;
 
 public class LoginTerminalHandler {
+
     private final Scanner scanner;
 
     public LoginTerminalHandler(Scanner scanner) {
@@ -30,8 +31,10 @@ public class LoginTerminalHandler {
         boolean sucesso = false;
 
         switch (tipo) {
-            case "1" -> sucesso = new LoginFuncionarioUseCase().login(email, senha);
-            case "2" -> sucesso = new LoginAdministradorUseCase().login(email, senha);
+            case "1" ->
+                sucesso = new LoginFuncionarioUseCase().login(email, senha);
+            case "2" ->
+                sucesso = new LoginAdministradorUseCase().login(email, senha);
             default -> {
                 System.out.println("Tipo inválido.");
                 return false;

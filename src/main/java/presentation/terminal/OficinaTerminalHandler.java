@@ -24,11 +24,13 @@ public class OficinaTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1" -> atualizarVeiculo();
+                case "1" ->
+                    atualizarVeiculo();
                 case "0" -> {
                     return;
                 }
-                default -> System.out.println("Opção inválida.");
+                default ->
+                    System.out.println("Opção inválida.");
             }
         }
     }

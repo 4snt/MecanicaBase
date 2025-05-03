@@ -6,8 +6,15 @@ import java.util.UUID;
 
 import core.Entity;
 
+/**
+ * Representa uma entrada de peça no estoque, contendo referência à peça,
+ * quantidade, custo e nome do fornecedor.
+ */
 public class EntradaPeca extends Entity {
 
+    /**
+     * Lista estática que simula a persistência das entradas de peças.
+     */
     public static final List<EntradaPeca> instances = new ArrayList<>();
 
     private int quantidade;
@@ -15,6 +22,14 @@ public class EntradaPeca extends Entity {
     private float custo;
     private UUID peca;
 
+    /**
+     * Construtor para criar uma nova entrada de peça.
+     *
+     * @param peca ID da peça associada
+     * @param quantidade Quantidade de peças recebidas
+     * @param custo Custo unitário
+     * @param nomeFornecedor Nome do fornecedor
+     */
     public EntradaPeca(UUID peca, int quantidade, float custo, String nomeFornecedor) {
         this.peca = peca;
         this.quantidade = quantidade;
@@ -26,6 +41,9 @@ public class EntradaPeca extends Entity {
         return peca;
     }
 
+    /**
+     * Retorna o objeto Peca associado com base no ID.
+     */
     public Peca getPeca() {
         return Peca.instances.stream()
                 .filter(p -> p.getId().equals(this.peca))
@@ -61,17 +79,19 @@ public class EntradaPeca extends Entity {
         this.custo = custo;
     }
 
+    /**
+     * Retorna uma representação textual da entrada de peça.
+     */
     @Override
     public String toString() {
         Peca pecaObj = getPeca();
-        return """
-            EntradaPeca {
-                ID: %s
-                Peca: %s
-                Quantidade: %d
-                Custo: %.2f
-            }
-            """.formatted(
+        return String.format(
+                "EntradaPeca {\n"
+                + "  ID: %s\n"
+                + "  Peca: %s\n"
+                + "  Quantidade: %d\n"
+                + "  Custo: %.2f\n"
+                + "}",
                 getId(),
                 pecaObj != null ? pecaObj.getNome() : "Desconhecida",
                 quantidade,

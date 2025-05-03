@@ -1,4 +1,4 @@
-package domain.usecases.operacao.peca;
+package domain.usecases.financeiro.ordem_de_servico;
 
 import java.util.UUID;
 

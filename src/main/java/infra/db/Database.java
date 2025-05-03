@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 import core.Entity;
 import domain.entities.financeiro.Agendamento;
+import domain.entities.financeiro.Caixa;
 import domain.entities.financeiro.CategoriaDespesa;
 import domain.entities.financeiro.Despesa;
 import domain.entities.financeiro.PecaItem;
@@ -37,6 +38,7 @@ public class Database {
 
     private static final List<Class<? extends Entity>> entities = List.of((Class<? extends Entity>) (Class<? extends Entity>) Agendamento.class,
             (Class<? extends Entity>) CategoriaDespesa.class,
+            (Class<? extends Entity>) Caixa.class,
             (Class<? extends Entity>) Despesa.class,
             (Class<? extends Entity>) PecaItem.class,
             (Class<? extends Entity>) ServicoItem.class,

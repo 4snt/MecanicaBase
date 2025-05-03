@@ -2,6 +2,7 @@ package domain.entities.financeiro;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,10 +13,10 @@ import domain.entities.operacao.Veiculo;
 import domain.entities.usuarios.Funcionario;
 
 /**
- * Representa um agendamento de serviço feito por um cliente.
- * Usa java.time.LocalDateTime para armazenar data e hora em um único campo.
+ * Representa um agendamento de serviço feito por um cliente. Usa
+ * java.time.LocalDateTime para armazenar data e hora em um único campo.
  */
-public class Agendamento extends Entity {
+public class Agendamento extends Entity implements Comparable<Agendamento> {
 
     public static List<Agendamento> instances = new ArrayList<>();
 
@@ -37,13 +38,13 @@ public class Agendamento extends Entity {
      * @param veiculo Veículo envolvido
      */
     public Agendamento(
-        LocalDateTime data,
-        String descricaoProblema,
-        UUID veiculo,
-        UUID elevador,
-        UUID funcionario,
-        UUID servico,
-        UUID ordemDeServico
+            LocalDateTime data,
+            String descricaoProblema,
+            UUID veiculo,
+            UUID elevador,
+            UUID funcionario,
+            UUID servico,
+            UUID ordemDeServico
     ) {
         this.data = data;
         this.descricaoProblema = descricaoProblema;
@@ -55,7 +56,6 @@ public class Agendamento extends Entity {
     }
 
     // Getters e Setters
-
     public LocalDateTime getData() {
         return data;
     }
@@ -82,9 +82,9 @@ public class Agendamento extends Entity {
 
     public Servico getServico() {
         return Servico.instances.stream()
-            .filter(s -> s.getId().equals(this.servico))
-            .findFirst()
-            .orElse(null);
+                .filter(s -> s.getId().equals(this.servico))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setServico(UUID servico) {
@@ -93,9 +93,9 @@ public class Agendamento extends Entity {
 
     public OrdemDeServico getOrdemDeServico() {
         return OrdemDeServico.instances.stream()
-            .filter(o -> o.getId().equals(this.ordemDeServico))
-            .findFirst()
-            .orElse(null);
+                .filter(o -> o.getId().equals(this.ordemDeServico))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setOrdemDeServico(UUID ordemDeServico) {
@@ -104,9 +104,9 @@ public class Agendamento extends Entity {
 
     public Funcionario getFuncionario() {
         return Funcionario.instances.stream()
-            .filter(f -> f.getId().equals(this.funcionario))
-            .findFirst()
-            .orElse(null);
+                .filter(f -> f.getId().equals(this.funcionario))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setFuncionario(UUID funcionario) {
@@ -115,9 +115,9 @@ public class Agendamento extends Entity {
 
     public Veiculo getVeiculo() {
         return Veiculo.instances.stream()
-            .filter(v -> v.getId().equals(this.veiculo))
-            .findFirst()
-            .orElse(null);
+                .filter(v -> v.getId().equals(this.veiculo))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setVeiculo(UUID veiculo) {
@@ -126,19 +126,40 @@ public class Agendamento extends Entity {
 
     public Elevador getElevador() {
         return Elevador.instances.stream()
-            .filter(e -> e.getId().equals(this.elevador))
-            .findFirst()
-            .orElse(null);
+                .filter(e -> e.getId().equals(this.elevador))
+                .findFirst()
+                .orElse(null);
     }
 
     public void setElevador(UUID elevador) {
         this.elevador = elevador;
     }
 
+    // MÉTODOS DE REPOSITÓRIO
     public static Agendamento buscarPorId(UUID id) {
         return Agendamento.instances.stream()
-            .filter(a -> a.getId().equals(id))
-            .findFirst()
-            .orElse(null);
+                .filter(a -> a.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
+
+    // IMPLEMENTAÇÃO COMPARATOR
+    @Override
+    public int compareTo(Agendamento outro) {
+        return this.data.compareTo(outro.data); // Ordenação padrão por data
+    }
+
+    // Comparador por data (mais antigos primeiro)
+    public static final Comparator<Agendamento> porDataAsc = Comparator.comparing(Agendamento::getData);
+
+    // Comparador por data (mais recentes primeiro)
+    public static final Comparator<Agendamento> porDataDesc = Comparator.comparing(Agendamento::getData).reversed();
+
+    // Comparador por nome do funcionário
+    public static final Comparator<Agendamento> porFuncionarioNome
+            = Comparator.comparing(a -> a.getFuncionario().getNome(), String.CASE_INSENSITIVE_ORDER);
+
+    // Comparador por descrição do problema
+    public static final Comparator<Agendamento> porDescricaoProblema
+            = Comparator.comparing(Agendamento::getDescricaoProblema, String.CASE_INSENSITIVE_ORDER);
 }

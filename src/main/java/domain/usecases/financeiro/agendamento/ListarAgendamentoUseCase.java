@@ -9,8 +9,23 @@ import domain.entities.financeiro.Agendamento;
 import domain.entities.financeiro.StatusAgendamento;
 import domain.entities.operacao.Veiculo;
 
+/**
+ * Caso de uso responsável por listar agendamentos com base em filtros
+ * opcionais.
+ */
 public class ListarAgendamentoUseCase {
 
+    /**
+     * Lista agendamentos filtrando por data de início, data final, status,
+     * funcionário ou cliente.
+     *
+     * @param dataInicio Data mínima do agendamento (pode ser nula).
+     * @param dataFinal Data máxima do agendamento (pode ser nula).
+     * @param status Status do agendamento (pode ser nulo).
+     * @param funcionarioId ID do funcionário responsável (pode ser nulo).
+     * @param clienteId ID do cliente associado ao veículo (pode ser nulo).
+     * @return Lista de agendamentos que satisfazem os critérios fornecidos.
+     */
     public List<Agendamento> use(
             LocalDateTime dataInicio,
             LocalDateTime dataFinal,

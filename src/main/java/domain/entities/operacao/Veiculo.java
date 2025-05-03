@@ -8,41 +8,39 @@ import core.Entity;
 import domain.entities.usuarios.Cliente;
 
 /**
- * Representa um veículo cadastrado no sistema.
- * Essa classe é parte do modelo de domínio e armazena os dados essenciais do veículo.
+ * Representa um veículo cadastrado no sistema. Essa classe é parte do modelo de
+ * domínio e armazena os dados essenciais do veículo.
  */
 public class Veiculo extends Entity {
 
     /**
-     * Lista que armazena todas as instâncias de veículos.
-     * Essa lista simula um banco de dados em memória e será usada para serialização/deserialização em JSON.
-     * É uma exigência do projeto como forma de persistência de dados sem uso de banco relacional.
+     * Lista que armazena todas as instâncias de veículos. Essa lista simula um
+     * banco de dados em memória e será usada para serialização/deserialização
+     * em JSON.
      */
     public static List<Veiculo> instances = new ArrayList<>();
 
     // =========================
     // Atributos do Veículo
     // =========================
-
-    private String modelo;         // Modelo do veículo (ex: "Fiat Uno", "Toyota Corolla")
-    private String placa;          // Placa do veículo (ex: "ABC-1234")
-    private int anoFabricacao;     // Ano de fabricação (ex: 2015)
-    private String cor;            // Cor do veículo (ex: "Branco", "Preto")
-    private StatusVeiculo status;         // Status do veículo (ex: "Disponível", "Em manutenção")
+    private String modelo;
+    private String placa;
+    private int anoFabricacao;
+    private String cor;
+    private StatusVeiculo status;
     private UUID clienteId;
 
     // =========================
     // Construtor
     // =========================
-
     /**
-     * Construtor para criar um novo objeto Veiculo.
+     * Construtor para criar um novo veículo vinculado a um cliente.
      *
+     * @param clienteId ID do cliente proprietário do veículo
      * @param modelo Modelo do veículo
      * @param placa Placa do veículo
      * @param anoFabricacao Ano de fabricação
      * @param cor Cor do veículo
-     * @param status Status atual do veículo
      */
     public Veiculo(UUID clienteId, String modelo, String placa, int anoFabricacao, String cor) {
         this.modelo = modelo;
@@ -50,14 +48,12 @@ public class Veiculo extends Entity {
         this.anoFabricacao = anoFabricacao;
         this.cor = cor;
         this.clienteId = clienteId;
-
         this.status = StatusVeiculo.RECEBIDO;
     }
 
     // =========================
     // Getters e Setters
     // =========================
-
     public String getModelo() {
         return modelo;
     }
@@ -103,29 +99,28 @@ public class Veiculo extends Entity {
     }
 
     public Cliente getCliente() {
-        for (Cliente c : Cliente.instances) {
-            if (c.getId().equals(this.clienteId)) {
-                return c;
-            }
-        }
-        return null;
+        return Cliente.instances.stream()
+                .filter(c -> c.getId().equals(this.clienteId))
+                .findFirst()
+                .orElse(null);
     }
 
+    /**
+     * Retorna uma representação textual do veículo.
+     */
     @Override
     public String toString() {
         Cliente cliente = getCliente();
-
-        return """
-            Veículo {
-                ID: %s
-                Modelo: %s
-                Placa: %s
-                Ano de Fabricação: %d
-                Cor: %s
-                Status: %s
-                Cliente: %s
-            }
-            """.formatted(
+        return String.format(
+                "Veículo {\n"
+                + "  ID: %s\n"
+                + "  Modelo: %s\n"
+                + "  Placa: %s\n"
+                + "  Ano de Fabricação: %d\n"
+                + "  Cor: %s\n"
+                + "  Status: %s\n"
+                + "  Cliente: %s\n"
+                + "}",
                 getId(),
                 modelo,
                 placa,
@@ -133,8 +128,8 @@ public class Veiculo extends Entity {
                 cor,
                 status,
                 cliente != null
-                    ? "%s (ID: %s)".formatted(cliente.getNome(), cliente.getId())
-                    : "Desconhecido"
-            );
+                        ? String.format("%s (ID: %s)", cliente.getNome(), cliente.getId())
+                        : "Desconhecido"
+        );
     }
 }

@@ -17,8 +17,19 @@ import domain.entities.operacao.Peca;
 import domain.entities.operacao.Servico;
 import domain.entities.usuarios.Funcionario;
 
+/**
+ * Caso de uso para gerar um balanço financeiro e operacional no sistema com
+ * base em um intervalo de datas.
+ */
 public class GerarBalancoUseCase {
 
+    /**
+     * Gera um resumo detalhado do período de operações entre duas datas.
+     *
+     * @param dataInicio Data de início
+     * @param dataFinal Data final
+     * @return Relatório formatado em String
+     */
     public String use(LocalDateTime dataInicio, LocalDateTime dataFinal) {
         List<OrdemDeServico> osFinalizadas = buscarOSFinalizadas(dataInicio, dataFinal);
         List<OrdemDeServico> osCriadas = buscarOSCriadas(dataInicio, dataFinal);
@@ -44,42 +55,28 @@ public class GerarBalancoUseCase {
 
         float lucroLiquido = totalGeral - totalDespesas;
 
-        return """
-            📊 BALANÇO FINANCEIRO E OPERACIONAL
-            Período: %s a %s
-
-            🔢 Totais:
-            - Ordens criadas: %d
-            - Ordens finalizadas: %d
-            - Ordens concluídas: %d (%.1f%%)
-            - Ordens canceladas: %d (%.1f%%)
-
-            💰 Faturamento:
-            - Total em serviços: R$ %.2f
-            - Total em peças: R$ %.2f
-            - Faturamento total: R$ %.2f
-
-            🛠️ Top 3 serviços:
-            %s
-
-            🔩 Top 3 peças:
-            %s
-
-            🧑‍🔧 Funcionário com mais agendamentos:
-            %s
-
-            📉 Despesas:
-            - Total de despesas: R$ %.2f
-            - Lucro líquido: R$ %.2f
-
-            📂 Gastos por categoria:
-            %s
-            """.formatted(
+        return String.format(
+                "BALANÇO FINANCEIRO E OPERACIONAL\n"
+                + "Período: %s a %s\n\n"
+                + "Totais:\n"
+                + "- Ordens criadas: %d\n"
+                + "- Ordens finalizadas: %d\n"
+                + "- Ordens concluídas: %d (%.1f%%)\n"
+                + "- Ordens canceladas: %d (%.1f%%)\n\n"
+                + "Faturamento:\n"
+                + "- Total em serviços: R$ %.2f\n"
+                + "- Total em peças: R$ %.2f\n"
+                + "- Faturamento total: R$ %.2f\n\n"
+                + "Top 3 serviços:\n%s\n\n"
+                + "Top 3 peças:\n%s\n\n"
+                + "Funcionário com mais agendamentos:\n%s\n\n"
+                + "Despesas:\n"
+                + "- Total de despesas: R$ %.2f\n"
+                + "- Lucro líquido: R$ %.2f\n\n"
+                + "Gastos por categoria:\n%s",
                 dataInicio.toLocalDate(), dataFinal.toLocalDate(),
-                osCriadas.size(),
-                osFinalizadas.size(),
-                concluidas, percConcluido,
-                canceladas, percCancelado,
+                osCriadas.size(), osFinalizadas.size(),
+                concluidas, percConcluido, canceladas, percCancelado,
                 totalServicos, totalPecas, totalGeral,
                 String.join("\n", topServicos),
                 String.join("\n", topPecas),
@@ -122,45 +119,44 @@ public class GerarBalancoUseCase {
 
     private List<String> top3Servicos(List<OrdemDeServico> lista) {
         Map<UUID, Integer> contagem = new HashMap<>();
-
         for (OrdemDeServico os : lista) {
             for (ServicoItem si : os.getServicos()) {
                 UUID id = si.getServico().getId();
                 contagem.put(id, contagem.getOrDefault(id, 0) + 1);
             }
         }
-
         return contagem.entrySet().stream()
                 .sorted(Map.Entry.<UUID, Integer>comparingByValue().reversed())
                 .limit(3)
                 .map(entry -> {
-                    Servico s = Servico.instances.stream().filter(serv -> serv.getId().equals(entry.getKey())).findFirst().orElse(null);
+                    Servico s = Servico.instances.stream()
+                            .filter(serv -> serv.getId().equals(entry.getKey()))
+                            .findFirst().orElse(null);
                     return s != null ? s.getTipo() + " (" + entry.getValue() + ")" : "Desconhecido";
                 }).toList();
     }
 
     private List<String> top3Pecas(List<OrdemDeServico> lista) {
         Map<UUID, Integer> contagem = new HashMap<>();
-
         for (OrdemDeServico os : lista) {
             for (PecaItem pi : os.getPecas()) {
                 UUID id = pi.getPeca().getId();
                 contagem.put(id, contagem.getOrDefault(id, 0) + pi.getQuantidade());
             }
         }
-
         return contagem.entrySet().stream()
                 .sorted(Map.Entry.<UUID, Integer>comparingByValue().reversed())
                 .limit(3)
                 .map(entry -> {
-                    Peca p = Peca.instances.stream().filter(pc -> pc.getId().equals(entry.getKey())).findFirst().orElse(null);
+                    Peca p = Peca.instances.stream()
+                            .filter(pc -> pc.getId().equals(entry.getKey()))
+                            .findFirst().orElse(null);
                     return p != null ? p.getNome() + " (" + entry.getValue() + ")" : "Desconhecida";
                 }).toList();
     }
 
     private String funcionarioMaisAtivo(List<OrdemDeServico> lista) {
         Map<UUID, Integer> contagem = new HashMap<>();
-
         for (OrdemDeServico os : lista) {
             for (Agendamento ag : os.getAgendamentos()) {
                 if (ag != null && ag.getFuncionario() != null) {
@@ -169,12 +165,13 @@ public class GerarBalancoUseCase {
                 }
             }
         }
-
         return contagem.entrySet().stream()
                 .sorted(Map.Entry.<UUID, Integer>comparingByValue().reversed())
                 .findFirst()
                 .map(entry -> {
-                    Funcionario f = Funcionario.instances.stream().filter(fun -> fun.getId().equals(entry.getKey())).findFirst().orElse(null);
+                    Funcionario f = Funcionario.instances.stream()
+                            .filter(fun -> fun.getId().equals(entry.getKey()))
+                            .findFirst().orElse(null);
                     return f != null ? f.getNome() + " (" + entry.getValue() + " agendamentos)" : "Desconhecido";
                 }).orElse("Nenhum");
     }

@@ -11,12 +11,75 @@
       }
     ],
     "domain.entities.financeiro.ServicoItem": [],
-    "domain.entities.financeiro.Despesa": [],
-    "domain.entities.operacao.Peca": [],
-    "domain.entities.operacao.Veiculo": [],
-    "domain.entities.usuarios.Funcionario": [],
-    "domain.entities.operacao.Servico": [],
-    "domain.entities.financeiro.CategoriaDespesa": [],
+    "domain.entities.financeiro.Despesa": [
+      {
+        "descricao": "foi caro viu",
+        "valor": 500.0,
+        "categoriaId": "2a5fbc96-d4b3-4fc8-81bc-44cff3c50015",
+        "id": "0bfad672-caab-46cf-baab-c984bc123607",
+        "criadoEm": "2025-05-04T14:44:59.1144472",
+        "atualizadoEm": "2025-05-04T14:44:59.1144472"
+      }
+    ],
+    "domain.entities.operacao.Peca": [
+      {
+        "nome": "Radiador de celta",
+        "valor": 1000.0,
+        "quantidade": 3,
+        "id": "33a9dc09-52a0-4590-80dc-0ba88429b8d7",
+        "criadoEm": "2025-05-04T12:19:29.9051186",
+        "atualizadoEm": "2025-05-04T12:19:29.9051186"
+      }
+    ],
+    "domain.entities.operacao.Veiculo": [
+      {
+        "modelo": "GM celta",
+        "placa": "qpz 8d92",
+        "anoFabricacao": 2001,
+        "cor": "preto",
+        "status": "RECEBIDO",
+        "clienteId": "baa39211-8953-48c8-b8a1-b0ffd00b0959",
+        "id": "602d3eb6-efb0-4135-9dba-ac07dd79a6f4",
+        "criadoEm": "2025-05-04T12:06:28.9201558",
+        "atualizadoEm": "2025-05-04T12:06:28.9201558"
+      }
+    ],
+    "domain.entities.usuarios.Funcionario": [
+      {
+        "funcao": "MECANICO_ESPECIFICO",
+        "salario": 1000.0,
+        "senha": "tKPvptea+kVKS8G43fX0pQ\u003d\u003d",
+        "nome": "Tião funileiro",
+        "email": "tiao@teste.com",
+        "cpf": "Ar6irSlFuTxTqJ7XRbVjWW1spSm82JKY",
+        "telefone": "31984567800",
+        "endereco": "Tiao",
+        "id": "9e250e15-3c9c-4307-8493-f8e52737a590",
+        "criadoEm": "2025-05-04T11:49:21.9560221",
+        "atualizadoEm": "2025-05-04T11:49:21.9560221"
+      }
+    ],
+    "domain.entities.operacao.Servico": [
+      {
+        "tipo": "Funilaria",
+        "preco": 10000.0,
+        "descricao": "Recuperar carro mediamonta",
+        "duracao": 300,
+        "tipoFuncionario": "MECANICO_ESPECIFICO",
+        "usaElevador": false,
+        "id": "04186364-d950-4a9e-8bda-251eb2b259f9",
+        "criadoEm": "2025-05-04T12:53:53.0607817",
+        "atualizadoEm": "2025-05-04T12:53:53.0607817"
+      }
+    ],
+    "domain.entities.financeiro.CategoriaDespesa": [
+      {
+        "titulo": "Aluguei",
+        "id": "2a5fbc96-d4b3-4fc8-81bc-44cff3c50015",
+        "criadoEm": "2025-05-04T14:44:36.1254865",
+        "atualizadoEm": "2025-05-04T14:44:36.1254865"
+      }
+    ],
     "domain.entities.operacao.Elevador": [
       null,
       null,
@@ -40,7 +103,30 @@
         "atualizadoEm": "2025-05-03T02:52:14.8135889"
       }
     ],
-    "domain.entities.financeiro.Agendamento": [],
+    "domain.entities.financeiro.Agendamento": [
+      {
+        "data": "2025-05-04T14:30:00",
+        "descricaoProblema": "Tem que arrumar ne ",
+        "ordemDeServico": "1c103760-3319-4fe5-9a91-ae6e125ded2c",
+        "servico": "04186364-d950-4a9e-8bda-251eb2b259f9",
+        "funcionario": "9e250e15-3c9c-4307-8493-f8e52737a590",
+        "veiculo": "602d3eb6-efb0-4135-9dba-ac07dd79a6f4",
+        "id": "3a79987b-9624-4bc2-bd27-e44d2c39e371",
+        "criadoEm": "2025-05-04T13:41:12.4154345",
+        "atualizadoEm": "2025-05-04T13:41:12.4154345"
+      },
+      {
+        "data": "2025-05-04T15:30:00",
+        "descricaoProblema": "a",
+        "ordemDeServico": "9b74f34a-7288-4bc9-a5fb-76e26728da83",
+        "servico": "04186364-d950-4a9e-8bda-251eb2b259f9",
+        "funcionario": "9e250e15-3c9c-4307-8493-f8e52737a590",
+        "veiculo": "602d3eb6-efb0-4135-9dba-ac07dd79a6f4",
+        "id": "d6e4cb0d-7b4d-4177-9d3a-d4e734120fda",
+        "criadoEm": "2025-05-04T14:19:49.6717726",
+        "atualizadoEm": "2025-05-04T14:19:49.6717726"
+      }
+    ],
     "domain.entities.financeiro.PecaItem": [],
     "domain.entities.usuarios.Cliente": [
       {
@@ -53,6 +139,19 @@
         "id": "866fc924-62c7-41a0-bbab-e2e5d96963b2",
         "criadoEm": "2025-05-03T02:53:44.2954842",
         "atualizadoEm": "2025-05-03T02:53:44.2954842"
+      },
+      {
+        "veiculos": [
+          "602d3eb6-efb0-4135-9dba-ac07dd79a6f4"
+        ],
+        "nome": "marquito",
+        "email": "marqutindograu@gmail.com",
+        "cpf": "Cng6qnh9siDsKYaGa1yPGqPx44qOMUuw",
+        "telefone": "diamantina",
+        "endereco": "31 999699775",
+        "id": "baa39211-8953-48c8-b8a1-b0ffd00b0959",
+        "criadoEm": "2025-05-04T12:02:18.3174419",
+        "atualizadoEm": "2025-05-04T12:02:18.3174419"
       }
     ]
   }

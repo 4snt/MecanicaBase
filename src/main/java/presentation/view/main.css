@@ -1,0 +1,9 @@
+.label {
+    -fx-font-family: "Segoe UI";
+    -fx-text-fill: #333;
+}
+
+.mfx-button {
+    -fx-font-size: 14px;
+    -fx-background-radius: 10;
+}

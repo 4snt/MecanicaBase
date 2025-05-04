@@ -19,6 +19,6 @@ domain.usecases.usuarios.funcionario
 infra.auth
 infra.crypto
 infra.db
-presentation.components
+presentation.Terminal
+presentation.Terminal.router
 presentation.view
-presentation.view.cliente

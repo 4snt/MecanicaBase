@@ -7,7 +7,7 @@ nbdist/
 target/*
 
 # Mas não ignore o conteúdo de target/site
-!target/site/
+!target/reports/
 # Ignorar configurações privadas do NetBeans
 nbproject/private/
 

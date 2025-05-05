@@ -49,18 +49,18 @@ public class DespesaTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1" ->
+                case "1":
                     criar();
-                case "2" ->
+                case "2":
                     listar();
-                case "3" ->
+                case "3":
                     atualizar();
-                case "4" ->
+                case "4":
                     remover();
-                case "0" -> {
+                case "0": {
                     return;
                 }
-                default ->
+                default:
                     System.out.println("Opção inválida.");
             }
         }

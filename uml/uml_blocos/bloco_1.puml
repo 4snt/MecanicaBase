@@ -1,0 +1,119 @@
+@startuml
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontName Courier
+skinparam wrapWidth 100
+top to bottom direction
+skinparam linetype ortho
+
+class MecanicaBase {
+}
+
+class ClienteController {
+  +criar()
+  +remover()
+  +atualizar()
+  +listar()
+  +buscarPorId()
+}
+
+class MainViewController {
+  - btnClientes : MFXButton
+  - btnOficina : MFXButton
+  - btnServicos : MFXButton
+  - btnAgendamentos : MFXButton
+  - btnOrdemServico : MFXButton
+  - btnColaboradores : MFXButton
+  - btnFinanceiro : MFXButton
+  - adminSection : VBox
+  +abrirColaboradores()
+  +initialize()
+  +abrirFinanceiro()
+  +abrirAgendamentos()
+  +abrirOrdens()
+  +abrirServicos()
+  +abrirClientes()
+  +abrirOficina()
+}
+
+class "Entity" {
+  - atualizadoEm : LocalDateTime
+  +getAtualizadoEm()
+  +getId()
+  +touch()
+  +getCriadoEm()
+}
+
+class Agendamento {
+  - data : LocalDateTime
+  - descricaoProblema : String
+  - status : StatusAgendamento
+  - ordemDeServico : UUID
+  - servico : UUID
+  - elevador : UUID
+  - funcionario : UUID
+  - veiculo : UUID
+  +getData()
+  +getDescricaoProblema()
+  +setDescricaoProblema()
+  +setStatus()
+  +getFuncionario()
+  +getServico()
+  +setOrdemDeServico()
+  +setElevador()
+  +getVeiculo()
+  +setData()
+  +setVeiculo()
+  +getStatus()
+  +getOrdemDeServico()
+  +setFuncionario()
+  +getElevador()
+  +compareTo()
+  +setServico()
+  +toString()
+}
+
+class CategoriaDespesa {
+  +getTitulo()
+  +toString()
+}
+
+class Despesa {
+  - descricao : String
+  - valor : float
+  +getCategoria()
+  +setDescricao()
+  +getDescricao()
+  +getValor()
+  +setValor()
+  +toString()
+}
+
+class OrdemDeServico {
+  - clienteId : UUID
+  - status : StatusOrdemDeServico
+  - finalizadoEm : LocalDateTime
+  +toString()
+  +getFinalizadoEm()
+  +addPeca()
+  +addServico()
+  +setStatus()
+  +addAgendamento()
+  +removeAgendamento()
+  +removeServicoPor()
+  +getClienteId()
+  +getStatus()
+  +removePeca()
+  +getAgendamentos()
+  +setClienteId()
+  +getServicos()
+  +getPecas()
+}
+
+"Entity" <|-- Agendamento
+"Entity" <|-- CategoriaDespesa
+"Entity" <|-- Despesa
+"Entity" <|-- OrdemDeServico
+
+@enduml

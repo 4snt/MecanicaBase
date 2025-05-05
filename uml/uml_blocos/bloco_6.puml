@@ -1,0 +1,54 @@
+@startuml
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontName Courier
+skinparam wrapWidth 100
+top to bottom direction
+skinparam linetype ortho
+
+class RemoveOrdemDeServicoUseCase {
+  +use()
+}
+
+class RemoverPecaItemUseCase {
+  +use()
+}
+
+class VenderPecaUseCase {
+  +use()
+}
+
+class GerarBalancoUseCase {
+  +top3Servicos()
+  +calcularTotalDespesas()
+  +buscarOSCriadas()
+  +buscarOSFinalizadas()
+  +funcionarioMaisAtivo()
+  +use()
+  +calcularTotalPecas()
+  +top3Pecas()
+  +buscarDespesasNoPeriodo()
+  +contarPorStatus()
+  +formatarGastosPorCategoria()
+  +calcularTotalServicos()
+}
+
+class GerarRelatorioUseCase {
+  +use()
+}
+
+class CriarManualEntradaPecaUseCase {
+  +use()
+}
+
+class AtualizaPecaUseCase {
+  +use()
+}
+
+class BuscaPorIdPecaUseCase {
+  +use()
+}
+
+
+@enduml

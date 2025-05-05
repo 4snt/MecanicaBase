@@ -6,14 +6,27 @@
 - [ ] Refaça o **Diagrama de Casos de Uso** do sistema.
 - [ ] Crie os **cenários (fluxo de eventos)** para todos os casos de uso obrigatórios:
   - [x] Incluir, Editar e Remover Cliente, além de definir o ID do Cliente.
+      //Incluir: \src\main\java\domain\usecases\usuarios\cliente\CriarClienteUseCase.java
+      //Editar:  \src\main\java\domain\usecases\usuarios\cliente\Atualizar.java
   - [x] Incluir, Editar e Remover Funcionário, Colaborador e Administrador.
-  - [x] Alterar a senha de um Administrador.
+  // src/main/java/domain/usecases/usuarios/administrador/CriarAdministradorUseCase.java
+  // src/main/java/domain/usecases/usuarios/administrador/AtualizarAdministradorUseCase.java
+  // src/main/java/domain/usecases/usuarios/administrador/RemoverAdministradorUseCase.java
+  - [x] Alterar a senha de um Administrador. 
+  //src/main/java/domain/usecases/usuarios/administrador/AtualizarAdministradorUseCase.java
+  // 
   - [x] Verificar produto no estoque da loja.
+  // src/main/java/domain/usecases/operacao/peca/BuscaPorIdPecaUseCase.java
   - [x] Realizar agendamentos.
+  // src/main/java/domain/usecases/financeiro/agendamento/CriarAgendamentoUseCase.java
   - [x] Receber de fornecedores e atualizar automaticamente todas as ações do estoque da loja.
+  // src/main/java/domain/usecases/operacao/peca/AtualizaPecaUseCase.java
   - [x] Cancelar agendamentos (com retenção de 20% do valor).
+  // src/main/java/domain/usecases/financeiro/agendamento/AtualizaAgendamentoUseCase.java
   - [x] Emitir relatório de vendas e serviços de um dia e de um mês.
+  // src/main/java/domain/usecases/financeiro/relatorios/GerarRelatorioUseCase.java
   - [x] Gerar balanço mensal com estatísticas básicas de serviços e vendas.
+  // src/main/java/domain/usecases/financeiro/relatorios/GerarBalancoUseCase.java
 - [ ] Criar o **Diagrama de Classes COMPLETO** com atributos e métodos necessários para realizar todos os casos de uso do sistema.
 
 ## Questão 2

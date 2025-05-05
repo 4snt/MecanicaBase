@@ -42,16 +42,16 @@ public class LoginTerminalHandler {
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
 
-        boolean sucesso = switch (tipo) {
-            case "1" ->
-                new LoginFuncionarioUseCase().login(email, senha);
-            case "2" ->
-                new LoginAdministradorUseCase().login(email, senha);
-            default -> {
-                System.out.println("Tipo inválido.");
-                yield false;
-            }
-        };
+        boolean sucesso = false;
+
+        if (tipo.equals("1")) {
+            sucesso = new LoginFuncionarioUseCase().login(email, senha);
+        } else if (tipo.equals("2")) {
+            sucesso = new LoginAdministradorUseCase().login(email, senha);
+        } else {
+            System.out.println("Tipo inválido.");
+            return false;
+        }
 
         if (sucesso) {
             Colaborador pessoa = Session.getPessoaLogado();

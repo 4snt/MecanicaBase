@@ -53,18 +53,18 @@ public class AgendamentoTerminalHandler {
 
             String opcao = scanner.nextLine();
             switch (opcao) {
-                case "1" ->
+                case "1":
                     criar();
-                case "2" ->
+                case "2":
                     listar();
-                case "3" ->
+                case "3":
                     atualizarStatus();
-                case "4" ->
+                case "4":
                     cancelar();
-                case "0" -> {
+                case "0": {
                     return;
                 }
-                default ->
+                default:
                     System.out.println("Opção inválida.");
             }
         }

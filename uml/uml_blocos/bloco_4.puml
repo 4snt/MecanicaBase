@@ -1,0 +1,43 @@
+@startuml
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontName Courier
+skinparam wrapWidth 100
+top to bottom direction
+skinparam linetype ortho
+
+class ListarAgendamentoUseCase {
+  +use()
+}
+
+class RemoverAgendamentoUseCase {
+  +use()
+}
+
+class AtualizarCategoriaDespesaUseCase {
+  +use()
+}
+
+class BuscarPorIdCategoriaDespesaUseCase {
+  +use()
+}
+
+class CriarCategoriaDespesaUseCase {
+  +use()
+}
+
+class ListarCategoriaDespesaUseCase {
+  +use()
+}
+
+class RemoverCategoriaDespesaUseCase {
+  +use()
+}
+
+class AtualizarDespesaUseCase {
+  +use()
+}
+
+
+@enduml

@@ -1,0 +1,126 @@
+@startuml
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam classFontName Courier
+skinparam wrapWidth 100
+top to bottom direction
+skinparam linetype ortho
+
+class PecaItem {
+  - peca : UUID
+  - quantidade : int
+  - valorUnitario : float
+  +setValorUnitario()
+  +toString()
+  +getPeca()
+  +getOrdemDeServico()
+  +setQuantidade()
+  +setPeca()
+  +getValorUnitario()
+  +getQuantidade()
+}
+
+class ServicoItem {
+  - servico : UUID
+  - valorUnitario : float
+  +setValorUnitario()
+  +getServico()
+  +getOrdemDeServico()
+  +getValorUnitario()
+  +setServico()
+  +toString()
+}
+
+class Elevador {
+  - tipo : TipoElevador
+  +getTipo()
+  +setTipo()
+  +toString()
+}
+
+class EntradaPeca {
+  - quantidade : int
+  - nomeFornecedor : String
+  - custo : float
+  - peca : UUID
+  +toString()
+  +getCusto()
+  +getPeca()
+  +getPecaId()
+  +setQuantidade()
+  +setPeca()
+  +setCusto()
+  +setNomeFornecedor()
+  +getNomeFornecedor()
+  +getQuantidade()
+}
+
+class Peca {
+  - nome : String
+  - valor : float
+  - quantidade : int
+  +toString()
+  +setNome()
+  +setValor()
+  +adicionarEstoque()
+  +setQuantidade()
+  +reduzirEstoque()
+  +getValor()
+  +getNome()
+  +getQuantidade()
+}
+
+class Servico {
+  - tipo : String
+  - preco : float
+  - descricao : String
+  - duracao : int
+  - tipoFuncionario : TipoFuncionario
+  - tipoElevador : TipoElevador
+  - usaElevador : boolean
+  +setTipoElevador()
+  +toString()
+  +getTipoElevador()
+  +usaElevador()
+  +setDuracao()
+  +getDuracao()
+  +setPreco()
+  +getTipoFuncionario()
+  +setUsaElevador()
+  +getTipo()
+  +setDescricao()
+  +getDescricao()
+  +setTipoFuncionario()
+  +setTipo()
+  +getPreco()
+}
+
+class Sistema {
+  +toString()
+}
+
+class Veiculo {
+  - modelo : String
+  - placa : String
+  - anoFabricacao : int
+  - cor : String
+  - status : StatusVeiculo
+  - clienteId : UUID
+  +getCor()
+  +setStatus()
+  +setCor()
+  +setModelo()
+  +getAnoFabricacao()
+  +getStatus()
+  +setCliente()
+  +setPlaca()
+  +setAnoFabricacao()
+  +getCliente()
+  +getPlaca()
+  +getModelo()
+  +toString()
+}
+
+
+@enduml

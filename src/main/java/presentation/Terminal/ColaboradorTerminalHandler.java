@@ -62,26 +62,26 @@ public class ColaboradorTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1" ->
+                case "1":
                     criarFuncionario();
-                case "2" ->
+                case "2":
                     criarAdministrador();
-                case "3" ->
+                case "3":
                     listarFuncionarios();
-                case "4" ->
+                case "4":
                     listarAdministradores();
-                case "5" ->
+                case "5":
                     atualizarFuncionario();
-                case "6" ->
+                case "6":
                     atualizarAdministrador();
-                case "7" ->
+                case "7":
                     removerFuncionario();
-                case "8" ->
+                case "8":
                     removerAdministrador();
-                case "0" -> {
+                case "0": {
                     return;
                 }
-                default ->
+                default:
                     System.out.println("Opção inválida.");
             }
         }

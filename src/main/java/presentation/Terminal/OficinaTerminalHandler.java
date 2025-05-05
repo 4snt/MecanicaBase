@@ -45,15 +45,15 @@ public class OficinaTerminalHandler {
 
             // Executa a ação conforme a opção escolhida
             switch (opcao) {
-                case "1" ->
+                case "1":
                     veiculoTerminalHandler.menu();
-                case "2" ->
+                case "2":
                     pecaTerminalHandler.menu();
-                case "0" -> {
+                case "0": {
                     System.out.println("Saindo do sistema...");
                     return; // Encerra o menu
                 }
-                default ->
+                default:
                     System.out.println("Opção inválida."); // Tratamento para entradas incorretas
             }
         }

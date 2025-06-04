@@ -5,8 +5,11 @@ nbbuild/
 nbdist/
 
 # Ignorar tudo dentro de target, exceto site/apidocs
-target/*
-!target/site/
+# Ignora tudo em target
+target/**
+
+# Exceto a documentação
+!target/site/apidocs/index.html
 !target/site/apidocs/**
 # ou se quiser permitir tudo dentro de apidocs:
 # !target/site/apidocs/

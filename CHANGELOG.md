@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/4snt/MecanicaBase/compare/v2.0.0...v2.0.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* **gitignore:** correção da geração do site javadoc ([14c24fc](https://github.com/4snt/MecanicaBase/commit/14c24fca34685a65481b58312a72b60483cd96bb))
+
 ## 2.0.0 (2025-06-04)
 
 

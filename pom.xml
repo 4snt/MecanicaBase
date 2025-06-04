@@ -12,7 +12,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Você está usando JDK 23, mas o código não precisa de nada além do 21 -->
-    <maven.compiler.release>21</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
 
     <!-- JavaFX -->
     <javafx.version>21</javafx.version>
@@ -65,6 +65,19 @@
 
   <build>
     <plugins>
+      <!-- Geração do Javadoc -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.4.1</version>
+        <configuration>
+          <source>17</source>
+          <encoding>${project.build.sourceEncoding}</encoding>
+          <docencoding>${project.build.sourceEncoding}</docencoding>
+          <charset>${project.build.sourceEncoding}</charset>
+          <destDir>target/reports/apidocs</destDir>
+        </configuration>
+      </plugin>
 
       <!-- JavaFX run : mvn javafx:run -->
       <plugin>

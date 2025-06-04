@@ -2,6 +2,8 @@
 
 Projeto Java para gerenciamento de uma oficina mecânica. Criado com foco educacional e arquitetura limpa.
 
+> **📘 Projeto desenvolvido como Trabalho Prático I da disciplina de Programação Orientada a Objetos – POO, UFVJM – 2025/1, sob orientação do professor Eduardo Pelli.** > **📘 Participantes : Murilo Santiago Escobedo , Luís Cláudio Prado, Pávila Miranda Cardoso**
+
 ## 🗂 Documentação
 
 - [# ✅ Checklist - Trabalho Prático Integrador (TPI) entrega 1](documentation/entrega1.md)
@@ -38,7 +40,8 @@ MecanicaBase.zip
 
 ### 📚 Javadoc
 
-A documentação Javadoc é gerada na pasta `target/site/apidocs` e pode ser publicada, por exemplo, no Vercel para consulta online.
+A documentação Javadoc é gerada na pasta `target/site/apidocs` e está hospedada publicamente no Vercel para consulta online:
+👉 **[https://mecanica-base.vercel.app/](https://mecanica-base.vercel.app/)**
 
 > Para evitar poluir o repositório, o diretório `target/` está no `.gitignore`, exceto a pasta `target/reports` caso precise ser usada.
 

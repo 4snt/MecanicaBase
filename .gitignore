@@ -31,7 +31,7 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# Ignorar artefatos do standard-version/semantic-release (caso crie)
+# Ignorar artefatos do standard-version/semantic-release (caso existam)
 .npmrc
 .release-it.json
 .releaserc

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20.0" alignment="TOP_CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.MainViewController"
+      stylesheets="@main.css"
+      prefWidth="600.0" prefHeight="500.0"
+      style="-fx-background-color: white;">
+
+    <Label text="Painel Principal" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <MFXButton fx:id="btnClientes" text="Clientes" onAction="#abrirClientes" prefWidth="250"/>
+    <MFXButton fx:id="btnOficina" text="Oficina" onAction="#abrirOficina" prefWidth="250"/>
+    <MFXButton fx:id="btnServicos" text="Serviços" onAction="#abrirServicos" prefWidth="250"/>
+    <MFXButton fx:id="btnAgendamentos" text="Agendamentos" onAction="#abrirAgendamentos" prefWidth="250"/>
+    <MFXButton fx:id="btnOrdemServico" text="Ordens de Serviço" onAction="#abrirOrdens" prefWidth="250"/>
+
+    <!-- Admin Only Section -->
+    <VBox fx:id="adminSection" spacing="10" visible="false">
+        <Separator />
+        <Label text="Área Administrativa" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+        <MFXButton fx:id="btnColaboradores" text="Colaboradores" onAction="#abrirColaboradores" prefWidth="250"/>
+        <MFXButton fx:id="btnFinanceiro" text="Financeiro" onAction="#abrirFinanceiro" prefWidth="250"/>
+    </VBox>
+
+</VBox>

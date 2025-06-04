@@ -1,7 +1,7 @@
 package com.mycompany.mecanicabase;
 
-import infra.db.Database;
-import presentation.Terminal.router.TerminalRouter;
+import com.mycompany.mecanicabase.infra.db.Database;
+import com.mycompany.mecanicabase.view.Terminal.router.TerminalRouter;
 
 public class MecanicaBase {
 

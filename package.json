@@ -1,6 +1,6 @@
 {
   "name": "mecanicabase",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Projeto Java para gerenciamento de uma oficina mecânica. Criado com foco educacional e arquitetura limpa.",
   "scripts": {
     "javadoc": "mvn javadoc:javadoc -Drevision=%npm_package_version% || echo '⚠️ Ignorando erro de javadoc...' && exit 0",

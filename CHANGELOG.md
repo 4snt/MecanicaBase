@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/4snt/MecanicaBase/compare/v2.0.2...v2.0.3) (2025-06-04)
+
+
+### Bug Fixes
+
+* **vercel:** upload do javadoc no vercel ([4c45e9b](https://github.com/4snt/MecanicaBase/commit/4c45e9bc11c3f5640aaefc5a9c5f017abf3b55e1))
+
 ### [2.0.2](https://github.com/4snt/MecanicaBase/compare/v2.0.1...v2.0.2) (2025-06-04)
 
 ### [2.0.1](https://github.com/4snt/MecanicaBase/compare/v2.0.0...v2.0.1) (2025-06-04)

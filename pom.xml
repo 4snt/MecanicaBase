@@ -6,10 +6,11 @@
 
   <groupId>com.mycompany</groupId>
   <artifactId>MecanicaBase</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>jar</packaging>
 
   <properties>
+    <revision>0.0.1-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Você está usando JDK 23, mas o código não precisa de nada além do 21 -->
     <maven.compiler.release>17</maven.compiler.release>
@@ -65,19 +66,21 @@
 
   <build>
     <plugins>
+    
       <!-- Geração do Javadoc -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.4.1</version>
+        <version>3.3.1</version>
         <configuration>
-          <source>17</source>
+          <reportOutputDirectory>${project.build.directory}/site/apidocs</reportOutputDirectory>
+          <doctitle>MecanicaBase ${revision} API</doctitle>
           <encoding>${project.build.sourceEncoding}</encoding>
-          <docencoding>${project.build.sourceEncoding}</docencoding>
-          <charset>${project.build.sourceEncoding}</charset>
-          <destDir>target/reports/apidocs</destDir>
+          <charset>UTF-8</charset>
+          <docencoding>UTF-8</docencoding>
         </configuration>
       </plugin>
+
 
       <!-- JavaFX run : mvn javafx:run -->
       <plugin>

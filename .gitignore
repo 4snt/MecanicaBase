@@ -4,12 +4,11 @@ dist/
 nbbuild/
 nbdist/
 
-# Ignorar tudo dentro de target, exceto site/apidocs
-# Ignora tudo em target
+# Ignora tudo em target exceto site/apidocs
 target/**
-
-# ou se quiser permitir tudo dentro de apidocs:
-# !target/site/apidocs/
+!target/site/
+!target/site/apidocs/
+!target/site/apidocs/**
 
 # Ignorar configurações privadas do NetBeans
 nbproject/private/

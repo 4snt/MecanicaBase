@@ -1,13 +1,13 @@
-# Ignorar arquivos de build
+# Ignorar arquivos de build Java
 build/
 dist/
 nbbuild/
 nbdist/
-# Ignorar tudo dentro de target
-target/*
 
-# Mas não ignore o conteúdo de target/site
+# Ignorar tudo dentro de target, exceto relatórios
+target/*
 !target/reports/
+
 # Ignorar configurações privadas do NetBeans
 nbproject/private/
 
@@ -17,3 +17,21 @@ nbproject/private/
 # Ignorar arquivos de log e temporários
 *.log
 *.tmp
+
+# Ignorar dependências Node.js
+node_modules/
+
+# Ignorar arquivos JavaScript e TypeScript
+*.js
+*.jsx
+*.ts
+*.tsx
+
+# Ignorar arquivos de lock do Node
+package-lock.json
+yarn.lock
+
+# Ignorar artefatos do standard-version/semantic-release (caso crie)
+.npmrc
+.release-it.json
+.releaserc

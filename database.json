@@ -1,0 +1,59 @@
+{
+  "entidades": {
+    "mecanicabase.model.operacao.Servico": [],
+    "mecanicabase.model.financeiro.CategoriaDespesa": [],
+    "mecanicabase.model.operacao.Elevador": [
+      null,
+      null,
+      null,
+      {
+        "tipo": "ALINHAMENTO_E_BALANCEAMENTO",
+        "id": "f2ce08d4-9522-4bfc-911c-0953ef22bf2f",
+        "criadoEm": "2025-06-07T12:40:07.7456141",
+        "atualizadoEm": "2025-06-07T12:40:07.7456141"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "94b1d7de-be75-4bf2-ab06-6d51ff99bba6",
+        "criadoEm": "2025-06-07T12:40:07.7456141",
+        "atualizadoEm": "2025-06-07T12:40:07.7456141"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "2895afbf-0c45-41bf-a709-e0f34c633111",
+        "criadoEm": "2025-06-07T12:40:07.7470072",
+        "atualizadoEm": "2025-06-07T12:40:07.7470072"
+      }
+    ],
+    "mecanicabase.model.financeiro.ServicoItem": [],
+    "mecanicabase.model.usuarios.Administrador": [
+      {
+        "senha": "iof9rwSWOP5SEyjCwxKNIQ\u003d\u003d",
+        "nome": "Admin",
+        "email": "Admin",
+        "id": "07d60f79-16b8-48ef-8f31-0fa85feea51d",
+        "criadoEm": "2025-06-07T12:40:07.7470072",
+        "atualizadoEm": "2025-06-07T12:40:07.7470072"
+      }
+    ],
+    "mecanicabase.model.financeiro.Despesa": [],
+    "mecanicabase.model.operacao.Peca": [],
+    "mecanicabase.model.financeiro.PecaItem": [],
+    "mecanicabase.model.usuarios.Cliente": [
+      {
+        "veiculos": [],
+        "nome": "Murilo",
+        "email": "murilo@teste.com",
+        "cpf": "MAFbXOOuiiYar+Fjd5wPULcGAIUGt26H",
+        "telefone": "Teste",
+        "endereco": "31984567800",
+        "id": "b827a314-4462-47de-85b4-3ec23391572e",
+        "criadoEm": "2025-06-07T12:40:42.0236931",
+        "atualizadoEm": "2025-06-07T12:40:42.0236931"
+      }
+    ],
+    "mecanicabase.model.operacao.Veiculo": [],
+    "mecanicabase.model.usuarios.Funcionario": [],
+    "mecanicabase.model.financeiro.Agendamento": []
+  }
+}

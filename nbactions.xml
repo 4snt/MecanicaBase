@@ -14,7 +14,7 @@
 
         <properties>
             <!-- Somente o que será passado à JVM -->
-            <exec.vmArgs>-Dapp.version=${revision}</exec.vmArgs>
+            <exec.vmArgs>-Dapp.version=${project.version}</exec.vmArgs>
 
             <!-- A linha completa que o plugin usará -->
             <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>

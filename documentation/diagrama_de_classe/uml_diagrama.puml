@@ -1,0 +1,556 @@
+@startuml
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 10
+skinparam wrapWidth 100
+top to bottom direction
+
+class MecanicaBase {
+}
+class ClienteController {
+  +criar()
+  +listar()
+  +buscarPorId()
+  +atualizar()
+  +remover()
+}
+class MainViewController {
+  - btnClientes : MFXButton
+  - btnOficina : MFXButton
+  - btnServicos : MFXButton
+  - btnAgendamentos : MFXButton
+  - btnOrdemServico : MFXButton
+  - btnColaboradores : MFXButton
+  - btnFinanceiro : MFXButton
+  - adminSection : VBox
+  +initialize()
+  +abrirClientes()
+  +abrirOficina()
+  +abrirServicos()
+  +abrirAgendamentos()
+  +abrirOrdens()
+  +abrirColaboradores()
+  +abrirFinanceiro()
+}
+class "Entity" {
+  - atualizadoEm : LocalDateTime
+  +touch()
+  +getId()
+  +getCriadoEm()
+  +getAtualizadoEm()
+}
+class Session {
+}
+class JasyptCrypto {
+}
+class Database {
+}
+class Agendamento {
+  - data : LocalDateTime
+  - descricaoProblema : String
+  - status : StatusAgendamento
+  - ordemDeServico : UUID
+  - servico : UUID
+  - elevador : UUID
+  - funcionario : UUID
+  - veiculo : UUID
+  +getData()
+  +setData()
+  +getDescricaoProblema()
+  +setDescricaoProblema()
+  +getStatus()
+  +setStatus()
+  +getServico()
+  +setServico()
+  +getOrdemDeServico()
+  +setOrdemDeServico()
+  +getFuncionario()
+  +setFuncionario()
+  +getVeiculo()
+  +setVeiculo()
+  +getElevador()
+  +setElevador()
+  +compareTo()
+  +toString()
+}
+class CategoriaDespesa {
+  +getTitulo()
+  +toString()
+}
+class Despesa {
+  - descricao : String
+  - valor : float
+  +getDescricao()
+  +setDescricao()
+  +getValor()
+  +setValor()
+  +getCategoria()
+  +toString()
+}
+class OrdemDeServico {
+  - clienteId : UUID
+  - status : StatusOrdemDeServico
+  - finalizadoEm : LocalDateTime
+  +getClienteId()
+  +setClienteId()
+  +getServicos()
+  +getPecas()
+  +getAgendamentos()
+  +getStatus()
+  +getFinalizadoEm()
+  +setStatus()
+  +addServico()
+  +removeServicoPor()
+  +addPeca()
+  +removePeca()
+  +addAgendamento()
+  +removeAgendamento()
+  +toString()
+}
+class PecaItem {
+  - peca : UUID
+  - quantidade : int
+  - valorUnitario : float
+  +getPeca()
+  +setPeca()
+  +getQuantidade()
+  +setQuantidade()
+  +getValorUnitario()
+  +setValorUnitario()
+  +getOrdemDeServico()
+  +toString()
+}
+class ServicoItem {
+  - servico : UUID
+  - valorUnitario : float
+  +getServico()
+  +setServico()
+  +getValorUnitario()
+  +setValorUnitario()
+  +getOrdemDeServico()
+  +toString()
+}
+class Elevador {
+  - tipo : TipoElevador
+  +getTipo()
+  +setTipo()
+  +toString()
+}
+class EntradaPeca {
+  - quantidade : int
+  - nomeFornecedor : String
+  - custo : float
+  - peca : UUID
+  +getPecaId()
+  +getPeca()
+  +setPeca()
+  +getQuantidade()
+  +setQuantidade()
+  +getNomeFornecedor()
+  +setNomeFornecedor()
+  +getCusto()
+  +setCusto()
+  +toString()
+}
+class Peca {
+  - nome : String
+  - valor : float
+  - quantidade : int
+  +getNome()
+  +setNome()
+  +getValor()
+  +setValor()
+  +getQuantidade()
+  +setQuantidade()
+  +reduzirEstoque()
+  +adicionarEstoque()
+  +toString()
+}
+class Servico {
+  - tipo : String
+  - preco : float
+  - descricao : String
+  - duracao : int
+  - tipoFuncionario : TipoFuncionario
+  - tipoElevador : TipoElevador
+  - usaElevador : boolean
+  +getTipo()
+  +setTipo()
+  +getPreco()
+  +setPreco()
+  +getDescricao()
+  +setDescricao()
+  +getDuracao()
+  +setDuracao()
+  +getTipoFuncionario()
+  +setTipoFuncionario()
+  +getTipoElevador()
+  +setTipoElevador()
+  +usaElevador()
+  +setUsaElevador()
+  +toString()
+}
+class Sistema {
+  +toString()
+}
+class Veiculo {
+  - modelo : String
+  - placa : String
+  - anoFabricacao : int
+  - cor : String
+  - status : StatusVeiculo
+  - clienteId : UUID
+  +getModelo()
+  +setModelo()
+  +getPlaca()
+  +setPlaca()
+  +getAnoFabricacao()
+  +setAnoFabricacao()
+  +getCor()
+  +setCor()
+  +getStatus()
+  +setStatus()
+  +setCliente()
+  +getCliente()
+  +toString()
+}
+class Administrador {
+  +toString()
+}
+class Cliente {
+  +addVeiculo()
+  +removeVeiculo()
+  +getVeiculos()
+  +compareTo()
+  +toString()
+}
+class Colaborador {
+  - senha : String
+  +setSenha()
+  +compararSenha()
+}
+class Funcionario {
+  - funcao : TipoFuncionario
+  - salario : float
+  +getFuncao()
+  +setFuncao()
+  +getSalario()
+  +setSalario()
+  +toString()
+}
+class Pessoa {
+  - nome : String
+  - email : String
+  - cpf : String
+  - telefone : String
+  - endereco : String
+  +getNome()
+  +setNome()
+  +getEmail()
+  +setEmail()
+  +getCpf()
+  +setCpf()
+  +getTelefone()
+  +setTelefone()
+  +getEndereco()
+  +setEndereco()
+}
+class AtualizaAgendamentoUseCase {
+  +use()
+}
+class BuscarPorIdAgendamentoUseCase {
+  +use()
+}
+class CriarAgendamentoUseCase {
+  +use()
+}
+class ListarAgendamentoUseCase {
+  +use()
+}
+class RemoverAgendamentoUseCase {
+  +use()
+}
+class AtualizarCategoriaDespesaUseCase {
+  +use()
+}
+class BuscarPorIdCategoriaDespesaUseCase {
+  +use()
+}
+class CriarCategoriaDespesaUseCase {
+  +use()
+}
+class ListarCategoriaDespesaUseCase {
+  +use()
+}
+class RemoverCategoriaDespesaUseCase {
+  +use()
+}
+class AtualizarDespesaUseCase {
+  +use()
+}
+class BuscarDespesaPorIdUseCase {
+  +use()
+}
+class CriarDespesaUseCase {
+  +use()
+}
+class ListarDespesaUseCase {
+  +use()
+}
+class RemoverDespesaUseCase {
+  +use()
+}
+class AtualizaOrdemDeServicoUseCase {
+  +use()
+}
+class BuscaPorIdOrdemDeServicoUseCase {
+  +use()
+}
+class CriarOrdemDeServicoUseCase {
+  +use()
+}
+class ListaOrdemDeServicoUseCase {
+  +use()
+}
+class RemoveOrdemDeServicoUseCase {
+  +use()
+}
+class RemoverPecaItemUseCase {
+  +use()
+}
+class VenderPecaUseCase {
+  +use()
+}
+class GerarBalancoUseCase {
+  +use()
+  +buscarOSFinalizadas()
+  +buscarOSCriadas()
+  +contarPorStatus()
+  +calcularTotalServicos()
+  +calcularTotalPecas()
+  +top3Servicos()
+  +top3Pecas()
+  +funcionarioMaisAtivo()
+  +buscarDespesasNoPeriodo()
+  +calcularTotalDespesas()
+  +formatarGastosPorCategoria()
+}
+class GerarRelatorioUseCase {
+  +use()
+}
+class CriarManualEntradaPecaUseCase {
+  +use()
+}
+class AtualizaPecaUseCase {
+  +use()
+}
+class BuscaPorIdPecaUseCase {
+  +use()
+}
+class CriarPecaUseCase {
+  +use()
+}
+class ListaPecaUseCase {
+  +use()
+}
+class RemovePecaUseCase {
+  +use()
+}
+class AtualizaServicoUseCase {
+  +use()
+}
+class BuscaPorIdServicoUseCase {
+  +use()
+}
+class CriarServicoUseCase {
+  +use()
+}
+class ListaServicoUseCase {
+  +use()
+}
+class RemoveServicoUseCase {
+  +use()
+}
+class AtualizaVeiculoUseCase {
+  +use()
+}
+class BuscarPorIdVeiculoUseCase {
+  +use()
+}
+class CriarVeiculoUseCase {
+  +use()
+}
+class ListaVeiculoUseCase {
+  +use()
+}
+class RemoverVeiculoUsecase {
+  +use()
+}
+class AtualizarAdministradorUseCase {
+  +use()
+}
+class BuscaPorIdAdministradorUseCase {
+  +use()
+}
+class CriarAdministradorUseCase {
+  +use()
+}
+class ListarAdministradorUseCase {
+  +use()
+}
+class LoginAdministradorUseCase {
+  +login()
+}
+class RemoverAdministradorUseCase {
+  +use()
+}
+class AtualizaClienteUseCase {
+  +use()
+}
+class BuscaPorIdClienteUseCase {
+  +use()
+}
+class CriarClienteUseCase {
+  +use()
+}
+class ListaClienteUseCase {
+  +use()
+}
+class RemoveClienteUseCase {
+  +use()
+}
+class AtualizaFuncionarioUseCase {
+  +use()
+}
+class BuscaPorIdFuncionarioUseCase {
+  +use()
+}
+class CriarFuncionarioUseCase {
+  +use()
+}
+class ListaFuncionarioUseCase {
+  +use()
+}
+class LoginFuncionarioUseCase {
+  +login()
+}
+class RemoveFuncionarioUseCase {
+  +use()
+}
+class MainView {
+  +start()
+}
+class AgendamentoTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +atualizarStatus()
+  +cancelar()
+}
+class CategoriaDespesaTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +atualizar()
+  +remover()
+}
+class ClienteTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +buscar()
+  +atualizar()
+  +remover()
+}
+class ColaboradorTerminalHandler {
+  +menu()
+  +criarFuncionario()
+  +criarAdministrador()
+  +listarFuncionarios()
+  +listarAdministradores()
+  +atualizarFuncionario()
+  +atualizarAdministrador()
+  +removerFuncionario()
+  +removerAdministrador()
+}
+class DespesaTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +atualizar()
+  +remover()
+}
+class GerarBalancoTerminalHandler {
+  +menu()
+}
+class GerarRelatorioTerminalHandler {
+  +menu()
+}
+class LoginTerminalHandler {
+  +login()
+}
+class OficinaTerminalHandler {
+  +menu()
+}
+class OrdemDeServicoTerminalHandler {
+  +menu()
+  +listar()
+  +adicionarPeca()
+  +finalizar()
+}
+class PecaTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +atualizar()
+  +remover()
+  +entradaManual()
+}
+class ServicoTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +atualizar()
+  +remover()
+}
+class VeiculoTerminalHandler {
+  +menu()
+  +criar()
+  +listar()
+  +buscar()
+  +atualizar()
+  +remover()
+  +selecionarClientePorBusca()
+  +selecionarVeiculoRecebido()
+}
+class TerminalRouter {
+  +start()
+  +menuFinanceiro()
+}
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Agendamento
+Comparable <|-- Agendamento
+"Entity" <|-- CategoriaDespesa
+"Entity" <|-- Despesa
+"Entity" <|-- OrdemDeServico
+"Entity" <|-- PecaItem
+"Entity" <|-- ServicoItem
+"Entity" <|-- Elevador
+"Entity" <|-- EntradaPeca
+"Entity" <|-- Peca
+"Entity" <|-- Servico
+"Entity" <|-- Veiculo
+Colaborador <|-- Administrador
+Pessoa <|-- Cliente
+Comparable <|-- Cliente
+Pessoa <|-- Colaborador
+Colaborador <|-- Funcionario
+"Entity" <|-- Pessoa
+Application <|-- MainView
+
+@enduml

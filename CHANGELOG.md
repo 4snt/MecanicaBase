@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.4](https://github.com/4snt/MecanicaBase/compare/v3.0.3...v3.0.4) (2025-06-07)
+
+
+### Bug Fixes
+
+* **package.json:** Inclusão do envio automatico da tag de release ([193582c](https://github.com/4snt/MecanicaBase/commit/193582c6751c7c1853bf8b5112773c26f9d7cfbd))
+
 ### [3.0.3](https://github.com/4snt/MecanicaBase/compare/v3.0.2...v3.0.3) (2025-06-07)
 
 ### [3.0.2](https://github.com/4snt/MecanicaBase/compare/v3.0.1...v3.0.2) (2025-06-07)

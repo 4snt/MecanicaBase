@@ -4,35 +4,19 @@ import java.util.List;
 import java.util.Scanner;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
+import mecanicabase.service.operacao.PecaCrud;
 import mecanicabase.service.operacao.entrada_peca.CriarManualEntradaPecaUseCase;
-import mecanicabase.service.operacao.peca.AtualizaPecaUseCase;
-import mecanicabase.service.operacao.peca.CriarPecaUseCase;
-import mecanicabase.service.operacao.peca.ListaPecaUseCase;
-import mecanicabase.service.operacao.peca.RemovePecaUseCase;
 
-/**
- * Handler de terminal para gestão de peças. Permite criar, listar, atualizar,
- * remover peças e registrar entradas manuais.
- */
 public class PecaTerminalHandler {
 
     private final Scanner scanner;
-    private final CriarPecaUseCase criarPecaUseCase = new CriarPecaUseCase();
-    private final ListaPecaUseCase listaPecaUseCase = new ListaPecaUseCase();
-    private final AtualizaPecaUseCase atualizaPecaUseCase = new AtualizaPecaUseCase();
-    private final RemovePecaUseCase removePecaUseCase = new RemovePecaUseCase();
+    private final PecaCrud pecaCrud = new PecaCrud();
     private final CriarManualEntradaPecaUseCase criarManualEntradaPecaUseCase = new CriarManualEntradaPecaUseCase();
 
-    /**
-     * Construtor que recebe o scanner para entrada de dados.
-     */
     public PecaTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    /**
-     * Exibe o menu principal de ações com peças.
-     */
     public void menu() {
         while (true) {
             System.out.println("\n=== MENU PEÇAS ===");
@@ -48,26 +32,27 @@ public class PecaTerminalHandler {
             switch (opcao) {
                 case "1":
                     criar();
+                    break;
                 case "2":
                     listar();
+                    break;
                 case "3":
                     atualizar();
+                    break;
                 case "4":
                     remover();
+                    break;
                 case "5":
                     entradaManual();
-                case "0": {
+                    break;
+                case "0":
                     return;
-                }
                 default:
                     System.out.println("Opção inválida.");
             }
         }
     }
 
-    /**
-     * Cria uma nova peça com nome, valor e quantidade inicial.
-     */
     private void criar() {
         System.out.print("Nome da peça: ");
         String nome = scanner.nextLine();
@@ -76,15 +61,16 @@ public class PecaTerminalHandler {
         System.out.print("Quantidade inicial: ");
         int quantidade = Integer.parseInt(scanner.nextLine());
 
-        Peca peca = criarPecaUseCase.use(nome, valor, quantidade);
-        System.out.println("✅ Peça criada com ID: " + peca.getId());
+        try {
+            Peca peca = pecaCrud.criar(true, nome, valor, quantidade);
+            System.out.println("✅ Peça criada com ID: " + peca.getId());
+        } catch (RuntimeException e) {
+            System.out.println("❌ Erro ao criar peça: " + e.getMessage());
+        }
     }
 
-    /**
-     * Lista todas as peças cadastradas com suas informações principais.
-     */
     private void listar() {
-        List<Peca> pecas = listaPecaUseCase.use();
+        List<Peca> pecas = pecaCrud.listarTodos();
         if (pecas.isEmpty()) {
             System.out.println("Nenhuma peça cadastrada.");
             return;
@@ -96,11 +82,8 @@ public class PecaTerminalHandler {
         }
     }
 
-    /**
-     * Atualiza os dados de uma peça selecionada pelo índice.
-     */
     private void atualizar() {
-        List<Peca> pecas = listaPecaUseCase.use();
+        List<Peca> pecas = pecaCrud.listarTodos();
         if (pecas.isEmpty()) {
             System.out.println("Nenhuma peça cadastrada.");
             return;
@@ -128,15 +111,16 @@ public class PecaTerminalHandler {
         String qtdStr = scanner.nextLine();
         Integer quantidade = qtdStr.isBlank() ? null : Integer.parseInt(qtdStr);
 
-        Peca atualizada = atualizaPecaUseCase.use(peca.getId().toString(), nome, valor, quantidade);
-        System.out.println(atualizada != null ? "✅ Peça atualizada." : "❌ Erro ao atualizar peça.");
+        try {
+            Peca atualizada = pecaCrud.atualizar(peca.getId().toString(), true, nome, valor, quantidade);
+            System.out.println(atualizada != null ? "✅ Peça atualizada." : "❌ Erro ao atualizar peça.");
+        } catch (RuntimeException e) {
+            System.out.println("❌ Erro ao atualizar: " + e.getMessage());
+        }
     }
 
-    /**
-     * Remove uma peça selecionada da lista.
-     */
     private void remover() {
-        List<Peca> pecas = listaPecaUseCase.use();
+        List<Peca> pecas = pecaCrud.listarTodos();
         if (pecas.isEmpty()) {
             System.out.println("Nenhuma peça cadastrada.");
             return;
@@ -151,15 +135,12 @@ public class PecaTerminalHandler {
         }
 
         Peca peca = pecas.get(index);
-        boolean sucesso = removePecaUseCase.use(peca.getId().toString());
+        boolean sucesso = pecaCrud.removerPorId(peca.getId().toString());
         System.out.println(sucesso ? "✅ Peça removida." : "❌ Erro ao remover peça.");
     }
 
-    /**
-     * Registra uma entrada manual de peças (ex: compra de fornecedor).
-     */
     private void entradaManual() {
-        List<Peca> pecas = listaPecaUseCase.use();
+        List<Peca> pecas = pecaCrud.listarTodos();
         if (pecas.isEmpty()) {
             System.out.println("Nenhuma peça cadastrada.");
             return;

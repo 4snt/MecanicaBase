@@ -9,7 +9,7 @@ import mecanicabase.model.operacao.Peca;
 import mecanicabase.service.financeiro.ordem_de_servico.AtualizaOrdemDeServicoUseCase;
 import mecanicabase.service.financeiro.ordem_de_servico.ListaOrdemDeServicoUseCase;
 import mecanicabase.service.financeiro.ordem_de_servico.VenderPecaUseCase;
-import mecanicabase.service.operacao.peca.ListaPecaUseCase;
+import mecanicabase.service.operacao.PecaCrud;
 
 /**
  * Handler para funcionalidades extras de Ordem de Serviço. Aqui você pode
@@ -21,7 +21,7 @@ public class OrdemDeServicoTerminalHandler {
     private final Scanner scanner;
     private final ListaOrdemDeServicoUseCase listaOS = new ListaOrdemDeServicoUseCase();
     private final AtualizaOrdemDeServicoUseCase atualizaOS = new AtualizaOrdemDeServicoUseCase();
-    private final ListaPecaUseCase listaPeca = new ListaPecaUseCase();
+    private final PecaCrud pecaCrud = new PecaCrud();
     private final VenderPecaUseCase venderPeca = new VenderPecaUseCase();
 
     public OrdemDeServicoTerminalHandler(Scanner scanner) {
@@ -41,10 +41,13 @@ public class OrdemDeServicoTerminalHandler {
             switch (opcao) {
                 case "1":
                     listar();
+                    break;
                 case "2":
                     adicionarPeca();
+                    break;
                 case "3":
                     finalizar();
+                    break;
                 case "0": {
                     return;
                 }
@@ -78,7 +81,7 @@ public class OrdemDeServicoTerminalHandler {
         int indexOS = Integer.parseInt(scanner.nextLine()) - 1;
         OrdemDeServico os = ordens.get(indexOS);
 
-        List<Peca> pecas = listaPeca.use();
+        List<Peca> pecas = pecaCrud.listarTodos();
         if (pecas.isEmpty()) {
             System.out.println("Nenhuma peça cadastrada.");
             return;

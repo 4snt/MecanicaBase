@@ -13,8 +13,8 @@ import mecanicabase.service.financeiro.agendamento.AtualizaAgendamentoUseCase;
 import mecanicabase.service.financeiro.agendamento.CriarAgendamentoUseCase;
 import mecanicabase.service.financeiro.agendamento.ListarAgendamentoUseCase;
 import mecanicabase.service.financeiro.ordem_de_servico.CriarOrdemDeServicoUseCase;
-import mecanicabase.service.operacao.servico.ListaServicoUseCase;
-import mecanicabase.service.operacao.veiculo.ListaVeiculoUseCase;
+import mecanicabase.service.operacao.ServicoCrud;
+import mecanicabase.service.operacao.VeiculoCrud;
 import mecanicabase.service.usuarios.cliente.ListaClienteUseCase;
 
 /**
@@ -30,8 +30,8 @@ public class AgendamentoTerminalHandler {
     private final AtualizaAgendamentoUseCase atualizaAgendamento = new AtualizaAgendamentoUseCase();
     private final CriarOrdemDeServicoUseCase criarOS = new CriarOrdemDeServicoUseCase();
     private final ListaClienteUseCase listarClientes = new ListaClienteUseCase();
-    private final ListaVeiculoUseCase listarVeiculos = new ListaVeiculoUseCase();
-    private final ListaServicoUseCase listarServicos = new ListaServicoUseCase();
+    private final VeiculoCrud listarVeiculos = new VeiculoCrud();
+    private final ServicoCrud servicoCrud = new ServicoCrud();
 
     public AgendamentoTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -87,7 +87,7 @@ public class AgendamentoTerminalHandler {
         int indexCliente = Integer.parseInt(scanner.nextLine()) - 1;
         Cliente cliente = clientes.get(indexCliente);
 
-        List<Veiculo> veiculos = listarVeiculos.use(cliente.getId().toString());
+        List<Veiculo> veiculos = listarVeiculos.buscarPorFiltro(cliente.getId().toString());
         if (veiculos.isEmpty()) {
             System.out.println("Este cliente não possui veículos.");
             return;
@@ -100,7 +100,7 @@ public class AgendamentoTerminalHandler {
         int indexVeiculo = Integer.parseInt(scanner.nextLine()) - 1;
         Veiculo veiculo = veiculos.get(indexVeiculo);
 
-        List<Servico> servicos = listarServicos.use();
+        List<Servico> servicos = servicoCrud.listarTodos();
         for (int i = 0; i < servicos.size(); i++) {
             System.out.printf("[%d] %s\n", i + 1, servicos.get(i));
         }

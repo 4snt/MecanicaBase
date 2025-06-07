@@ -5,30 +5,17 @@ import java.util.Scanner;
 import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.TipoElevador;
 import mecanicabase.model.usuarios.TipoFuncionario;
-import mecanicabase.service.operacao.servico.AtualizaServicoUseCase;
-import mecanicabase.service.operacao.servico.CriarServicoUseCase;
-import mecanicabase.service.operacao.servico.ListaServicoUseCase;
-import mecanicabase.service.operacao.servico.RemoveServicoUseCase;
+import mecanicabase.service.operacao.ServicoCrud;
 
-/**
- * Classe responsável por lidar com interações via terminal para serviços da
- * oficina.
- */
 public class ServicoTerminalHandler {
 
     private final Scanner scanner;
-    private final CriarServicoUseCase criarServico = new CriarServicoUseCase();
-    private final ListaServicoUseCase listarServico = new ListaServicoUseCase();
-    private final AtualizaServicoUseCase atualizarServico = new AtualizaServicoUseCase();
-    private final RemoveServicoUseCase removerServico = new RemoveServicoUseCase();
+    private final ServicoCrud crud = new ServicoCrud();
 
     public ServicoTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    /**
-     * Exibe o menu principal de serviços no terminal.
-     */
     public void menu() {
         while (true) {
             System.out.println("\n=== MENU SERVIÇOS ===");
@@ -41,27 +28,23 @@ public class ServicoTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     criar();
-                case "2":
+                case "2" ->
                     listar();
-                case "3":
+                case "3" ->
                     atualizar();
-                case "4":
+                case "4" ->
                     remover();
-                case "0": {
+                case "0" -> {
                     return;
                 }
-                default:
+                default ->
                     System.out.println("Opção inválida.");
             }
         }
     }
 
-    /**
-     * Realiza a criação de um novo serviço, solicitando todos os dados ao
-     * usuário.
-     */
     private void criar() {
         System.out.print("Tipo do serviço: ");
         String tipo = scanner.nextLine();
@@ -75,44 +58,20 @@ public class ServicoTerminalHandler {
         System.out.print("Duração (minutos): ");
         int duracao = Integer.parseInt(scanner.nextLine());
 
-        TipoFuncionario tipoFuncionario = null;
-        System.out.println("Tipo de funcionário necessário:");
-        TipoFuncionario[] valoresFuncionario = TipoFuncionario.values();
-        for (int i = 0; i < valoresFuncionario.length; i++) {
-            System.out.printf("[%d] %s\n", i + 1, valoresFuncionario[i].name());
-        }
-        System.out.print("Escolha o número: ");
-        int escolhaFuncionario = Integer.parseInt(scanner.nextLine());
-        if (escolhaFuncionario > 0 && escolhaFuncionario <= valoresFuncionario.length) {
-            tipoFuncionario = valoresFuncionario[escolhaFuncionario - 1];
-        }
-
-        System.out.print("Usa elevador? (true/false): ");
-        Boolean usaElevador = Boolean.parseBoolean(scanner.nextLine());
+        TipoFuncionario tipoFuncionario = escolherTipoFuncionario();
+        Boolean usaElevador = perguntarBoolean("Usa elevador? (true/false): ");
 
         TipoElevador tipoElevador = null;
-        if (usaElevador) {
-            System.out.println("Tipo de elevador necessário:");
-            TipoElevador[] valoresElevador = TipoElevador.values();
-            for (int i = 0; i < valoresElevador.length; i++) {
-                System.out.printf("[%d] %s\n", i + 1, valoresElevador[i].name());
-            }
-            System.out.print("Escolha o número: ");
-            int escolhaElevador = Integer.parseInt(scanner.nextLine());
-            if (escolhaElevador > 0 && escolhaElevador <= valoresElevador.length) {
-                tipoElevador = valoresElevador[escolhaElevador - 1];
-            }
+        if (usaElevador != null && usaElevador) {
+            tipoElevador = escolherTipoElevador();
         }
 
-        Servico servico = criarServico.use(tipo, preco, descricao, duracao, tipoFuncionario, tipoElevador, usaElevador);
+        Servico servico = crud.criar(true, tipo, preco, descricao, duracao, tipoFuncionario, tipoElevador, usaElevador);
         System.out.println("Criado com ID: " + servico.getId());
     }
 
-    /**
-     * Lista todos os serviços cadastrados.
-     */
     private void listar() {
-        List<Servico> servicos = listarServico.use();
+        List<Servico> servicos = crud.listarTodos();
         if (servicos.isEmpty()) {
             System.out.println("Nenhum serviço encontrado.");
             return;
@@ -122,11 +81,8 @@ public class ServicoTerminalHandler {
         }
     }
 
-    /**
-     * Atualiza um serviço selecionado pelo usuário.
-     */
     private void atualizar() {
-        List<Servico> servicos = listarServico.use();
+        List<Servico> servicos = crud.listarTodos();
         if (servicos.isEmpty()) {
             System.out.println("Nenhum serviço encontrado.");
             return;
@@ -141,69 +97,30 @@ public class ServicoTerminalHandler {
             System.out.println("Número inválido.");
             return;
         }
+
         Servico selecionado = servicos.get(index);
 
         System.out.print("Novo tipo (ENTER para manter): ");
         String tipo = scanner.nextLine();
         tipo = tipo.isBlank() ? null : tipo;
 
-        System.out.print("Novo preço (ENTER para manter): ");
-        String precoStr = scanner.nextLine();
-        Float preco = precoStr.isBlank() ? null : Float.parseFloat(precoStr);
-
+        Float preco = perguntarFloat("Novo preço (ENTER para manter): ");
         System.out.print("Nova descrição (ENTER para manter): ");
         String descricao = scanner.nextLine();
         descricao = descricao.isBlank() ? null : descricao;
 
-        System.out.print("Nova duração (minutos) (ENTER para manter): ");
-        String duracaoStr = scanner.nextLine();
-        Integer duracao = duracaoStr.isBlank() ? null : Integer.parseInt(duracaoStr);
+        Integer duracao = perguntarInt("Nova duração (ENTER para manter): ");
 
-        TipoFuncionario tipoFuncionario = null;
-        System.out.println("Tipo de funcionário necessário:");
-        TipoFuncionario[] valoresFuncionario = TipoFuncionario.values();
-        for (int i = 0; i < valoresFuncionario.length; i++) {
-            System.out.printf("[%d] %s\n", i + 1, valoresFuncionario[i].name());
-        }
-        System.out.print("Escolha o número (ENTER para manter): ");
-        String escolhaFuncionario = scanner.nextLine();
-        if (!escolhaFuncionario.isBlank()) {
-            int escolha = Integer.parseInt(escolhaFuncionario);
-            if (escolha > 0 && escolha <= valoresFuncionario.length) {
-                tipoFuncionario = valoresFuncionario[escolha - 1];
-            } else {
-                System.out.println("Tipo de funcionário inválido. Mantendo o atual.");
-            }
-        }
-
-        System.out.print("Usa elevador? (true/false) (ENTER para manter): ");
-        String elevadorStr = scanner.nextLine();
-        Boolean usaElevador = elevadorStr.isBlank() ? null : Boolean.parseBoolean(elevadorStr);
+        TipoFuncionario tipoFuncionario = escolherTipoFuncionarioOptional();
+        Boolean usaElevador = perguntarBoolean("Usa elevador? (ENTER para manter): ");
 
         TipoElevador tipoElevador = null;
         if (usaElevador != null && usaElevador) {
-            System.out.println("Tipo de elevador necessário:");
-            TipoElevador[] valoresElevador = TipoElevador.values();
-            for (int i = 0; i < valoresElevador.length; i++) {
-                System.out.printf("[%d] %s\n", i + 1, valoresElevador[i].name());
-            }
-            System.out.print("Escolha o número (ENTER para manter): ");
-            String escolhaElevador = scanner.nextLine();
-            if (!escolhaElevador.isBlank()) {
-                int escolha = Integer.parseInt(escolhaElevador);
-                if (escolha > 0 && escolha <= valoresElevador.length) {
-                    tipoElevador = valoresElevador[escolha - 1];
-                } else {
-                    System.out.println("Tipo de elevador inválido. Mantendo o atual.");
-                }
-            }
+            tipoElevador = escolherTipoElevador();
         }
 
-        Servico atualizado = atualizarServico.use(
-                selecionado.getId().toString(),
-                tipo, preco, descricao, duracao,
-                tipoFuncionario, tipoElevador, usaElevador
-        );
+        Servico atualizado = crud.atualizar(selecionado.getId().toString(), true,
+                tipo, preco, descricao, duracao, tipoFuncionario, tipoElevador, usaElevador);
 
         if (atualizado != null) {
             System.out.println("Serviço atualizado.");
@@ -212,11 +129,8 @@ public class ServicoTerminalHandler {
         }
     }
 
-    /**
-     * Remove um serviço selecionado da lista.
-     */
     private void remover() {
-        List<Servico> servicos = listarServico.use();
+        List<Servico> servicos = crud.listarTodos();
         if (servicos.isEmpty()) {
             System.out.println("Nenhum serviço encontrado.");
             return;
@@ -233,10 +147,63 @@ public class ServicoTerminalHandler {
         }
 
         Servico servico = servicos.get(index);
-        if (removerServico.use(servico.getId().toString())) {
+        if (crud.removerPorId(servico.getId().toString())) {
             System.out.println("Serviço removido.");
         } else {
             System.out.println("Erro ao remover serviço.");
         }
+    }
+
+    // utilitários
+    private TipoFuncionario escolherTipoFuncionario() {
+        TipoFuncionario[] valores = TipoFuncionario.values();
+        for (int i = 0; i < valores.length; i++) {
+            System.out.printf("[%d] %s\n", i + 1, valores[i].name());
+        }
+        System.out.print("Escolha o número: ");
+        int escolha = Integer.parseInt(scanner.nextLine());
+        return (escolha > 0 && escolha <= valores.length) ? valores[escolha - 1] : null;
+    }
+
+    private TipoFuncionario escolherTipoFuncionarioOptional() {
+        TipoFuncionario[] valores = TipoFuncionario.values();
+        for (int i = 0; i < valores.length; i++) {
+            System.out.printf("[%d] %s\n", i + 1, valores[i].name());
+        }
+        System.out.print("Escolha o número (ENTER para manter): ");
+        String escolha = scanner.nextLine();
+        if (escolha.isBlank()) {
+            return null;
+        }
+        int index = Integer.parseInt(escolha);
+        return (index > 0 && index <= valores.length) ? valores[index - 1] : null;
+    }
+
+    private TipoElevador escolherTipoElevador() {
+        TipoElevador[] valores = TipoElevador.values();
+        for (int i = 0; i < valores.length; i++) {
+            System.out.printf("[%d] %s\n", i + 1, valores[i].name());
+        }
+        System.out.print("Escolha o número: ");
+        int escolha = Integer.parseInt(scanner.nextLine());
+        return (escolha > 0 && escolha <= valores.length) ? valores[escolha - 1] : null;
+    }
+
+    private Boolean perguntarBoolean(String label) {
+        System.out.print(label);
+        String entrada = scanner.nextLine();
+        return entrada.isBlank() ? null : Boolean.parseBoolean(entrada);
+    }
+
+    private Float perguntarFloat(String label) {
+        System.out.print(label);
+        String entrada = scanner.nextLine();
+        return entrada.isBlank() ? null : Float.parseFloat(entrada);
+    }
+
+    private Integer perguntarInt(String label) {
+        System.out.print(label);
+        String entrada = scanner.nextLine();
+        return entrada.isBlank() ? null : Integer.parseInt(entrada);
     }
 }

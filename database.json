@@ -41,7 +41,9 @@
     "mecanicabase.model.financeiro.PecaItem": [],
     "mecanicabase.model.usuarios.Cliente": [
       {
-        "veiculos": [],
+        "veiculos": [
+          "b5e06127-b674-4879-ab6b-ce63735fbb5e"
+        ],
         "nome": "Murilo",
         "email": "murilo@teste.com",
         "cpf": "MAFbXOOuiiYar+Fjd5wPULcGAIUGt26H",
@@ -52,7 +54,19 @@
         "atualizadoEm": "2025-06-07T12:40:42.0236931"
       }
     ],
-    "mecanicabase.model.operacao.Veiculo": [],
+    "mecanicabase.model.operacao.Veiculo": [
+      {
+        "modelo": "HB-20",
+        "placa": "QPZ8J92",
+        "anoFabricacao": 2019,
+        "cor": "Cinza",
+        "status": "RECEBIDO",
+        "clienteId": "b827a314-4462-47de-85b4-3ec23391572e",
+        "id": "b5e06127-b674-4879-ab6b-ce63735fbb5e",
+        "criadoEm": "2025-06-07T15:43:01.8687103",
+        "atualizadoEm": "2025-06-07T15:43:01.8687103"
+      }
+    ],
     "mecanicabase.model.usuarios.Funcionario": [],
     "mecanicabase.model.financeiro.Agendamento": []
   }

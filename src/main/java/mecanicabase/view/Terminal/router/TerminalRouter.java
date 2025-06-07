@@ -58,20 +58,26 @@ public class TerminalRouter {
             switch (opcao) {
                 case "1":
                     new ClienteTerminalHandler(scanner).menu();
+                    break;
                 case "2":
                     new OficinaTerminalHandler(scanner).menu();
+                    break;
                 case "3":
                     new ServicoTerminalHandler(scanner).menu();
+                    break;
                 case "4":
                     new AgendamentoTerminalHandler(scanner).menu();
+                    break;
                 case "5":
                     new OrdemDeServicoTerminalHandler(scanner).menu();
+                    break;
                 case "6": {
                     if (isAdmin) {
                         new ColaboradorTerminalHandler(scanner).menu();
                     } else {
                         System.out.println("Opção inválida.");
                     }
+                    break;
                 }
                 case "7": {
                     if (isAdmin) {
@@ -79,6 +85,7 @@ public class TerminalRouter {
                     } else {
                         System.out.println("Opção inválida.");
                     }
+                    break;
                 }
                 case "0": {
                     System.out.println("Encerrando...");
@@ -86,6 +93,7 @@ public class TerminalRouter {
                 }
                 default:
                     System.out.println("Opção inválida.");
+                    break;
             }
         }
     }
@@ -107,17 +115,21 @@ public class TerminalRouter {
             switch (opcao) {
                 case "1":
                     new CategoriaDespesaTerminalHandler(scanner).menu();
+                    break;
                 case "2":
                     new DespesaTerminalHandler(scanner).menu();
+                    break;
                 case "3":
                     new GerarRelatorioTerminalHandler(scanner).menu();
+                    break;
                 case "4":
                     new GerarBalancoTerminalHandler(scanner).menu();
-                case "0": {
+                    break;
+                case "0":
                     return;
-                }
                 default:
                     System.out.println("Opção inválida.");
+                    break;
             }
         }
     }

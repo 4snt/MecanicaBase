@@ -20,7 +20,7 @@ Projeto Java para gerenciamento de uma oficina mecânica. Criado com foco educac
 
 O diagrama completo de classes é **gerado automaticamente** a partir do código‑fonte por um script Python que varre `src/main/java`, monta um arquivo `.puml` e, em seguida, usa **PlantUML** para produzir o SVG.
 
-> Arquivo gerado: [`documentation/diagrama_de_classe/uml_diagrama.svg`](documentation/diagrama_de_classe/uml_diagrama.svg)
+![Diagrama de Classes](documentation/diagrama_de_classe/uml_diagrama.svg)
 
 O script faz parte do fluxo `npm run release`, garantindo que o diagrama esteja sempre atualizado a cada versão.
 

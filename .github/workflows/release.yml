@@ -1,0 +1,39 @@
+name: Criar Release no GitHub
+
+on:
+  push:
+    tags:
+      - "v*" # Ex: v3.0.3
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extrair notas da versão atual do CHANGELOG.md
+        id: changelog
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"   # v3.0.3
+          VERSION="${TAG_NAME#v}"               # 3.0.3
+
+          echo "Extraindo seção para $VERSION..."
+
+          # Extrai entre o cabeçalho da versão e o próximo
+          NOTES=$(awk "/^### ${VERSION//./\\.}/ {flag=1; next} /^### / {flag=0} flag" CHANGELOG.md)
+
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Criar Release no GitHub
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.changelog.outputs.release_notes }}

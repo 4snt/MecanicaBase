@@ -5,7 +5,7 @@
   "scripts": {
     "javadoc": "mvn javadoc:javadoc -Drevision=%npm_package_version% || echo '⚠️ Ignorando erro de javadoc...' && exit 0",
     "uml": "python documentation/diagrama_de_classe/gerar_diagrama.py && mvn -q -Puml exec:java@gerar-plantuml",
-    "release": "npm run uml && npm run javadoc  && git add documentation/diagrama_de_classe/uml_diagrama.svg target/site/apidocs     && standard-version --commit-all"
+    "release": "npm run uml && npm run javadoc  && git add documentation/diagrama_de_classe/uml_diagrama.svg target/site/apidocs && standard-version --commit-all && git push --follow-tags origin main"
   },
   "repository": {
     "type": "git",

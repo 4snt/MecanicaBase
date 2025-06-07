@@ -59,12 +59,4 @@ public class PecaCrud extends Crud<Peca> {
         }
     }
 
-    @Override
-    public boolean removerPorId(String id) {
-        Peca peca = buscarPorId(id);
-        if (peca != null) {
-            return Peca.instances.remove(peca);
-        }
-        return false;
-    }
 }

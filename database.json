@@ -67,7 +67,21 @@
         "atualizadoEm": "2025-06-07T15:43:01.8687103"
       }
     ],
-    "mecanicabase.model.usuarios.Funcionario": [],
+    "mecanicabase.model.usuarios.Funcionario": [
+      {
+        "funcao": "MECANICO_ESPECIFICO",
+        "salario": 5000.0,
+        "senha": "JY4DnwvxeVx263VvkGPIzMr3T8CvL4GL",
+        "nome": "Murilo Santiago Escobedo",
+        "email": "murilo.escobedo@protonmail.com",
+        "cpf": "HsjmMx4uuCy662T7HCQqOyCK14NCftLuBQSfsF2SCsHP4y5p/VO9ZWXLUAQn6aEk",
+        "telefone": "31984567800",
+        "endereco": "Rua Peixe Vivo 119",
+        "id": "648a8d24-c952-4c97-9a89-8eca72fcdced",
+        "criadoEm": "2025-06-07T17:02:12.2893794",
+        "atualizadoEm": "2025-06-07T17:02:12.2893794"
+      }
+    ],
     "mecanicabase.model.financeiro.Agendamento": []
   }
 }

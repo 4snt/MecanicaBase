@@ -1,4 +1,4 @@
-package mecanicabase.service.financeiro.agendamento;
+package mecanicabase.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,28 +10,28 @@ import mecanicabase.model.operacao.Elevador;
 import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Funcionario;
+import mecanicabase.service.financeiro.AgendamentoCrud;
 
 /**
- * Caso de uso responsável por criar um novo agendamento. Aloca automaticamente
- * um funcionário e, se necessário, um elevador disponível.
+ * Controller responsável por criar agendamentos com lógica de alocação
+ * automática.
  */
-public class CriarAgendamentoUseCase {
+public class AgendamentoController {
+
+    private final AgendamentoCrud crud = new AgendamentoCrud();
 
     /**
-     * Cria um novo agendamento com base nas informações fornecidas e recursos
-     * disponíveis.
+     * Cria um novo agendamento, alocando automaticamente os recursos
+     * necessários.
      *
-     * @param horarioDesejado Data e hora desejada para o agendamento.
-     * @param servico Serviço a ser executado.
-     * @param descricaoProblema Descrição do problema relatado pelo cliente.
-     * @param veiculo Veículo que será atendido.
-     * @param ordemDeServico Ordem de serviço à qual o agendamento será
-     * vinculado.
-     * @return O agendamento criado.
-     * @throws RuntimeException Se a ordem de serviço não estiver aberta, ou não
-     * houver funcionário/elevador disponível.
+     * @param horarioDesejado Data e hora desejadas
+     * @param servico Serviço a ser executado
+     * @param descricaoProblema Descrição do problema relatado
+     * @param veiculo Veículo do cliente
+     * @param ordemDeServico Ordem de Serviço aberta
+     * @return Agendamento criado
      */
-    public Agendamento use(
+    public Agendamento criarAgendamentoComAlocacao(
             LocalDateTime horarioDesejado,
             Servico servico,
             String descricaoProblema,
@@ -57,7 +57,6 @@ public class CriarAgendamentoUseCase {
         Funcionario funcionarioAlocado = funcionariosDisponiveis.get(0);
 
         UUID elevadorId = null;
-
         if (servico.usaElevador()) {
             List<Elevador> elevadoresDisponiveis = Elevador.buscarElevadoresDisponiveis(
                     servico.getTipoElevador(),
@@ -72,7 +71,9 @@ public class CriarAgendamentoUseCase {
             elevadorId = elevadoresDisponiveis.get(0).getId();
         }
 
-        Agendamento agendamento = new Agendamento(
+        // Criação delegada ao Crud
+        Agendamento agendamento = crud.criar(
+                true,
                 horarioDesejado,
                 descricaoProblema,
                 veiculo.getId(),
@@ -82,10 +83,7 @@ public class CriarAgendamentoUseCase {
                 ordemDeServico.getId()
         );
 
-        Agendamento.instances.add(agendamento);
-
         ordemDeServico.addAgendamento(agendamento.getId());
-
         return agendamento;
     }
 }

@@ -61,4 +61,5 @@ public abstract class Crud<T> {
         atualizarInstancia(entidade, params);
         return entidade;
     }
+
 }

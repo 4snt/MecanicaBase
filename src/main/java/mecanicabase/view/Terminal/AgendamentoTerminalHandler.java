@@ -3,43 +3,33 @@ package mecanicabase.view.Terminal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Scanner;
+import mecanicabase.controller.AgendamentoController;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.StatusAgendamento;
 import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Cliente;
-import mecanicabase.service.financeiro.agendamento.AtualizaAgendamentoUseCase;
-import mecanicabase.service.financeiro.agendamento.CriarAgendamentoUseCase;
-import mecanicabase.service.financeiro.agendamento.ListarAgendamentoUseCase;
+import mecanicabase.service.financeiro.AgendamentoCrud;
 import mecanicabase.service.financeiro.ordem_de_servico.CriarOrdemDeServicoUseCase;
 import mecanicabase.service.operacao.ServicoCrud;
 import mecanicabase.service.operacao.VeiculoCrud;
-import mecanicabase.service.usuarios.cliente.ListaClienteUseCase;
+import mecanicabase.service.usuarios.ClienteCrud;
 
-/**
- * Handler de terminal para gestão de agendamentos. Permite criar, listar,
- * atualizar (status) e cancelar agendamentos. O cancelamento gera uma cobrança
- * de 20% do valor do serviço na OS.
- */
 public class AgendamentoTerminalHandler {
 
     private final Scanner scanner;
-    private final CriarAgendamentoUseCase criarAgendamento = new CriarAgendamentoUseCase();
-    private final ListarAgendamentoUseCase listarAgendamentos = new ListarAgendamentoUseCase();
-    private final AtualizaAgendamentoUseCase atualizaAgendamento = new AtualizaAgendamentoUseCase();
+    private final AgendamentoCrud agendamentoCrud = new AgendamentoCrud();
     private final CriarOrdemDeServicoUseCase criarOS = new CriarOrdemDeServicoUseCase();
-    private final ListaClienteUseCase listarClientes = new ListaClienteUseCase();
+    private final ClienteCrud listarClientes = new ClienteCrud();
     private final VeiculoCrud listarVeiculos = new VeiculoCrud();
     private final ServicoCrud servicoCrud = new ServicoCrud();
+    private final AgendamentoController agendamentoController = new AgendamentoController();
 
     public AgendamentoTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    /**
-     * Exibe o menu de opções para gerenciamento de agendamentos via terminal.
-     */
     public void menu() {
         while (true) {
             System.out.println("\n=== MENU AGENDAMENTO ===");
@@ -52,83 +42,77 @@ public class AgendamentoTerminalHandler {
 
             String opcao = scanner.nextLine();
             switch (opcao) {
-                case "1":
+                case "1" ->
                     criar();
-                case "2":
+                case "2" ->
                     listar();
-                case "3":
+                case "3" ->
                     atualizarStatus();
-                case "4":
+                case "4" ->
                     cancelar();
-                case "0": {
+                case "0" -> {
                     return;
                 }
-                default:
+                default ->
                     System.out.println("Opção inválida.");
             }
         }
     }
 
-    /**
-     * Cria um novo agendamento vinculando um cliente, veículo, serviço e ordem
-     * de serviço.
-     */
     private void criar() {
-        List<Cliente> clientes = listarClientes.use("");
-        if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente encontrado.");
-            return;
-        }
-
-        for (int i = 0; i < clientes.size(); i++) {
-            System.out.printf("[%d] %s\n", i + 1, clientes.get(i));
-        }
-        System.out.print("Escolha o cliente: ");
-        int indexCliente = Integer.parseInt(scanner.nextLine()) - 1;
-        Cliente cliente = clientes.get(indexCliente);
-
-        List<Veiculo> veiculos = listarVeiculos.buscarPorFiltro(cliente.getId().toString());
-        if (veiculos.isEmpty()) {
-            System.out.println("Este cliente não possui veículos.");
-            return;
-        }
-
-        for (int i = 0; i < veiculos.size(); i++) {
-            System.out.printf("[%d] %s\n", i + 1, veiculos.get(i));
-        }
-        System.out.print("Escolha o veículo: ");
-        int indexVeiculo = Integer.parseInt(scanner.nextLine()) - 1;
-        Veiculo veiculo = veiculos.get(indexVeiculo);
-
-        List<Servico> servicos = servicoCrud.listarTodos();
-        for (int i = 0; i < servicos.size(); i++) {
-            System.out.printf("[%d] %s\n", i + 1, servicos.get(i));
-        }
-        System.out.print("Escolha o serviço: ");
-        int indexServico = Integer.parseInt(scanner.nextLine()) - 1;
-        Servico servico = servicos.get(indexServico);
-
-        System.out.print("Descreva o problema: ");
-        String problema = scanner.nextLine();
-
-        System.out.print("Data e hora desejada (yyyy-MM-ddTHH:mm): ");
-        LocalDateTime data = LocalDateTime.parse(scanner.nextLine());
-
-        OrdemDeServico ordem = criarOS.use(cliente.getId());
-
         try {
-            Agendamento agendamento = criarAgendamento.use(data, servico, problema, veiculo, ordem);
+            List<Cliente> clientes = listarClientes.listarTodos();
+            if (clientes.isEmpty()) {
+                System.out.println("Nenhum cliente encontrado.");
+                return;
+            }
+
+            for (int i = 0; i < clientes.size(); i++) {
+                System.out.printf("[%d] %s\n", i + 1, clientes.get(i));
+            }
+            System.out.print("Escolha o cliente: ");
+            Cliente cliente = clientes.get(Integer.parseInt(scanner.nextLine()) - 1);
+
+            List<Veiculo> veiculos = listarVeiculos.buscarPorFiltro(cliente.getId().toString());
+            if (veiculos.isEmpty()) {
+                System.out.println("Este cliente não possui veículos.");
+                return;
+            }
+
+            for (int i = 0; i < veiculos.size(); i++) {
+                System.out.printf("[%d] %s\n", i + 1, veiculos.get(i));
+            }
+            System.out.print("Escolha o veículo: ");
+            Veiculo veiculo = veiculos.get(Integer.parseInt(scanner.nextLine()) - 1);
+
+            List<Servico> servicos = servicoCrud.listarTodos();
+            for (int i = 0; i < servicos.size(); i++) {
+                System.out.printf("[%d] %s\n", i + 1, servicos.get(i));
+            }
+            System.out.print("Escolha o serviço: ");
+            Servico servico = servicos.get(Integer.parseInt(scanner.nextLine()) - 1);
+
+            System.out.print("Descreva o problema: ");
+            String problema = scanner.nextLine();
+
+            System.out.print("Data e hora desejada (yyyy-MM-ddTHH:mm): ");
+            LocalDateTime data = LocalDateTime.parse(scanner.nextLine());
+
+            OrdemDeServico ordem = criarOS.use(cliente.getId());
+
+            Agendamento agendamento = agendamentoController.criarAgendamentoComAlocacao(
+                    data, servico, problema, veiculo, ordem
+            );
+
             System.out.println("✅ Agendamento criado: " + agendamento.getId());
-        } catch (RuntimeException e) {
-            System.out.println("❌ Erro: " + e.getMessage());
+
+        } catch (Exception e) {
+            System.out.println("❌ Erro ao criar agendamento: " + e.getMessage());
         }
     }
 
-    /**
-     * Lista todos os agendamentos cadastrados no sistema.
-     */
     private void listar() {
-        List<Agendamento> agendamentos = listarAgendamentos.use(null, null, null, null, null);
+        List<Agendamento> agendamentos = agendamentoCrud.buscarComFiltros(null, null, null, null, null);
         if (agendamentos.isEmpty()) {
             System.out.println("Nenhum agendamento encontrado.");
             return;
@@ -136,11 +120,8 @@ public class AgendamentoTerminalHandler {
         agendamentos.forEach(System.out::println);
     }
 
-    /**
-     * Permite alterar o status de um agendamento existente.
-     */
     private void atualizarStatus() {
-        List<Agendamento> agendamentos = listarAgendamentos.use(null, null, null, null, null);
+        List<Agendamento> agendamentos = agendamentoCrud.buscarComFiltros(null, null, null, null, null);
         if (agendamentos.isEmpty()) {
             System.out.println("Nenhum agendamento encontrado.");
             return;
@@ -157,22 +138,23 @@ public class AgendamentoTerminalHandler {
         System.out.println("Status atual: " + ag.getStatus());
         System.out.println("1 - ABERTO\n2 - CANCELADO\n3 - CONCLUIDO");
         System.out.print("Novo status: ");
-        int opcao = Integer.parseInt(scanner.nextLine());
+        StatusAgendamento novo = StatusAgendamento.values()[Integer.parseInt(scanner.nextLine()) - 1];
 
-        try {
-            StatusAgendamento novo = StatusAgendamento.values()[opcao - 1];
-            atualizaAgendamento.use(ag.getId(), null, null, null, null, null, null, novo);
-            System.out.println("✅ Status atualizado com sucesso.");
-        } catch (Exception e) {
-            System.out.println("❌ Erro ao atualizar: " + e.getMessage());
-        }
+        agendamentoCrud.atualizar(ag.getId().toString(), true,
+                ag.getData(), ag.getDescricaoProblema(),
+                ag.getVeiculo().getId(),
+                ag.getElevador().getId(),
+                ag.getFuncionario().getId(),
+                ag.getServico().getId(),
+                ag.getOrdemDeServico().getId(),
+                novo
+        );
+
+        System.out.println("✅ Status atualizado.");
     }
 
-    /**
-     * Cancela um agendamento e aplica taxa de 20% do serviço na OS vinculada.
-     */
     private void cancelar() {
-        List<Agendamento> agendamentos = listarAgendamentos.use(null, null, null, null, null);
+        List<Agendamento> agendamentos = agendamentoCrud.buscarComFiltros(null, null, null, null, null);
         if (agendamentos.isEmpty()) {
             System.out.println("Nenhum agendamento encontrado.");
             return;
@@ -184,23 +166,18 @@ public class AgendamentoTerminalHandler {
 
         System.out.print("Escolha o agendamento para cancelar: ");
         int index = Integer.parseInt(scanner.nextLine()) - 1;
-
-        if (index < 0 || index >= agendamentos.size()) {
-            System.out.println("Opção inválida.");
-            return;
-        }
-
         Agendamento ag = agendamentos.get(index);
 
-        try {
-            atualizaAgendamento.use(
-                    ag.getId(),
-                    null, null, null, null, null, null,
-                    StatusAgendamento.CANCELADO
-            );
-            System.out.println("✅ Agendamento cancelado com taxa de 20% aplicada à OS.");
-        } catch (Exception e) {
-            System.out.println("❌ Falha ao cancelar: " + e.getMessage());
-        }
+        agendamentoCrud.atualizar(ag.getId().toString(), true,
+                ag.getData(), ag.getDescricaoProblema(),
+                ag.getVeiculo().getId(),
+                ag.getElevador().getId(),
+                ag.getFuncionario().getId(),
+                ag.getServico().getId(),
+                ag.getOrdemDeServico().getId(),
+                StatusAgendamento.CANCELADO
+        );
+
+        System.out.println("✅ Agendamento cancelado com taxa de 20% aplicada à OS.");
     }
 }

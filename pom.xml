@@ -1,6 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -9,27 +10,36 @@
   <version>${revision}</version>
   <packaging>jar</packaging>
 
+  <!-- =========================== -->
+  <!--          PROPERTIES         -->
+  <!-- =========================== -->
   <properties>
     <revision>0.0.1-SNAPSHOT</revision>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Você está usando JDK 23, mas o código não precisa de nada além do 21 -->
     <maven.compiler.release>17</maven.compiler.release>
 
     <!-- JavaFX -->
     <javafx.version>21</javafx.version>
 
-    <!-- Classe principal -->
-    <main.class>com.mycompany.mecanicabase.MecanicaBase</main.class>
+    <!-- Classe principal única da aplicação -->
+    <main.class>mecanicabase.MecanicaBase</main.class>
   </properties>
 
+  <!-- =========================== -->
+  <!--        REPOSITORIES         -->
+  <!-- =========================== -->
   <repositories>
-    <!-- MaterialFX está no JitPack -->
+    <!-- MaterialFX vem do JitPack -->
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
   </repositories>
 
+  <!-- =========================== -->
+  <!--        DEPENDENCIES         -->
+  <!-- =========================== -->
   <dependencies>
     <!-- === CORE === -->
     <dependency>
@@ -56,7 +66,7 @@
       <version>${javafx.version}</version>
     </dependency>
 
-    <!-- === MaterialFX (UI bonita) === -->
+    <!-- === MaterialFX === -->
     <dependency>
       <groupId>io.github.palexdev</groupId>
       <artifactId>materialfx</artifactId>
@@ -64,17 +74,31 @@
     </dependency>
   </dependencies>
 
+  <!-- =========================== -->
+  <!--           BUILD             -->
+  <!-- =========================== -->
   <build>
     <plugins>
-    
-      <!-- Geração do Javadoc -->
+
+      <!-- Compilação consistente com JDK 17 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <release>${maven.compiler.release}</release>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- Geração de Javadoc -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.3.1</version>
         <configuration>
           <reportOutputDirectory>${project.build.directory}/site/apidocs</reportOutputDirectory>
-          <doctitle>MecanicaBase ${revision} API</doctitle>
+          <doctitle>MecanicaBase&nbsp;${revision}&nbsp;API</doctitle>
           <encoding>${project.build.sourceEncoding}</encoding>
           <charset>UTF-8</charset>
           <docencoding>UTF-8</docencoding>
@@ -82,8 +106,7 @@
         </configuration>
       </plugin>
 
-
-      <!-- JavaFX run : mvn javafx:run -->
+      <!-- JavaFX: mvn javafx:run -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -93,7 +116,17 @@
         </configuration>
       </plugin>
 
-      <!-- JAR “fat” (jar‑with‑dependencies) : mvn clean package -->
+      <!-- Exec: mvn exec:java (IDE genéricas/linha de comando) -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <mainClass>${main.class}</mainClass>
+        </configuration>
+      </plugin>
+
+      <!-- JAR “fat” (jar-with-dependencies) -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -112,7 +145,9 @@
           <execution>
             <id>make-assembly</id>
             <phase>package</phase>
-            <goals><goal>single</goal></goals>
+            <goals>
+              <goal>single</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>

@@ -197,7 +197,7 @@ Com a refatoração, adotamos uma arquitetura mais idiomática para Java desktop
 
 ```
 src/
-└── main/java/com/mycompany/mecanicabase/
+└── main/java/mecanicabase/
     |   MecanicaBase.java
     |
     +---controllers

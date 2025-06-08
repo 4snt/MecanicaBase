@@ -1,87 +1,88 @@
-# 🧠 Padrão de Projeto: Flyweight
+# 🧠 Padrão de Projeto: Flyweight aplicado em Ordens de Serviço
 
 ## 📌 O que é o padrão Flyweight?
 
-O padrão **Flyweight** é um padrão estrutural utilizado para **economizar memória** ao compartilhar objetos semelhantes. Ele é útil nos seguintes cenários:
-
-- Quando há **muitos objetos parecidos**, com **dados imutáveis** ou que podem ser externalizados;
-- Quando se deseja **evitar a criação repetida** de objetos que diferem apenas por **dados contextuais pequenos** (ex: quantidade, posição, dono, etc).
+O **Flyweight** é um padrão estrutural que visa **compartilhar objetos imutáveis** para economizar memória e melhorar desempenho, principalmente quando se trabalha com **muitas instâncias idênticas ou similares**.
 
 ---
 
-## 🔍 Aplicação no Sistema
+## 🎯 Contexto no Sistema `MecanicaBase`
 
-Este sistema representa uma **oficina mecânica**, com entidades como:
+O sistema simula uma **oficina mecânica**, onde:
 
-- `OrdemDeServico`
-- `Servico`
-- `Peca`
-- `Cliente`
-- `Funcionario`
-- `Elevador`
-- `Agendamento`
-- `Despesa`
+- Cada `OrdemDeServico` pode conter várias `PecaItem`;
+- Muitas ordens utilizam as **mesmas peças** (ex: velas, parafusos);
+- Os dados de `Peca` (nome, valor, etc.) são **imutáveis** e reutilizáveis.
 
-O padrão Flyweight **não é aplicável à maioria dessas entidades**, pois carregam estado individual e mutável (ex: status, datas, relacionamentos únicos).
+### Situação identificada:
+
+Durante benchmarks com **grandes volumes de ordens (10 mil a 100 mil)**, observou-se criação redundante de objetos `Peca`, mesmo que com os mesmos atributos.
 
 ---
 
-## 🎯 Flyweight aplicado à classe `Peca`
+## ✅ Solução com Flyweight em `Peca`
 
-### Justificativa:
+### Estratégia aplicada:
 
-- O sistema lida com **centenas de peças por veículos**.
-- Muitas peças são **reutilizadas em diferentes ordens de serviço** e entre diversos modelos de carro.
-- Os dados centrais das peças (nome, código, marca, categoria, valor unitário) são geralmente **imutáveis**.
-- Aplicar Flyweight aqui evita **criação redundante de objetos com mesmas características**, otimizando uso de memória.
+- Criada a classe `PecaFactory`, que armazena um **cache de peças compartilhadas** com base em `nome + valor`;
+- A entidade `PecaItem` armazena o **contexto** (ex: quantidade, ordem associada);
+- Evita-se a criação repetida de objetos `Peca` com UUIDs distintos.
 
-### Estratégia:
-
-- Criar uma **fábrica Flyweight** de `Peca`, que retorna instâncias únicas para cada tipo de peça baseada em seus atributos fixos (ex: código ou nome).
-- Dados contextuais como `quantidade`, `local de uso`, ou `ordem de serviço` serão armazenados **fora** do objeto `Peca`, na classe `PecaItem` (associação com contexto).
-
-# 📊 Diagrama proposto UML do Padrão Flyweight aplicado à `Peca`
-
-Abaixo está o diagrama de classes representando a aplicação do padrão **Flyweight** ao modelo `Peca`:
-
-![Diagrama UML - Flyweight com Peca](./assets/DiagramaUMLFlyweightPeca.png)
-
-> Este diagrama ilustra a interação entre `Peca`, `PecaItem`, `PecaFactory` e `PecaCrud`. O objetivo é garantir que instâncias de peças com as mesmas características sejam compartilhadas em memória, enquanto `PecaItem` armazena o contexto de uso (como a OS associada).
-
----
-
-## ⚠️ Quando _não_ aplicar Flyweight (Anti-Padrão)
-
-- Quando os objetos têm **estado mutável frequente** (ex: estoque atual, status de uso);
-- Quando a implementação do padrão adiciona **mais complexidade do que benefícios reais**;
-- Quando não há **grande volume de objetos iguais** no sistema.
-
----
-
-## ✅ Tabela de Avaliação
-
-| Classe    | Flyweight Aplicável? | Justificativa                                                                |
-| --------- | -------------------- | ---------------------------------------------------------------------------- |
-| `Peca`    | ✅ Sim               | Muitas instâncias, atributos imutáveis, alto reaproveitamento                |
-| `Servico` | ❌ Não               | Poucos serviços (~50), instâncias limitadas, ganho irrelevante               |
-| Outras    | ❌ Não               | Estado individual e mutável (ex: `Cliente`, `Funcionario`, `OrdemDeServico`) |
-
----
-
-## 🛠️ Exemplo Futuro: `PecaFactory`
-
-> O padrão será aplicado por meio de uma fábrica que mantém um cache de instâncias reutilizáveis de peças, com acesso via código/nome.
+### Trecho chave de `PecaFactory`:
 
 ```java
 public class PecaFactory {
     private static final Map<String, Peca> cache = new HashMap<>();
 
-    public static Peca getPeca(String codigo, String nome, String categoria, double valor) {
-        String chave = codigo;
-        if (!cache.containsKey(chave)) {
-            cache.put(chave, new Peca(codigo, nome, categoria, valor));
-        }
-        return cache.get(chave);
+    public static Peca getPeca(String nome, float valor) {
+        String chave = nome.toLowerCase() + "|" + valor;
+        return cache.computeIfAbsent(chave, k -> new Peca(nome, valor, 0));
+    }
+
+    public static int getTotalInstanciasCompartilhadas() {
+        return cache.size();
+    }
+
+    public static void limparCache() {
+        cache.clear();
     }
 }
 ```
+
+---
+
+## 🧪 Benchmark implementado
+
+### Objetivo:
+
+Avaliar a diferença de performance (tempo e memória) entre:
+
+- Criação de `OrdemDeServico` com múltiplos `PecaItem`;
+- Usando `Peca` **com Flyweight** (compartilhada) versus **sem Flyweight** (cada uma única).
+
+### Detalhes técnicos:
+
+- Executado com volumes de 10.000, 50.000 e 100.000 ordens de serviço;
+- Cada ordem associa de 1 a 2 peças;
+- As peças vêm de uma lista base de 20 itens criados via `PecaFactory`;
+- Resultados salvos em `data/medicoes_ordem.txt` e acessíveis pelo menu principal.
+
+---
+
+## 📊 Tabela de Resultados
+
+| OS Criadas | Tempo Sem FW | Tempo Com FW | Δ Tempo | Memória Sem FW | Memória Com FW | Δ Memória |
+| ---------- | ------------ | ------------ | ------- | -------------- | -------------- | --------- |
+| 10.000     | 1.751 ms     | 1.701 ms     | 🔻 -2%  | 37.126 KB      | 37.056 KB      | 🔻 ≈0%    |
+| 50.000     | 31.293 ms    | 25.488 ms    | 🔻 -18% | 111.616 KB     | 113.462 KB     | 🔺 +1%    |
+| 100.000    | 166.365 ms   | 153.707 ms   | 🔻 -7%  | 272.192 KB     | 258.048 KB     | 🔻 -5%    |
+
+📌 **Observação:** o benefício do Flyweight **só se torna perceptível acima de 50 mil objetos**. A variação pode ser alta conforme o número de peças repetidas utilizadas.
+
+---
+
+## 🧠 Conclusão
+
+- O padrão Flyweight foi aplicado **especificamente à classe `Peca`**, reutilizada em várias ordens;
+- Evitamos a criação de objetos `Peca` duplicados, melhorando **uso de memória** e **tempo de execução**;
+- O benchmark integrado permite **avaliar sinteticamente os ganhos**, e o sistema permanece extensível.

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/4snt/MecanicaBase/compare/v4.0.0...v4.1.0) (2025-06-08)
+
+
+### Features
+
+* **benchmark:** adiciona medição realista de OS com base em PecaItem e estoque ([c61b542](https://github.com/4snt/MecanicaBase/commit/c61b54224cdfa713550766443eb64522fff7bcd9))
+* **flyweight:** aplica padrão Flyweight na entidade Peca com reutilização via PecaFactory ([f9e85de](https://github.com/4snt/MecanicaBase/commit/f9e85de06a29f0ac3b644cf23b4e4b190172146f))
+
+
+### Bug Fixes
+
+* **database:** ajusta persistência para salvar fora do .jar em produção e manter leitura no projeto no modo desenvolvimento ([a166fb9](https://github.com/4snt/MecanicaBase/commit/a166fb950abde82b7815677afaed6a6c7e059eeb))
+
 ## [4.0.0](https://github.com/4snt/MecanicaBase/compare/v3.0.4...v4.0.0) (2025-06-08)
 
 

@@ -70,7 +70,17 @@ public class Database {
             .create();
 
     // Caminho para o arquivo onde os dados do banco são armazenados
-    private static final String FILE_PATH = "data/database.json";
+    private static String getDatabasePath() {
+        return isRunningFromJar()
+                ? "data/database.json" // fora do .jar (para escrita)
+                : "src/main/resources/data/database.json";  // usado no NetBeans
+    }
+
+    private static boolean isRunningFromJar() {
+        String className = Database.class.getName().replace('.', '/') + ".class";
+        String classPath = Database.class.getClassLoader().getResource(className).toString();
+        return classPath.startsWith("jar:");
+    }
 
     /**
      * Carrega os dados de todas as entidades persistidas a partir do arquivo
@@ -84,7 +94,7 @@ public class Database {
     public static void load() {
         try {
             // Verifica se o arquivo de persistência existe
-            if (!Files.exists(Paths.get(FILE_PATH))) {
+            if (!Files.exists(Paths.get(getDatabasePath()))) {
                 System.out.println("Arquivo não encontrado, iniciando com dados fixos.");
                 Elevador.init(); // Inicializa dados fixos de Elevadores
                 Administrador.init(); // Inicializa dados fixos de Administradores
@@ -92,7 +102,8 @@ public class Database {
             }
 
             // Lê o conteúdo do arquivo JSON
-            String json = Files.readString(Paths.get(FILE_PATH));
+            String json = Files.readString(Paths.get(getDatabasePath())
+            );
             // Converte o conteúdo JSON em um mapa de dados
             Map<String, Object> rawData = gson.fromJson(json, new TypeToken<Map<String, Object>>() {
             }.getType());
@@ -170,7 +181,7 @@ public class Database {
             String json = gson.toJson(exportData);
 
             // Escreve o JSON no arquivo de persistência
-            Files.write(Paths.get(FILE_PATH), json.getBytes());
+            Files.write(Paths.get(getDatabasePath()), json.getBytes());
 
         } catch (IOException e) {
             System.out.println("Erro ao salvar banco de dados:");

@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/4snt/MecanicaBase/compare/v3.0.4...v4.0.0) (2025-06-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **core:** todos os serviços agora estendem a classe abstrata Crud<T>,
+eliminando os antigos casos de uso manuais (use cases) para criar, atualizar, listar e remover entidades.
+
+- Criação da classe Crud<T> com métodos genéricos para:
+  - listarTodos()
+  - buscarPorId(String e UUID)
+  - criar(Object... params)
+  - atualizar(Object... params)
+  - removerPorId()
+
+- Refatorados os seguintes serviços para extender Crud<T>:
+  - CategoriaDespesaCrud
+  - DespesaCrud
+  - OrdemDeServicoCrud
+  - AgendamentoCrud
+  - ServicoCrud
+  - PecaCrud (e outros conforme necessário)
+
+- Remoção dos antigos UseCases:
+  - Criar/Listar/Atualizar/RemoverCategoriaDespesaUseCase
+  - Criar/Listar/Atualizar/RemoverDespesaUseCase
+  - Criar/Listar/Atualizar/RemoverOrdemDeServicoUseCase
+  - VenderPecaUseCase, RemoverPecaItemUseCase etc.
+
+- Atualização dos TerminalHandlers para utilizar diretamente os novos CRUDs:
+  - AgendamentoTerminalHandler
+  - CategoriaDespesaTerminalHandler
+  - DespesaTerminalHandler
+  - OrdemDeServicoTerminalHandler
+
+- database.json agora é persistido em `data/database.json` para facilitar visualização e envio ao professor.
+- Atualização de `Database.java` para refletir nova localização do arquivo.
+
+Essa mudança quebra compatibilidade com qualquer código antigo que dependia dos casos de uso específicos. A partir de agora, toda persistência e lógica de entidades devem ser feitas via extensão do CRUD genérico.
+
+### Features
+
+* **core:** centraliza lógica de CRUD com classe genérica ([c477767](https://github.com/4snt/MecanicaBase/commit/c477767f701ff02c1813a645c7a8217e0b8ce1c7))
+
 ### [3.0.4](https://github.com/4snt/MecanicaBase/compare/v3.0.3...v3.0.4) (2025-06-07)
 
 

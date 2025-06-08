@@ -2,13 +2,14 @@ package mecanicabase.infra.benchmark;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import mecanicabase.infra.flyweight.PecaFactory;
 import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.StatusOrdemDeServico;
 import mecanicabase.model.operacao.Peca;
-import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Cliente;
 import mecanicabase.service.financeiro.OrdemDeServicoCrud;
 import mecanicabase.service.operacao.PecaCrud;
@@ -43,15 +44,18 @@ public class BenchmarkOrdemDeServico {
         ClienteCrud clienteCrud = new ClienteCrud();
         VeiculoCrud veiculoCrud = new VeiculoCrud();
         OrdemDeServicoCrud osCrud = new OrdemDeServicoCrud();
-
-        List<Peca> pecasDisponiveis = pecaCrud.listarTodos();
-        if (pecasDisponiveis.size() < 10) {
-            System.out.println("⚠️ É necessário ter ao menos 10 peças cadastradas.");
-            return;
-        }
-
-        List<Peca> pecasBase = pecasDisponiveis.subList(0, Math.min(20, pecasDisponiveis.size()));
         Random rand = new Random();
+
+        // Criar 20 instâncias únicas no cache do Flyweight
+        List<Peca> pecasBase = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            String nome = "Peça " + (i + 1);
+            float valor = 10 + i;
+            Peca peca = PecaFactory.getPeca(nome, valor);
+            peca.adicionarEstoque(quantidade); // garantir estoque
+            pecaCrud.criar(false, peca); // salvar uma vez só
+            pecasBase.add(peca);
+        }
 
         Runtime runtime = Runtime.getRuntime();
         runtime.gc();
@@ -59,40 +63,27 @@ public class BenchmarkOrdemDeServico {
         long tempoAntes = System.nanoTime();
 
         for (int i = 0; i < quantidade; i++) {
-            // Criar Cliente
             String nomeCompleto = nomes.get(rand.nextInt(nomes.size())) + " "
                     + sobrenomes.get(rand.nextInt(sobrenomes.size()));
             String endereco = "Rua Exemplo, nº " + rand.nextInt(1000);
             String telefone = "3199" + String.format("%06d", rand.nextInt(1000000));
             String email = nomeCompleto.toLowerCase().replace(" ", ".") + "@exemplo.com";
             String cpf = String.format("%03d.%03d.%03d-00", rand.nextInt(1000), rand.nextInt(1000), rand.nextInt(1000));
-
             Cliente cliente = clienteCrud.criar(true, nomeCompleto, endereco, telefone, email, cpf);
 
-            // Criar Veículo
             String cor = "Prata";
             int ano = 2015 + rand.nextInt(10);
             String modelo = modelos.get(rand.nextInt(modelos.size()));
             String marca = marcas.get(rand.nextInt(marcas.size()));
             String placa = "XYZ" + String.format("%04d", i);
             String modeloCompleto = marca + " " + modelo;
+            veiculoCrud.criar(true, cor, ano, placa, modeloCompleto, cliente.getId());
 
-            Veiculo veiculo = veiculoCrud.criar(true, cor, ano, placa, modeloCompleto, cliente.getId());
-
-            // Só usar o veiculo se quiser evitar warning
-            if (veiculo == null) {
-                System.out.print("");
-            }
-
-            // Criar OS
             OrdemDeServico os = osCrud.criar(true, cliente.getId());
 
             int itens = rand.nextInt(2) + 1;
             for (int j = 0; j < itens; j++) {
                 Peca peca = pecasBase.get(rand.nextInt(pecasBase.size()));
-                if (peca.getQuantidade() < 1) {
-                    peca.adicionarEstoque(100); // ou qualquer valor razoável
-                }
                 osCrud.venderPeca(os.getId(), peca.getId(), 1);
             }
 
@@ -112,12 +103,14 @@ public class BenchmarkOrdemDeServico {
         System.out.printf("✅ Benchmark concluído: %d OS registradas%n", quantidade);
         System.out.printf("⏱️ Tempo: %d ms%n", tempoMs);
         System.out.printf("📦 Memória usada: %d KB%n", memoriaKb);
+        System.out.printf("📦 Peças Flyweight compartilhadas: %d%n", PecaFactory.getTotalInstanciasCompartilhadas());
 
         try (FileWriter fw = new FileWriter("data/medicoes_ordem.txt", true)) {
-            fw.write("Benchmark Ordem de Serviço (realista)\n");
+            fw.write("Benchmark Ordem de Serviço com Flyweight\n");
             fw.write("OS criadas: " + quantidade + "\n");
             fw.write("Tempo: " + tempoMs + " ms\n");
-            fw.write("Memória: " + memoriaKb + " KB\n\n");
+            fw.write("Memória: " + memoriaKb + " KB\n");
+            fw.write("Peças Flyweight: " + PecaFactory.getTotalInstanciasCompartilhadas() + "\n\n");
         } catch (IOException e) {
             System.out.println("❌ Falha ao salvar benchmark: " + e.getMessage());
         }

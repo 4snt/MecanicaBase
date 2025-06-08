@@ -7,8 +7,12 @@ top to bottom direction
 
 class MecanicaBase {
 }
+class AgendamentoController {
+  +criarAgendamentoComAlocacao()
+}
 class ClienteController {
   +criar()
+  +listar()
   +listar()
   +buscarPorId()
   +atualizar()
@@ -31,6 +35,16 @@ class MainViewController {
   +abrirOrdens()
   +abrirColaboradores()
   +abrirFinanceiro()
+}
+class Crud {
+  +validarCriacao()
+  +validarAtualizacao()
+  +buscarPorId()
+  +buscarPorId()
+  +listarTodos()
+  +removerPorId()
+  +criar()
+  +atualizar()
 }
 class "Entity" {
   - atualizadoEm : LocalDateTime
@@ -226,8 +240,9 @@ class Cliente {
 }
 class Colaborador {
   - senha : String
-  +setSenha()
+  +getEmail()
   +compararSenha()
+  +setSenha()
 }
 class Funcionario {
   - funcao : TipoFuncionario
@@ -255,71 +270,40 @@ class Pessoa {
   +getEndereco()
   +setEndereco()
 }
-class AtualizaAgendamentoUseCase {
-  +use()
+class AgendamentoCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +buscarComFiltros()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class BuscarPorIdAgendamentoUseCase {
-  +use()
+class CategoriaDespesaCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class CriarAgendamentoUseCase {
-  +use()
+class DespesaCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class ListarAgendamentoUseCase {
-  +use()
-}
-class RemoverAgendamentoUseCase {
-  +use()
-}
-class AtualizarCategoriaDespesaUseCase {
-  +use()
-}
-class BuscarPorIdCategoriaDespesaUseCase {
-  +use()
-}
-class CriarCategoriaDespesaUseCase {
-  +use()
-}
-class ListarCategoriaDespesaUseCase {
-  +use()
-}
-class RemoverCategoriaDespesaUseCase {
-  +use()
-}
-class AtualizarDespesaUseCase {
-  +use()
-}
-class BuscarDespesaPorIdUseCase {
-  +use()
-}
-class CriarDespesaUseCase {
-  +use()
-}
-class ListarDespesaUseCase {
-  +use()
-}
-class RemoverDespesaUseCase {
-  +use()
-}
-class AtualizaOrdemDeServicoUseCase {
-  +use()
-}
-class BuscaPorIdOrdemDeServicoUseCase {
-  +use()
-}
-class CriarOrdemDeServicoUseCase {
-  +use()
-}
-class ListaOrdemDeServicoUseCase {
-  +use()
-}
-class RemoveOrdemDeServicoUseCase {
-  +use()
-}
-class RemoverPecaItemUseCase {
-  +use()
-}
-class VenderPecaUseCase {
-  +use()
+class OrdemDeServicoCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
+  +removerPecaItem()
+  +venderPeca()
 }
 class GerarBalancoUseCase {
   +use()
@@ -338,104 +322,58 @@ class GerarBalancoUseCase {
 class GerarRelatorioUseCase {
   +use()
 }
-class CriarManualEntradaPecaUseCase {
-  +use()
+class PecaCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +registrarEntrada()
 }
-class AtualizaPecaUseCase {
-  +use()
+class ServicoCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class BuscaPorIdPecaUseCase {
-  +use()
+class VeiculoCrud {
+  +getInstancias()
+  +getId()
+  +buscarPorFiltro()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
+  +removerPorId()
 }
-class CriarPecaUseCase {
-  +use()
+class AdministradorCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class ListaPecaUseCase {
-  +use()
+class ClienteCrud {
+  +getInstancias()
+  +getId()
+  +buscarPorFiltro()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class RemovePecaUseCase {
-  +use()
+class FuncionarioCrud {
+  +getInstancias()
+  +getId()
+  +criarInstancia()
+  +atualizarInstancia()
+  +validarCriacao()
+  +validarAtualizacao()
 }
-class AtualizaServicoUseCase {
-  +use()
-}
-class BuscaPorIdServicoUseCase {
-  +use()
-}
-class CriarServicoUseCase {
-  +use()
-}
-class ListaServicoUseCase {
-  +use()
-}
-class RemoveServicoUseCase {
-  +use()
-}
-class AtualizaVeiculoUseCase {
-  +use()
-}
-class BuscarPorIdVeiculoUseCase {
-  +use()
-}
-class CriarVeiculoUseCase {
-  +use()
-}
-class ListaVeiculoUseCase {
-  +use()
-}
-class RemoverVeiculoUsecase {
-  +use()
-}
-class AtualizarAdministradorUseCase {
-  +use()
-}
-class BuscaPorIdAdministradorUseCase {
-  +use()
-}
-class CriarAdministradorUseCase {
-  +use()
-}
-class ListarAdministradorUseCase {
-  +use()
-}
-class LoginAdministradorUseCase {
+class UsuarioCrud {
   +login()
-}
-class RemoverAdministradorUseCase {
-  +use()
-}
-class AtualizaClienteUseCase {
-  +use()
-}
-class BuscaPorIdClienteUseCase {
-  +use()
-}
-class CriarClienteUseCase {
-  +use()
-}
-class ListaClienteUseCase {
-  +use()
-}
-class RemoveClienteUseCase {
-  +use()
-}
-class AtualizaFuncionarioUseCase {
-  +use()
-}
-class BuscaPorIdFuncionarioUseCase {
-  +use()
-}
-class CriarFuncionarioUseCase {
-  +use()
-}
-class ListaFuncionarioUseCase {
-  +use()
-}
-class LoginFuncionarioUseCase {
-  +login()
-}
-class RemoveFuncionarioUseCase {
-  +use()
 }
 class MainView {
   +start()
@@ -512,6 +450,12 @@ class ServicoTerminalHandler {
   +listar()
   +atualizar()
   +remover()
+  +escolherTipoFuncionario()
+  +escolherTipoFuncionarioOptional()
+  +escolherTipoElevador()
+  +perguntarBoolean()
+  +perguntarFloat()
+  +perguntarInt()
 }
 class VeiculoTerminalHandler {
   +menu()
@@ -549,8 +493,21 @@ Colaborador <|-- Administrador
 Pessoa <|-- Cliente
 Comparable <|-- Cliente
 Pessoa <|-- Colaborador
+Autenticavel <|-- Colaborador
 Colaborador <|-- Funcionario
 "Entity" <|-- Pessoa
+Crud <|-- AgendamentoCrud
+Crud <|-- CategoriaDespesaCrud
+Crud <|-- DespesaCrud
+Crud <|-- OrdemDeServicoCrud
+Crud <|-- PecaCrud
+Crud <|-- ServicoCrud
+Crud <|-- VeiculoCrud
+UsuarioCrud <|-- AdministradorCrud
+Crud <|-- ClienteCrud
+UsuarioCrud <|-- FuncionarioCrud
+Autenticavel <|-- UsuarioCrud
+Crud <|-- UsuarioCrud
 Application <|-- MainView
 
 @enduml

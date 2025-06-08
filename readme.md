@@ -10,6 +10,7 @@ Projeto Java para gerenciamento de uma oficina mecânica. Criado com foco educac
 
 - [Como instalar/importar no netbeans: ](documentation/instalation.md)
 - [✅ Checklist – Entrega 1](documentation/entrega1.md)
+- [Proposta entrega 2 - Desing Paterns](documentation/entrega2.md)
 - [Arquitetura do Projeto](documentation/arquitetura.md)
 - [Entidades e Relacionamentos](documentation/entidades.md)
 - [Casos de Uso](documentation/casos-de-uso.md)

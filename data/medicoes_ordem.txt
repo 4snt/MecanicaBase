@@ -13,3 +13,14 @@ OS criadas: 10000
 Tempo: 1946 ms
 Memória: 80896 KB
 
+Benchmark Ordem de Serviço (realista)
+OS criadas: 100000
+Tempo: 189882 ms
+Memória: 202962 KB
+
+Benchmark Ordem de Serviço com Flyweight
+OS criadas: 100000
+Tempo: 155598 ms
+Memória: 198465 KB
+Peças Flyweight: 20
+

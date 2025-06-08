@@ -4,37 +4,22 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 import mecanicabase.model.financeiro.CategoriaDespesa;
-import mecanicabase.service.financeiro.categoria_despesa.AtualizarCategoriaDespesaUseCase;
-import mecanicabase.service.financeiro.categoria_despesa.CriarCategoriaDespesaUseCase;
-import mecanicabase.service.financeiro.categoria_despesa.ListarCategoriaDespesaUseCase;
-import mecanicabase.service.financeiro.categoria_despesa.RemoverCategoriaDespesaUseCase;
+import mecanicabase.service.financeiro.CategoriaDespesaCrud;
 
 /**
- * Handler de terminal para gerenciamento de categorias de despesa. Permite
- * criar, listar, atualizar e remover categorias.
+ * Handler de terminal para gerenciamento de categorias de despesa. Usa o CRUD
+ * genérico.
  */
 public class CategoriaDespesaTerminalHandler {
 
     private final Scanner scanner;
-    private final CriarCategoriaDespesaUseCase criar = new CriarCategoriaDespesaUseCase();
-    private final ListarCategoriaDespesaUseCase listar = new ListarCategoriaDespesaUseCase();
-    private final AtualizarCategoriaDespesaUseCase atualizar = new AtualizarCategoriaDespesaUseCase();
-    private final RemoverCategoriaDespesaUseCase remover = new RemoverCategoriaDespesaUseCase();
+    private final CategoriaDespesaCrud crud = new CategoriaDespesaCrud() {
+    };
 
-    /**
-     * Construtor que recebe o scanner utilizado para entrada de dados via
-     * terminal.
-     *
-     * @param scanner Scanner padrão usado para leitura do terminal.
-     */
     public CategoriaDespesaTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    /**
-     * Exibe o menu de categorias de despesa e redireciona para as opções
-     * correspondentes.
-     */
     public void menu() {
         while (true) {
             System.out.println("\n=== MENU CATEGORIAS DE DESPESA ===");
@@ -49,24 +34,24 @@ public class CategoriaDespesaTerminalHandler {
             switch (opcao) {
                 case "1":
                     criar();
+                    break;
                 case "2":
                     listar();
+                    break;
                 case "3":
                     atualizar();
+                    break;
                 case "4":
                     remover();
-                case "0": {
+                    break;
+                case "0":
                     return;
-                }
                 default:
                     System.out.println("Opção inválida.");
             }
         }
     }
 
-    /**
-     * Cria uma nova categoria de despesa com título informado pelo usuário.
-     */
     private void criar() {
         System.out.print("Digite o título da nova categoria: ");
         String titulo = scanner.nextLine().trim();
@@ -76,15 +61,12 @@ public class CategoriaDespesaTerminalHandler {
             return;
         }
 
-        CategoriaDespesa categoria = criar.use(titulo);
+        CategoriaDespesa categoria = crud.criar(true, titulo); // ✅ passa `true` explicitamente
         System.out.println("✅ Categoria criada com ID: " + categoria.getId());
     }
 
-    /**
-     * Lista todas as categorias de despesa cadastradas no sistema.
-     */
     private void listar() {
-        List<CategoriaDespesa> categorias = listar.use();
+        List<CategoriaDespesa> categorias = crud.listarTodos();
 
         if (categorias.isEmpty()) {
             System.out.println("Nenhuma categoria cadastrada.");
@@ -92,13 +74,9 @@ public class CategoriaDespesaTerminalHandler {
         }
 
         System.out.println("\n=== CATEGORIAS CADASTRADAS ===");
-        categorias.forEach(c -> System.out.println(c));
+        categorias.forEach(System.out::println);
     }
 
-    /**
-     * Permite atualizar o título de uma categoria de despesa existente, a
-     * partir do ID.
-     */
     private void atualizar() {
         listar();
         System.out.print("Digite o ID da categoria a ser atualizada: ");
@@ -106,6 +84,12 @@ public class CategoriaDespesaTerminalHandler {
 
         try {
             UUID id = UUID.fromString(idStr);
+            CategoriaDespesa existente = crud.buscarPorId(id);
+            if (existente == null) {
+                System.out.println("❌ Categoria não encontrada.");
+                return;
+            }
+
             System.out.print("Novo título: ");
             String novoTitulo = scanner.nextLine().trim();
 
@@ -114,37 +98,26 @@ public class CategoriaDespesaTerminalHandler {
                 return;
             }
 
-            CategoriaDespesa atualizada = atualizar.use(id, novoTitulo);
-            if (atualizada == null) {
-                System.out.println("❌ Categoria não encontrada.");
-            } else {
-                System.out.println("✅ Categoria atualizada com sucesso.");
-            }
+            crud.atualizar(idStr, true, novoTitulo); // ✅ passa `true` explicitamente
+            System.out.println("✅ Categoria atualizada com sucesso.");
 
         } catch (IllegalArgumentException e) {
             System.out.println("❌ ID inválido.");
         }
     }
 
-    /**
-     * Remove uma categoria de despesa do sistema com base no ID informado pelo
-     * usuário.
-     */
     private void remover() {
         listar();
         System.out.print("Digite o ID da categoria a ser removida: ");
         String idStr = scanner.nextLine().trim();
 
         try {
-            UUID id = UUID.fromString(idStr);
-            boolean sucesso = remover.use(id);
-
+            boolean sucesso = crud.removerPorId(idStr);
             if (sucesso) {
                 System.out.println("✅ Categoria removida.");
             } else {
                 System.out.println("❌ Categoria não encontrada.");
             }
-
         } catch (IllegalArgumentException e) {
             System.out.println("❌ ID inválido.");
         }

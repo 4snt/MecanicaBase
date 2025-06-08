@@ -86,6 +86,17 @@
   <!--           BUILD             -->
   <!-- =========================== -->
   <build>
+    <!-- ==================================== -->
+    <!-- Inclue database.json a Project Files -->
+    <!-- ==================================== -->
+    <resources>
+      <resource>
+        <directory>data</directory>
+        <includes>
+          <include>database.json</include>
+        </includes>
+      </resource>
+    </resources>
     <plugins>
 
       <!-- Compilação consistente com JDK 17 -->

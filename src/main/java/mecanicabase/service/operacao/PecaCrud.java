@@ -1,8 +1,10 @@
 package mecanicabase.service.operacao;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import mecanicabase.core.Crud;
+import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 
 public class PecaCrud extends Crud<Peca> {
@@ -57,6 +59,22 @@ public class PecaCrud extends Crud<Peca> {
         if (novaQuantidade != null) {
             peca.setQuantidade(novaQuantidade);
         }
+    }
+
+    public EntradaPeca registrarEntrada(UUID pecaId, String nomeFornecedor, float custo, int quantidade) {
+        Peca peca = buscarPorId(pecaId);
+        if (peca == null) {
+            throw new NoSuchElementException("Peça não encontrada");
+        }
+
+        if (custo < 0) {
+            throw new IllegalArgumentException("Valor de custo inválido");
+        }
+
+        EntradaPeca entrada = new EntradaPeca(peca.getId(), quantidade, custo, nomeFornecedor);
+        EntradaPeca.instances.add(entrada);
+        peca.adicionarEstoque(quantidade);
+        return entrada;
     }
 
 }

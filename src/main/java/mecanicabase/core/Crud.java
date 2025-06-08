@@ -29,6 +29,13 @@ public abstract class Crud<T> {
                 .orElse(null);
     }
 
+    public T buscarPorId(UUID id) {
+        return getInstancias().stream()
+                .filter(entidade -> getId(entidade).equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
     public List<T> listarTodos() {
         return getInstancias();
     }

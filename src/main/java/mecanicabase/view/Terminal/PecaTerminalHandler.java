@@ -5,13 +5,11 @@ import java.util.Scanner;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 import mecanicabase.service.operacao.PecaCrud;
-import mecanicabase.service.operacao.entrada_peca.CriarManualEntradaPecaUseCase;
 
 public class PecaTerminalHandler {
 
     private final Scanner scanner;
     private final PecaCrud pecaCrud = new PecaCrud();
-    private final CriarManualEntradaPecaUseCase criarManualEntradaPecaUseCase = new CriarManualEntradaPecaUseCase();
 
     public PecaTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -163,7 +161,7 @@ public class PecaTerminalHandler {
         int quantidade = Integer.parseInt(scanner.nextLine());
 
         try {
-            EntradaPeca entrada = criarManualEntradaPecaUseCase.use(peca.getId(), fornecedor, custo, quantidade);
+            EntradaPeca entrada = pecaCrud.registrarEntrada(peca.getId(), fornecedor, custo, quantidade);
             System.out.println("✅ Entrada registrada com ID: " + entrada.getId());
         } catch (Exception e) {
             System.out.println("❌ Erro ao registrar entrada: " + e.getMessage());

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
@@ -18,7 +17,6 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-
 import mecanicabase.core.Entity;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.CategoriaDespesa;
@@ -72,7 +70,7 @@ public class Database {
             .create();
 
     // Caminho para o arquivo onde os dados do banco são armazenados
-    private static final String FILE_PATH = "database.json";
+    private static final String FILE_PATH = "data/database.json";
 
     /**
      * Carrega os dados de todas as entidades persistidas a partir do arquivo

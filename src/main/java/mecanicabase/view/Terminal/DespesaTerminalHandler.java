@@ -4,38 +4,24 @@ import java.util.List;
 import java.util.Scanner;
 import mecanicabase.model.financeiro.CategoriaDespesa;
 import mecanicabase.model.financeiro.Despesa;
-import mecanicabase.service.financeiro.categoria_despesa.ListarCategoriaDespesaUseCase;
-import mecanicabase.service.financeiro.despesa.AtualizarDespesaUseCase;
-import mecanicabase.service.financeiro.despesa.CriarDespesaUseCase;
-import mecanicabase.service.financeiro.despesa.ListarDespesaUseCase;
-import mecanicabase.service.financeiro.despesa.RemoverDespesaUseCase;
+import mecanicabase.service.financeiro.CategoriaDespesaCrud;
+import mecanicabase.service.financeiro.DespesaCrud;
 
 /**
- * Handler de terminal responsável por operações relacionadas a despesas.
- * Permite criar, listar, atualizar e remover despesas do sistema.
+ * Handler de terminal responsável por operações relacionadas a despesas. Usa o
+ * CRUD genérico para criar, listar, atualizar e remover.
  */
 public class DespesaTerminalHandler {
 
     private final Scanner scanner;
+    private final DespesaCrud crud = new DespesaCrud();
+    private final CategoriaDespesaCrud categoriaCrud = new CategoriaDespesaCrud() {
+    };
 
-    private final CriarDespesaUseCase criarDespesa = new CriarDespesaUseCase();
-    private final ListarDespesaUseCase listarDespesas = new ListarDespesaUseCase();
-    private final AtualizarDespesaUseCase atualizarDespesa = new AtualizarDespesaUseCase();
-    private final RemoverDespesaUseCase removerDespesa = new RemoverDespesaUseCase();
-    private final ListarCategoriaDespesaUseCase listarCategorias = new ListarCategoriaDespesaUseCase();
-
-    /**
-     * Construtor do handler, recebe um Scanner para leitura do terminal.
-     *
-     * @param scanner Scanner padrão usado para entrada de dados no terminal.
-     */
     public DespesaTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
     }
 
-    /**
-     * Exibe o menu principal de opções para gerenciamento de despesas.
-     */
     public void menu() {
         while (true) {
             System.out.println("\n=== MENU DESPESAS ===");
@@ -50,26 +36,26 @@ public class DespesaTerminalHandler {
             switch (opcao) {
                 case "1":
                     criar();
+                    break;
                 case "2":
                     listar();
+                    break;
                 case "3":
                     atualizar();
+                    break;
                 case "4":
                     remover();
-                case "0": {
+                    break;
+                case "0":
                     return;
-                }
                 default:
                     System.out.println("Opção inválida.");
             }
         }
     }
 
-    /**
-     * Cria uma nova despesa associada a uma categoria existente.
-     */
     private void criar() {
-        List<CategoriaDespesa> categorias = listarCategorias.use();
+        List<CategoriaDespesa> categorias = categoriaCrud.listarTodos();
         if (categorias.isEmpty()) {
             System.out.println("Nenhuma categoria cadastrada.");
             return;
@@ -96,18 +82,15 @@ public class DespesaTerminalHandler {
         float valor = Float.parseFloat(scanner.nextLine());
 
         try {
-            Despesa d = criarDespesa.use(categoria.getId(), descricao, valor);
+            Despesa d = crud.criar(true, categoria.getId(), descricao, valor);
             System.out.println("✅ Despesa criada: " + d.getId());
         } catch (Exception e) {
             System.out.println("❌ Erro: " + e.getMessage());
         }
     }
 
-    /**
-     * Lista todas as despesas existentes, sem filtros.
-     */
     private void listar() {
-        List<Despesa> despesas = listarDespesas.use(null, null, null, null, null);
+        List<Despesa> despesas = crud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -116,11 +99,8 @@ public class DespesaTerminalHandler {
         despesas.forEach(System.out::println);
     }
 
-    /**
-     * Atualiza a descrição ou valor de uma despesa existente.
-     */
     private void atualizar() {
-        List<Despesa> despesas = listarDespesas.use(null, null, null, null, null);
+        List<Despesa> despesas = crud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -149,15 +129,12 @@ public class DespesaTerminalHandler {
         String novoValorStr = scanner.nextLine();
         Float novoValor = novoValorStr.isBlank() ? null : Float.parseFloat(novoValorStr);
 
-        Despesa atualizada = atualizarDespesa.use(d.getId(), novaDescricao, novoValor);
+        Despesa atualizada = crud.atualizar(d.getId().toString(), true, novaDescricao, novoValor);
         System.out.println(atualizada != null ? "✅ Despesa atualizada." : "❌ Erro ao atualizar.");
     }
 
-    /**
-     * Remove uma despesa selecionada pelo usuário.
-     */
     private void remover() {
-        List<Despesa> despesas = listarDespesas.use(null, null, null, null, null);
+        List<Despesa> despesas = crud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -175,7 +152,7 @@ public class DespesaTerminalHandler {
         }
 
         Despesa d = despesas.get(index);
-        boolean ok = removerDespesa.use(d.getId());
+        boolean ok = crud.removerPorId(d.getId().toString());
         System.out.println(ok ? "✅ Despesa removida." : "❌ Falha ao remover.");
     }
 }

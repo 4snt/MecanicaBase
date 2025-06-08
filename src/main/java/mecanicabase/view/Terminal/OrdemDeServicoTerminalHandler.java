@@ -6,23 +6,14 @@ import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.PecaItem;
 import mecanicabase.model.financeiro.StatusOrdemDeServico;
 import mecanicabase.model.operacao.Peca;
-import mecanicabase.service.financeiro.ordem_de_servico.AtualizaOrdemDeServicoUseCase;
-import mecanicabase.service.financeiro.ordem_de_servico.ListaOrdemDeServicoUseCase;
-import mecanicabase.service.financeiro.ordem_de_servico.VenderPecaUseCase;
+import mecanicabase.service.financeiro.OrdemDeServicoCrud;
 import mecanicabase.service.operacao.PecaCrud;
 
-/**
- * Handler para funcionalidades extras de Ordem de Serviço. Aqui você pode
- * listar, adicionar peça e finalizar uma OS. A criação agora é automática via
- * Agendamento.
- */
 public class OrdemDeServicoTerminalHandler {
 
     private final Scanner scanner;
-    private final ListaOrdemDeServicoUseCase listaOS = new ListaOrdemDeServicoUseCase();
-    private final AtualizaOrdemDeServicoUseCase atualizaOS = new AtualizaOrdemDeServicoUseCase();
+    private final OrdemDeServicoCrud crud = new OrdemDeServicoCrud();
     private final PecaCrud pecaCrud = new PecaCrud();
-    private final VenderPecaUseCase venderPeca = new VenderPecaUseCase();
 
     public OrdemDeServicoTerminalHandler(Scanner scanner) {
         this.scanner = scanner;
@@ -48,9 +39,8 @@ public class OrdemDeServicoTerminalHandler {
                 case "3":
                     finalizar();
                     break;
-                case "0": {
+                case "0":
                     return;
-                }
                 default:
                     System.out.println("Opção inválida.");
             }
@@ -58,7 +48,7 @@ public class OrdemDeServicoTerminalHandler {
     }
 
     private void listar() {
-        List<OrdemDeServico> ordens = listaOS.use();
+        List<OrdemDeServico> ordens = crud.listarTodos();
         if (ordens.isEmpty()) {
             System.out.println("Nenhuma ordem de serviço encontrada.");
             return;
@@ -67,7 +57,7 @@ public class OrdemDeServicoTerminalHandler {
     }
 
     private void adicionarPeca() {
-        List<OrdemDeServico> ordens = listaOS.use();
+        List<OrdemDeServico> ordens = crud.listarTodos();
         if (ordens.isEmpty()) {
             System.out.println("Nenhuma OS encontrada.");
             return;
@@ -99,8 +89,7 @@ public class OrdemDeServicoTerminalHandler {
         int qtd = Integer.parseInt(scanner.nextLine());
 
         try {
-            PecaItem item = venderPeca.use(os.getId(), peca.getId(), qtd);
-            os.addPeca(item.getId());
+            PecaItem item = crud.venderPeca(os.getId(), peca.getId(), qtd);
             System.out.println("✅ Peça adicionada com sucesso!");
         } catch (RuntimeException e) {
             System.out.println("❌ Erro: " + e.getMessage());
@@ -108,7 +97,7 @@ public class OrdemDeServicoTerminalHandler {
     }
 
     private void finalizar() {
-        List<OrdemDeServico> ordens = listaOS.use();
+        List<OrdemDeServico> ordens = crud.listarTodos();
         if (ordens.isEmpty()) {
             System.out.println("Nenhuma OS encontrada.");
             return;
@@ -123,7 +112,7 @@ public class OrdemDeServicoTerminalHandler {
         OrdemDeServico os = ordens.get(index);
 
         try {
-            atualizaOS.use(os.getId().toString(), null, StatusOrdemDeServico.CONCLUIDO);
+            crud.atualizar(os.getId().toString(), true, null, StatusOrdemDeServico.CONCLUIDO);
             System.out.println("✅ Ordem de serviço finalizada!");
         } catch (RuntimeException e) {
             System.out.println("❌ Erro: " + e.getMessage());

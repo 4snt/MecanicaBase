@@ -11,7 +11,7 @@ import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Cliente;
 import mecanicabase.service.financeiro.AgendamentoCrud;
-import mecanicabase.service.financeiro.ordem_de_servico.CriarOrdemDeServicoUseCase;
+import mecanicabase.service.financeiro.OrdemDeServicoCrud;
 import mecanicabase.service.operacao.ServicoCrud;
 import mecanicabase.service.operacao.VeiculoCrud;
 import mecanicabase.service.usuarios.ClienteCrud;
@@ -20,7 +20,8 @@ public class AgendamentoTerminalHandler {
 
     private final Scanner scanner;
     private final AgendamentoCrud agendamentoCrud = new AgendamentoCrud();
-    private final CriarOrdemDeServicoUseCase criarOS = new CriarOrdemDeServicoUseCase();
+    private final OrdemDeServicoCrud crud = new OrdemDeServicoCrud();
+
     private final ClienteCrud listarClientes = new ClienteCrud();
     private final VeiculoCrud listarVeiculos = new VeiculoCrud();
     private final ServicoCrud servicoCrud = new ServicoCrud();
@@ -98,7 +99,7 @@ public class AgendamentoTerminalHandler {
             System.out.print("Data e hora desejada (yyyy-MM-ddTHH:mm): ");
             LocalDateTime data = LocalDateTime.parse(scanner.nextLine());
 
-            OrdemDeServico ordem = criarOS.use(cliente.getId());
+            OrdemDeServico ordem = crud.criar(true, cliente.getId());
 
             Agendamento agendamento = agendamentoController.criarAgendamentoComAlocacao(
                     data, servico, problema, veiculo, ordem

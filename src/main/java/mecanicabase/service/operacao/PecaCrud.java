@@ -33,7 +33,6 @@ public class PecaCrud extends Crud<Peca> {
         }
 
         Peca peca = new Peca(nome, valor, quantidade);
-        Peca.instances.add(peca);
         return peca;
     }
 

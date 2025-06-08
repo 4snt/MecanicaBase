@@ -47,9 +47,10 @@ public class TerminalRouter {
             System.out.println("3 - Serviços");
             System.out.println("4 - Agendamentos");
             System.out.println("5 - Ordens de Serviço");
+            System.out.println("6 - Executar benchmark de 100.000 OS");
             if (isAdmin) {
-                System.out.println("6 - Colaboradores");
-                System.out.println("7 - Financeiro");
+                System.out.println("7 - Colaboradores");
+                System.out.println("8 - Financeiro");
             }
             System.out.println("0 - Sair");
             System.out.print("Escolha: ");
@@ -71,7 +72,10 @@ public class TerminalRouter {
                 case "5":
                     new OrdemDeServicoTerminalHandler(scanner).menu();
                     break;
-                case "6": {
+                case "6":
+                    executarBenchmark();
+                    break;
+                case "7": {
                     if (isAdmin) {
                         new ColaboradorTerminalHandler(scanner).menu();
                     } else {
@@ -79,7 +83,7 @@ public class TerminalRouter {
                     }
                     break;
                 }
-                case "7": {
+                case "8": {
                     if (isAdmin) {
                         menuFinanceiro();
                     } else {
@@ -96,6 +100,17 @@ public class TerminalRouter {
                     break;
             }
         }
+    }
+
+    private void executarBenchmark() {
+        System.out.print("Digite a quantidade de ordens de serviço para gerar (ex: 100000): ");
+        int quantidade = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("⏳ Iniciando benchmark realista de " + quantidade + " OS...\n");
+
+        mecanicabase.infra.benchmark.BenchmarkOrdemDeServico.executarBenchmark(quantidade);
+
+        System.out.println("\n✅ Benchmark concluído!");
     }
 
     /**

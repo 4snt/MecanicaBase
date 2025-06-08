@@ -1,0 +1,15 @@
+Benchmark Ordem de Serviço (realista)
+OS criadas: 100000
+Tempo: 192505 ms
+Memória: 180767 KB
+
+Benchmark Ordem de Serviço (realista)
+OS criadas: 50000
+Tempo: 31086 ms
+Memória: 103418 KB
+
+Benchmark Ordem de Serviço (realista)
+OS criadas: 10000
+Tempo: 1946 ms
+Memória: 80896 KB
+

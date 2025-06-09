@@ -2,7 +2,6 @@ package mecanicabase.infra.benchmark;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -46,15 +45,17 @@ public class BenchmarkOrdemDeServico {
         OrdemDeServicoCrud osCrud = new OrdemDeServicoCrud();
         Random rand = new Random();
 
-        // Criar 20 instâncias únicas no cache do Flyweight
-        List<Peca> pecasBase = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            String nome = "Peça " + (i + 1);
-            float valor = 10 + i;
-            Peca peca = PecaFactory.getPeca(nome, valor);
-            peca.adicionarEstoque(quantidade); // garantir estoque
-            pecaCrud.criar(false, peca); // salvar uma vez só
-            pecasBase.add(peca);
+        // Usa todas as peças que já estão cadastradas no sistema
+        List<Peca> pecasBase = pecaCrud.getInstancias();
+
+        if (pecasBase.isEmpty()) {
+            System.out.println("⚠️ Nenhuma peça cadastrada. Cancele o benchmark ou carregue o CSV antes.");
+            return;
+        }
+
+        // Garante estoque para cada peça
+        for (Peca peca : pecasBase) {
+            peca.adicionarEstoque(quantidade);
         }
 
         Runtime runtime = Runtime.getRuntime();

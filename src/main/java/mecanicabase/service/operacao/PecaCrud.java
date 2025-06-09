@@ -10,7 +10,7 @@ import mecanicabase.model.operacao.Peca;
 public class PecaCrud extends Crud<Peca> {
 
     @Override
-    protected List<Peca> getInstancias() {
+    public List<Peca> getInstancias() {
         return Peca.instances;
     }
 

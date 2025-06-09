@@ -55,9 +55,13 @@ class "Entity" {
 }
 class Session {
 }
+class BenchmarkOrdemDeServico {
+}
 class JasyptCrypto {
 }
 class Database {
+}
+class PecaFactory {
 }
 class Agendamento {
   - data : LocalDateTime
@@ -443,6 +447,8 @@ class PecaTerminalHandler {
   +atualizar()
   +remover()
   +entradaManual()
+  +importarCSV()
+  +importarPecaItensComBenchmark()
 }
 class ServicoTerminalHandler {
   +menu()
@@ -469,6 +475,7 @@ class VeiculoTerminalHandler {
 }
 class TerminalRouter {
   +start()
+  +executarBenchmark()
   +menuFinanceiro()
 }
 "Entity" <|-- Database

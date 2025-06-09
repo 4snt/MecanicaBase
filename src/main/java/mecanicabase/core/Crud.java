@@ -1,6 +1,8 @@
 package mecanicabase.core;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public abstract class Crud<T> {
@@ -21,19 +23,15 @@ public abstract class Crud<T> {
         return true;
     }
 
+    private final Map<UUID, T> indexPorId = new HashMap<>();
+
     public T buscarPorId(String id) {
         UUID uuid = UUID.fromString(id);
-        return getInstancias().stream()
-                .filter(entidade -> getId(entidade).equals(uuid))
-                .findFirst()
-                .orElse(null);
+        return buscarPorId(uuid);
     }
 
     public T buscarPorId(UUID id) {
-        return getInstancias().stream()
-                .filter(entidade -> getId(entidade).equals(id))
-                .findFirst()
-                .orElse(null);
+        return indexPorId.get(id);
     }
 
     public List<T> listarTodos() {
@@ -42,7 +40,13 @@ public abstract class Crud<T> {
 
     public boolean removerPorId(String id) {
         UUID uuid = UUID.fromString(id);
-        return getInstancias().removeIf(entidade -> getId(entidade).equals(uuid));
+        T entidade = buscarPorId(uuid);
+        if (entidade != null) {
+            getInstancias().remove(entidade);
+            indexPorId.remove(uuid);
+            return true;
+        }
+        return false;
     }
 
     public T criar(boolean validar, Object... params) {
@@ -52,6 +56,7 @@ public abstract class Crud<T> {
 
         T entidade = criarInstancia(params);
         getInstancias().add(entidade);
+        indexPorId.put(getId(entidade), entidade);
         return entidade;
     }
 
@@ -66,7 +71,7 @@ public abstract class Crud<T> {
         }
 
         atualizarInstancia(entidade, params);
+        indexPorId.put(getId(entidade), entidade);
         return entidade;
     }
-
 }

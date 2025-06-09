@@ -108,7 +108,9 @@ public class TerminalRouter {
 
         System.out.println("⏳ Iniciando benchmark realista de " + quantidade + " OS...\n");
 
-        mecanicabase.infra.benchmark.BenchmarkOrdemDeServico.executarBenchmark(quantidade);
+        // Executa os dois modos automaticamente (com e sem Flyweight)
+        mecanicabase.infra.benchmark.BenchmarkPecasAplicadas.executarBenchmark(quantidade, true);
+        mecanicabase.infra.benchmark.BenchmarkPecasAplicadas.executarBenchmark(quantidade, false);
 
         System.out.println("\n✅ Benchmark concluído!");
     }

@@ -4,10 +4,17 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import mecanicabase.core.Crud;
+import mecanicabase.infra.flyweight.PecaFactory;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 
 public class PecaCrud extends Crud<Peca> {
+
+    private boolean usarFlyweight = true;
+
+    public void setUsarFlyweight(boolean usarFlyweight) {
+        this.usarFlyweight = usarFlyweight;
+    }
 
     @Override
     public List<Peca> getInstancias() {
@@ -22,13 +29,25 @@ public class PecaCrud extends Crud<Peca> {
     @Override
     protected Peca criarInstancia(Object... params) {
         if (params[0] instanceof Peca) {
-            return (Peca) params[0]; // usa diretamente a instância compartilhada
+            return (Peca) params[0];
         }
 
         String nome = (String) params[0];
         float valor = (float) params[1];
         int quantidade = (int) params[2];
-        return new Peca(nome, valor, quantidade);
+
+        if (usarFlyweight) {
+            Peca compartilhada = PecaFactory.getPeca(nome, valor);
+
+            // Só adiciona ao estoque se ainda não estiver registrada
+            if (!Peca.instances.contains(compartilhada)) {
+                compartilhada.adicionarEstoque(quantidade);
+            }
+
+            return compartilhada;
+        } else {
+            return new Peca(nome, valor, quantidade);
+        }
     }
 
     @Override
@@ -68,7 +87,7 @@ public class PecaCrud extends Crud<Peca> {
         EntradaPeca entrada = new EntradaPeca(peca.getId(), quantidade, custo, nomeFornecedor);
         EntradaPeca.instances.add(entrada);
         peca.adicionarEstoque(quantidade);
+
         return entrada;
     }
-
 }

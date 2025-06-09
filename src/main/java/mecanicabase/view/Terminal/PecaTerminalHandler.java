@@ -1,10 +1,12 @@
 package mecanicabase.view.Terminal;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 import mecanicabase.service.operacao.PecaCrud;
@@ -27,7 +29,6 @@ public class PecaTerminalHandler {
             System.out.println("4 - Remover Peça");
             System.out.println("5 - Entrada Manual de Peça");
             System.out.println("6 - Importar Peças via CSV");
-            System.out.println("7 - Importar PecaItens via CSV (com medição)");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
             String opcao = scanner.nextLine();
@@ -51,9 +52,7 @@ public class PecaTerminalHandler {
                 case "6":
                     importarCSV();
                     break;
-                case "7":
-                    importarPecaItensComBenchmark();
-                    break;
+
                 case "0":
                     return;
                 default:
@@ -180,82 +179,96 @@ public class PecaTerminalHandler {
     }
 
     private void importarCSV() {
-        System.out.print("Caminho do arquivo CSV (ex: data/pecas.csv): ");
-        String caminho = scanner.nextLine();
+        File pasta = new File("data/");
+        File[] arquivos = pasta.listFiles((dir, name) -> name.toLowerCase().endsWith(".csv"));
 
-        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
-            String linha;
-            int linhaAtual = 0;
-
-            while ((linha = br.readLine()) != null) {
-                linhaAtual++;
-                if (linhaAtual == 1 && linha.contains("nome,valor,quantidade")) {
-                    continue; // pula o cabeçalho
-                }
-
-                String[] partes = linha.split(",");
-                if (partes.length < 3) {
-                    System.out.printf("⚠️ Linha %d inválida: %s%n", linhaAtual, linha);
-                    continue;
-                }
-
-                String nome = partes[0].trim();
-                float valor = Float.parseFloat(partes[1].trim());
-                int quantidade = Integer.parseInt(partes[2].trim());
-
-                try {
-                    pecaCrud.criar(true, nome, valor, quantidade);
-                    System.out.printf("✅ [%d] %s importada com sucesso.%n", linhaAtual, nome);
-                } catch (RuntimeException e) {
-                    System.out.printf("❌ [%d] Erro ao importar %s: %s%n", linhaAtual, nome, e.getMessage());
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("❌ Erro ao ler o arquivo: " + e.getMessage());
+        if (arquivos == null || arquivos.length == 0) {
+            System.out.println("❌ Nenhum arquivo CSV encontrado na pasta ./data/");
+            return;
         }
-    }
 
-    private void importarPecaItensComBenchmark() {
-        System.out.print("Caminho do arquivo CSV (ex: data/peca_item.csv): ");
-        String caminho = scanner.nextLine();
+        // Lista arquivos disponíveis
+        System.out.println("📄 Arquivos CSV disponíveis:");
+        for (int i = 0; i < arquivos.length; i++) {
+            System.out.printf("%d - %s%n", i + 1, arquivos[i].getName());
+        }
+
+        // Escolha do arquivo
+        System.out.print("Escolha um arquivo pelo número: ");
+        int escolha;
+        try {
+            escolha = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("❌ Entrada inválida.");
+            return;
+        }
+        if (escolha < 1 || escolha > arquivos.length) {
+            System.out.println("❌ Número fora do intervalo.");
+            return;
+        }
+
+        String caminho = arquivos[escolha - 1].getPath();
 
         Runtime runtime = Runtime.getRuntime();
-        runtime.gc(); // limpa o lixo antes
+        runtime.gc(); // limpa lixo antes
         long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
         long tempoAntes = System.nanoTime();
 
-        int linhaAtual = 0, importados = 0;
+        int linhaImportada = 0;
+        int linhaArquivo = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                linhaAtual++;
-                if (linhaAtual == 1 && linha.contains("peca_nome")) {
-                    continue;
-                }
+                linhaArquivo++;
 
+                // Remove ponto-e-vírgula extras no final da linha
+                linha = linha.replaceAll(";+$", "");
+
+                // Divide por vírgula, que é o separador correto do seu CSV
                 String[] partes = linha.split(",");
-                if (partes.length < 4) {
+
+                // Remove colunas extras (caso tenha)
+                if (partes.length > 3) {
+                    partes = new String[]{partes[0], partes[1], partes[2]};
+                }
+
+                // Pula o cabeçalho, garantindo que tenha partes suficientes
+                if (linhaArquivo == 1 && partes.length >= 2
+                        && partes[0].toLowerCase().contains("nome")
+                        && partes[1].toLowerCase().contains("valor")) {
                     continue;
                 }
 
-                String nome = partes[0].trim();
-                float valor = Float.parseFloat(partes[1].trim());
-                int quantidade = Integer.parseInt(partes[2].trim());
+                // Linha inválida se menos que 3 colunas
+                if (partes.length < 3) {
+                    System.out.printf("⚠️ Linha %d inválida: %s%n", linhaArquivo, linha);
+                    continue;
+                }
 
-                // Busca peça existente
-                Peca peca = pecaCrud.listarTodos().stream()
-                        .filter(p -> p.getNome().equalsIgnoreCase(nome) && p.getValor() == valor)
-                        .findFirst().orElse(null);
+                try {
+                    String nome = partes[0].trim();
+                    float valor = Float.parseFloat(partes[1].trim());
+                    int quantidade = Integer.parseInt(partes[2].trim());
 
-                if (peca != null) {
-                    peca.adicionarEstoque(quantidade);
-                    importados++;
+                    pecaCrud.criar(true, nome, valor, quantidade);
+                    linhaImportada++;
+                    System.out.printf("✅ [%d] %s importada com sucesso.%n", linhaImportada, nome);
+                } catch (NumberFormatException e) {
+                    System.out.printf("❌ [%d] Erro de formato numérico: %s%n", linhaArquivo, linha);
+                } catch (RuntimeException e) {
+                    System.out.printf("❌ [%d] Erro ao importar %s: %s%n", linhaArquivo, partes[0].trim(), e.getMessage());
                 }
             }
+
+            if (linhaImportada == 0) {
+                System.out.println("⚠️ Nenhuma peça foi importada.");
+            } else {
+                System.out.printf("✅ Importação concluída: %d peças importadas com sucesso.%n", linhaImportada);
+            }
+
         } catch (IOException e) {
-            System.out.println("❌ Erro ao ler arquivo: " + e.getMessage());
-            return;
+            System.out.println("❌ Erro ao ler o arquivo: " + e.getMessage());
         }
 
         long tempoDepois = System.nanoTime();
@@ -264,14 +277,12 @@ public class PecaTerminalHandler {
         long tempoMs = (tempoDepois - tempoAntes) / 1_000_000;
         long memoriaKb = (memoriaDepois - memoriaAntes) / 1024;
 
-        System.out.printf("✅ Importados: %d itens%n", importados);
         System.out.printf("⏱️ Tempo de execução: %d ms%n", tempoMs);
         System.out.printf("📦 Memória usada: %d KB%n", memoriaKb);
 
-        // Salva no arquivo
         try (var writer = new java.io.FileWriter("data/medicoes_benchmark.txt", true)) {
-            writer.write("Importação de PecaItens\n");
-            writer.write("Itens importados: " + importados + "\n");
+            writer.write("Importação de Peças (CSV)\n");
+            writer.write("Peças importadas: " + linhaImportada + "\n");
             writer.write("Tempo: " + tempoMs + " ms\n");
             writer.write("Memória: " + memoriaKb + " KB\n\n");
         } catch (IOException e) {

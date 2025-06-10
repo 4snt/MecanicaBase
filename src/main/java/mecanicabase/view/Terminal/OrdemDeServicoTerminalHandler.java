@@ -13,10 +13,11 @@ public class OrdemDeServicoTerminalHandler {
 
     private final Scanner scanner;
     private final OrdemDeServicoCrud crud = new OrdemDeServicoCrud();
-    private final PecaCrud pecaCrud = new PecaCrud();
+    private final PecaCrud pecaCrud;
 
-    public OrdemDeServicoTerminalHandler(Scanner scanner) {
+    public OrdemDeServicoTerminalHandler(Scanner scanner, boolean usarFlyweight) {
         this.scanner = scanner;
+        this.pecaCrud = new PecaCrud(usarFlyweight); // ✅ modo configurável
     }
 
     public void menu() {

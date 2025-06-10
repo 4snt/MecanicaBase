@@ -1,0 +1,15 @@
+Benchmark Peças em OS - SEM Flyweight [10000 OS]
+Tempo total: 2724 ms
+Tempo peças: 2614 ms
+Memória total: 18589 KB
+Memória peças: 19162 KB (19622904 bytes)
+Média por peça: 1308 bytes
+
+Benchmark Peças em OS - COM Flyweight [10000 OS]
+Tempo total: 3667 ms
+Tempo peças: 3557 ms
+Memória total: 15299 KB
+Memória peças: 15299 KB (15666952 bytes)
+Média por peça: 1044 bytes
+Peças compartilhadas: 952
+

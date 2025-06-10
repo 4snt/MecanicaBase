@@ -22,7 +22,9 @@ public class BenchmarkPecasAplicadas {
     private static final List<String> modelos = Arrays.asList("Gol", "Palio", "Civic", "Onix");
 
     public static void executarTodosBenchmarks() {
-        int[] quantidades = {10000, 50000, 100000};
+        int[] quantidades = {10000}; 
+            //50000, 
+            //100000};
         for (int qtd : quantidades) {
             executarBenchmarkCorrigido(qtd, false); // sem flyweight
             executarBenchmarkCorrigido(qtd, true);  // com flyweight
@@ -32,13 +34,7 @@ public class BenchmarkPecasAplicadas {
     public static void executarBenchmarkCorrigido(int quantidade, boolean usarFlyweight) {
         System.out.println("\n🔁 Benchmark " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight") + " (" + quantidade + " OS)");
 
-        PecaCrud pecaCrud = new PecaCrud();
-        pecaCrud.setUsarFlyweight(usarFlyweight, (chave, params) -> {
-            String nome = (String) params[0];
-            float valor = (float) params[1];
-            int quantidadePeca = (int) params[2];
-            return new Peca(nome, valor, quantidadePeca);
-        });
+        PecaCrud pecaCrud = new PecaCrud(usarFlyweight); // ✅ construtor novo
 
         ClienteCrud clienteCrud = new ClienteCrud();
         VeiculoCrud veiculoCrud = new VeiculoCrud();

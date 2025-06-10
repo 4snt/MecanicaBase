@@ -1,7 +1,6 @@
 package mecanicabase.view.Terminal.router;
 
 import java.util.Scanner;
-
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Administrador;
 import mecanicabase.view.Terminal.AgendamentoTerminalHandler;
@@ -62,7 +61,7 @@ public class TerminalRouter {
                     new ClienteTerminalHandler(scanner).menu();
                     break;
                 case "2":
-                    new OficinaTerminalHandler(scanner).menu();
+                    new OficinaTerminalHandler(scanner, true).menu();
                     break;
                 case "3":
                     new ServicoTerminalHandler(scanner).menu();
@@ -71,7 +70,7 @@ public class TerminalRouter {
                     new AgendamentoTerminalHandler(scanner).menu();
                     break;
                 case "5":
-                    new OrdemDeServicoTerminalHandler(scanner).menu();
+                    new OrdemDeServicoTerminalHandler(scanner, true).menu();
                     break;
                 case "6":
                     executarBenchmark();

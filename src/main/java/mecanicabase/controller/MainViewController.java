@@ -59,7 +59,7 @@ public class MainViewController {
 
     @FXML
     private void abrirOficina() {
-        new OficinaTerminalHandler(scanner).menu();
+        new OficinaTerminalHandler(scanner, true).menu();
     }
 
     @FXML
@@ -74,7 +74,7 @@ public class MainViewController {
 
     @FXML
     private void abrirOrdens() {
-        new OrdemDeServicoTerminalHandler(scanner).menu();
+        new OrdemDeServicoTerminalHandler(scanner, true).menu();
     }
 
     @FXML

@@ -22,10 +22,10 @@ public class OficinaTerminalHandler {
      *
      * @param scanner Scanner compartilhado com o sistema.
      */
-    public OficinaTerminalHandler(Scanner scanner) {
+    public OficinaTerminalHandler(Scanner scanner, boolean usarFlyweight) {
         this.scanner = scanner;
         this.veiculoTerminalHandler = new VeiculoTerminalHandler(scanner);
-        this.pecaTerminalHandler = new PecaTerminalHandler(scanner);
+        this.pecaTerminalHandler = new PecaTerminalHandler(scanner, usarFlyweight);
     }
 
     /**

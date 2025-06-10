@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
-
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 import mecanicabase.service.operacao.PecaCrud;
@@ -14,10 +13,11 @@ import mecanicabase.service.operacao.PecaCrud;
 public class PecaTerminalHandler {
 
     private final Scanner scanner;
-    private final PecaCrud pecaCrud = new PecaCrud();
+    private final PecaCrud pecaCrud;
 
-    public PecaTerminalHandler(Scanner scanner) {
+    public PecaTerminalHandler(Scanner scanner, boolean usarFlyweight) {
         this.scanner = scanner;
+        this.pecaCrud = new PecaCrud(usarFlyweight); // ✅ modo configurável
     }
 
     public void menu() {

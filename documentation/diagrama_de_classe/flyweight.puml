@@ -1,0 +1,40 @@
+@startuml
+title Padrão Flyweight no Sistema MecânicaBase
+
+interface Flyweight {
+  +operar(estadoExterno)
+}
+
+class Peca implements Flyweight {
+  -nome : String
+  -valor : float
+  -quantidade : int
+  +operar(estadoExterno)
+}
+
+class UnsharedConcreteFlyweight extends Peca {
+  -estadoExclusivo : Object
+  +operar(estadoExterno)
+}
+
+class PecaFlyweightFactory {
+  -cache : Map<String, Peca>
+  +getPeca(nome : String, valor : float)
+  +getTotalCompartilhados()
+  +limpar()
+}
+
+class PecaCrud {
+  +criar(...)
+  +listarTodos()
+  +setUsarFlyweight(...)
+}
+
+Flyweight <|.. Peca
+Peca <|-- UnsharedConcreteFlyweight
+
+PecaFlyweightFactory --> Peca : cria e compartilha
+PecaCrud --> PecaFlyweightFactory : usa
+PecaCrud --> Peca : referencia
+
+@enduml

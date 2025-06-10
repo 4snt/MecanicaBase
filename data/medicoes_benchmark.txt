@@ -13,3 +13,8 @@ Itens importados: 0
 Tempo: 3 ms
 Memória: 983 KB
 
+Importação de Peças (CSV)
+Peças importadas: 1000
+Tempo: 1567 ms
+Memória: 5079 KB
+

@@ -4,31 +4,23 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import mecanicabase.core.Crud;
+import mecanicabase.flyweight.PecaFlyweightFactory;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 
 public class PecaCrud extends Crud<Peca> {
 
     private boolean validarDuplicidade = true;
+    private final boolean modoFlyweight;
+    private final PecaFlyweightFactory flyweightFactory;
 
-    public PecaCrud() {
-        // Ativa flyweight e define a fábrica
-        setUsarFlyweight(true, (chave, params) -> {
-            String nome = (String) params[0];
-            float valor = (float) params[1];
-            return new Peca(nome, valor, 0);
-        });
+    public PecaCrud(boolean usarFlyweight) {
+        this.modoFlyweight = usarFlyweight;
+        this.flyweightFactory = new PecaFlyweightFactory();
     }
 
     public void setValidarDuplicidade(boolean validarDuplicidade) {
         this.validarDuplicidade = validarDuplicidade;
-    }
-
-    @Override
-    protected String gerarChaveFlyweight(Object... params) {
-        String nome = ((String) params[0]).toLowerCase();
-        float valor = (float) params[1];
-        return nome + "|" + valor;
     }
 
     @Override
@@ -47,8 +39,13 @@ public class PecaCrud extends Crud<Peca> {
         float valor = (float) params[1];
         int quantidade = (int) params[2];
 
-        Peca nova = new Peca(nome, valor, quantidade);
-        return nova;
+        if (modoFlyweight) {
+            Peca p = flyweightFactory.getPeca(nome, valor);
+            p.adicionarEstoque(quantidade);
+            return p;
+        } else {
+            return new Peca(nome, valor, quantidade);
+        }
     }
 
     @Override
@@ -92,5 +89,15 @@ public class PecaCrud extends Crud<Peca> {
         peca.adicionarEstoque(quantidade);
 
         return entrada;
+    }
+
+    public int getTotalCompartilhadosFlyweight() {
+        return modoFlyweight ? flyweightFactory.getTotalCompartilhados() : 0;
+    }
+
+    public void limparFlyweight() {
+        if (modoFlyweight) {
+            flyweightFactory.limpar();
+        }
     }
 }

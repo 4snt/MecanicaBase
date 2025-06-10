@@ -18,3 +18,13 @@ Peças importadas: 1000
 Tempo: 1567 ms
 Memória: 5079 KB
 
+Importação de Peças (CSV)
+Peças importadas: 100
+Tempo: 22 ms
+Memória: 1966 KB
+
+Importação de Peças (CSV)
+Peças importadas: 100
+Tempo: 45 ms
+Memória: 3222 KB
+

@@ -1,0 +1,33 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.0 http://maven.apache.org/xsd/assembly-2.1.0.xsd">
+
+    <!-- O ID será adicionado ao nome do arquivo final, ex: MecanicaBase-4.1.2-dist.zip -->
+    <id>dist</id>
+
+    <formats>
+        <format>zip</format>
+    </formats>
+
+    <!-- Não cria uma pasta "base" dentro do zip -->
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <files>
+        <!-- Inclui o JAR com dependências já gerado -->
+        <file>
+            <source>${project.build.directory}/${project.artifactId}-${project.version}-jar-with-dependencies.jar</source>
+            <outputDirectory>/</outputDirectory>
+        </file>
+    </files>
+
+    <fileSets>
+        <!-- Inclui toda a pasta 'data' (ex: database.json, outros arquivos) -->
+        <fileSet>
+            <directory>${project.basedir}/data</directory>
+            <outputDirectory>data</outputDirectory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

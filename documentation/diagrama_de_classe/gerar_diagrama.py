@@ -133,8 +133,8 @@ def main():
     args = ap.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)
-    completo = os.path.join(args.outdir, "uml_diagrama_completo.puml")
-    relacoes = os.path.join(args.outdir, "uml_diagrama_relacoes.puml")
+    completo = os.path.join(args.outdir, "/documentation/diagrama_de_classe/pumls/uml_diagrama_completo.puml")
+    relacoes = os.path.join(args.outdir, "/documentation/diagrama_de_classe/pumls/uml_diagrama_relacoes.puml")
 
     classes, herancas, comps, dependencias = extrair_infos(args.src)
 

@@ -9,7 +9,7 @@ target/**
 !target/site/
 !target/site/apidocs/
 !target/site/apidocs/**
-
+!target/*zip
 # Ignorar configurações privadas do NetBeans
 nbproject/private/
 

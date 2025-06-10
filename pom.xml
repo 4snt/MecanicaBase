@@ -1,17 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
+  <!-- =========================== -->
+  <!--         IDENTIFICAÇÃO       -->
+  <!-- =========================== -->
   <groupId>com.mycompany</groupId>
   <artifactId>MecanicaBase</artifactId>
   <version>${revision}</version>
   <packaging>jar</packaging>
 
   <!-- =========================== -->
-  <!--          PROPERTIES         -->
+  <!--          PROPRIEDADES       -->
   <!-- =========================== -->
   <properties>
     <revision>0.0.1-SNAPSHOT</revision>
@@ -21,18 +23,17 @@
 
     <!-- JavaFX -->
     <javafx.version>21</javafx.version>
-    <!-- PlantUML  -->
-    <plantuml.version>1.2024.3</plantuml.version>   
+    <!-- PlantUML -->
+    <plantuml.version>1.2024.3</plantuml.version>
 
-    <!-- Classe principal única da aplicação -->
+    <!-- Classe principal -->
     <main.class>mecanicabase.MecanicaBase</main.class>
   </properties>
 
   <!-- =========================== -->
-  <!--        REPOSITORIES         -->
+  <!--        REPOSITÓRIOS         -->
   <!-- =========================== -->
   <repositories>
-    <!-- MaterialFX vem do JitPack -->
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
@@ -40,23 +41,24 @@
   </repositories>
 
   <!-- =========================== -->
-  <!--        DEPENDENCIES         -->
+  <!--         DEPENDÊNCIAS        -->
   <!-- =========================== -->
   <dependencies>
-    <!-- === CORE === -->
+    <!-- Gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
       <version>2.10.1</version>
     </dependency>
 
+    <!-- Jasypt -->
     <dependency>
       <groupId>org.jasypt</groupId>
       <artifactId>jasypt</artifactId>
       <version>1.9.3</version>
     </dependency>
 
-    <!-- === JAVAFX (módulos) === -->
+    <!-- JavaFX -->
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -68,13 +70,14 @@
       <version>${javafx.version}</version>
     </dependency>
 
-    <!-- === PlantUml === -->
+    <!-- PlantUML -->
     <dependency>
       <groupId>net.sourceforge.plantuml</groupId>
       <artifactId>plantuml</artifactId>
       <version>${plantuml.version}</version>
     </dependency>
-    <!-- === MaterialFX === -->
+
+    <!-- MaterialFX -->
     <dependency>
       <groupId>io.github.palexdev</groupId>
       <artifactId>materialfx</artifactId>
@@ -83,19 +86,17 @@
   </dependencies>
 
   <!-- =========================== -->
-  <!--           BUILD             -->
+  <!--            BUILD            -->
   <!-- =========================== -->
   <build>
-    <!-- ==================================== -->
-    <!-- Inclue database.json a Project Files -->
-    <!-- ==================================== -->
+    <!-- Recursos -->
     <resources>
-    <resource>
-      <directory>src/main/resources</directory>
-      <excludes>
-        <exclude>data/**</exclude> <!-- 🔥 impede que a pasta data/ vá para o JAR -->
-      </excludes>
-    </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>data/**</exclude>
+        </excludes>
+      </resource>
       <resource>
         <directory>data</directory>
         <includes>
@@ -103,9 +104,10 @@
         </includes>
       </resource>
     </resources>
-    <plugins>
 
-      <!-- Compilação consistente com JDK 17 -->
+    <!-- Plugins -->
+    <plugins>
+      <!-- Compilador -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -116,14 +118,23 @@
         </configuration>
       </plugin>
 
-      <!-- Geração de Javadoc -->
+      <!-- Javadoc -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>gerar-javadoc</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>javadoc</goal>
+            </goals>
+          </execution>
+        </executions>
         <configuration>
           <reportOutputDirectory>${project.build.directory}/site/apidocs</reportOutputDirectory>
-          <doctitle>MecanicaBase&nbsp;${revision}&nbsp;API</doctitle>
+          <docTitle>MecanicaBase ${revision} API</docTitle>
           <encoding>${project.build.sourceEncoding}</encoding>
           <charset>UTF-8</charset>
           <docencoding>UTF-8</docencoding>
@@ -131,7 +142,7 @@
         </configuration>
       </plugin>
 
-      <!-- JavaFX: mvn javafx:run -->
+      <!-- JavaFX run -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -141,7 +152,7 @@
         </configuration>
       </plugin>
 
-      <!-- Exec: mvn exec:java (IDE genéricas/linha de comando) -->
+      <!-- Exec auxiliar -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -151,67 +162,89 @@
         </configuration>
       </plugin>
 
-      <!-- JAR “fat” (jar-with-dependencies) -->
+      <!-- Assembly -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.3.0</version>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass>${main.class}</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
         <executions>
+
+          <!-- JAR com dependências -->
           <execution>
-            <id>make-assembly</id>
+            <id>build-fat-jar</id>
             <phase>package</phase>
             <goals>
               <goal>single</goal>
             </goals>
+            <configuration>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+              <archive>
+                <manifest>
+                  <mainClass>${main.class}</mainClass>
+                </manifest>
+              </archive>
+              <!-- evita colisão com o JAR padrão -->
+              <classifier>fat</classifier>
+            </configuration>
           </execution>
+
+          <!-- ZIP de distribuição -->
+          <execution>
+            <id>make-dist</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/assembly.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+
         </executions>
       </plugin>
-
     </plugins>
   </build>
-<profiles>
-  <profile>
-    <id>uml</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>exec-maven-plugin</artifactId>
-          <version>3.1.0</version>
 
-          <executions>
-            <execution>
-              <id>gerar-plantuml</id>
-              <phase>none</phase>
-              <goals><goal>java</goal></goals>
+  <!-- =========================== -->
+  <!--          PROFILE UML        -->
+  <!-- =========================== -->
+  <profiles>
+    <profile>
+      <id>uml</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+              <execution>
+                <id>gerar-plantuml</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>java</goal>
+                </goals>
+                <configuration>
+                  <mainClass>net.sourceforge.plantuml.Run</mainClass>
+                  <arguments>
+                    <argument>-tsvg</argument>
+                    <argument>-o</argument>
+                    <argument>${project.basedir}/documentation/diagrama_de_classe/svgs</argument>
+                    <argument>${project.basedir}/documentation/diagrama_de_classe/pumls</argument>
+                  </arguments>
+                  <includeProjectDependencies>true</includeProjectDependencies>
+                  <classpathScope>runtime</classpathScope>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
-              <configuration>
-                <mainClass>net.sourceforge.plantuml.Run</mainClass>
-                <arguments>
-                  <argument>-tsvg</argument>
-                  <argument>${project.basedir}/documentation/diagrama_de_classe/uml_diagrama_completo.puml</argument>
-                  <argument>${project.basedir}/documentation/diagrama_de_classe/uml_diagrama_relacoes.puml</argument>
-                </arguments>
-
-                <!-- estas duas linhas resolvem o class-path -->
-                <includeProjectDependencies>true</includeProjectDependencies>
-                <classpathScope>runtime</classpathScope>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </build>
-  </profile>
-</profiles>
 </project>

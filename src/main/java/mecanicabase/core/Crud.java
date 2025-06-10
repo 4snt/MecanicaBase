@@ -1,10 +1,16 @@
 package mecanicabase.core;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
+/**
+ * Crud generificado com suporte opcional a Flyweight. Para usar, chame
+ * setFlyweightFactory com uma função (chave, params) -> T
+ */
 public abstract class Crud<T> {
 
     protected abstract List<T> getInstancias();
@@ -25,9 +31,26 @@ public abstract class Crud<T> {
 
     private final Map<UUID, T> indexPorId = new HashMap<>();
 
+    // Flyweight opcional
+    private boolean usarFlyweight = false;
+    private BiFunction<String, Object[], T> flyweightFactory = null;
+    private final Map<String, T> flyweightCache = new HashMap<>();
+
+    public void setUsarFlyweight(boolean usarFlyweight, BiFunction<String, Object[], T> factory) {
+        this.usarFlyweight = usarFlyweight;
+        this.flyweightFactory = factory;
+    }
+
+    public int getTotalCompartilhadosFlyweight() {
+        return flyweightCache.size();
+    }
+
+    public void limparFlyweight() {
+        flyweightCache.clear();
+    }
+
     public T buscarPorId(String id) {
-        UUID uuid = UUID.fromString(id);
-        return buscarPorId(uuid);
+        return buscarPorId(UUID.fromString(id));
     }
 
     public T buscarPorId(UUID id) {
@@ -54,9 +77,19 @@ public abstract class Crud<T> {
             throw new IllegalArgumentException("Validação falhou ao criar entidade.");
         }
 
-        T entidade = criarInstancia(params);
-        getInstancias().add(entidade);
-        indexPorId.put(getId(entidade), entidade);
+        T entidade;
+
+        if (usarFlyweight && flyweightFactory != null) {
+            String chave = gerarChaveFlyweight(params);
+            entidade = flyweightCache.computeIfAbsent(chave, k -> flyweightFactory.apply(k, params));
+        } else {
+            entidade = criarInstancia(params);
+        }
+
+        if (!getInstancias().contains(entidade)) {
+            getInstancias().add(entidade);
+            indexPorId.put(getId(entidade), entidade);
+        }
         return entidade;
     }
 
@@ -73,5 +106,9 @@ public abstract class Crud<T> {
         atualizarInstancia(entidade, params);
         indexPorId.put(getId(entidade), entidade);
         return entidade;
+    }
+
+    protected String gerarChaveFlyweight(Object... params) {
+        return Arrays.toString(params); // pode ser sobrescrito
     }
 }

@@ -1,12 +1,9 @@
 package mecanicabase.infra.benchmark;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
-import mecanicabase.infra.flyweight.PecaFactory;
 import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.StatusOrdemDeServico;
 import mecanicabase.model.operacao.Peca;
@@ -24,46 +21,60 @@ public class BenchmarkPecasAplicadas {
     private static final List<String> marcas = Arrays.asList("Volkswagen", "Fiat", "Honda", "Chevrolet");
     private static final List<String> modelos = Arrays.asList("Gol", "Palio", "Civic", "Onix");
 
-    /**
-     * Executa o benchmark medindo a aplicação de peças em ordens de serviço,
-     * reutilizando ou não as instâncias de peça conforme o uso do Flyweight. O
-     * benchmark utiliza as peças já carregadas no sistema.
-     *
-     * @param quantidade número de ordens de serviço a serem criadas
-     * @param usarFlyweight se true, ativa reutilização de instâncias via
-     * PecaFactory
-     */
-    public static void executarBenchmark(int quantidade, boolean usarFlyweight) {
-        System.out.println("\n🔁 Benchmark " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight"));
+    public static void executarTodosBenchmarks() {
+        int[] quantidades = {10000, 50000, 100000};
+        for (int qtd : quantidades) {
+            executarBenchmarkCorrigido(qtd, false); // sem flyweight
+            executarBenchmarkCorrigido(qtd, true);  // com flyweight
+        }
+    }
+
+    public static void executarBenchmarkCorrigido(int quantidade, boolean usarFlyweight) {
+        System.out.println("\n🔁 Benchmark " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight") + " (" + quantidade + " OS)");
 
         PecaCrud pecaCrud = new PecaCrud();
-        pecaCrud.setUsarFlyweight(usarFlyweight);
+        pecaCrud.setUsarFlyweight(usarFlyweight, (chave, params) -> {
+            String nome = (String) params[0];
+            float valor = (float) params[1];
+            int quantidadePeca = (int) params[2];
+            return new Peca(nome, valor, quantidadePeca);
+        });
+
         ClienteCrud clienteCrud = new ClienteCrud();
         VeiculoCrud veiculoCrud = new VeiculoCrud();
         OrdemDeServicoCrud osCrud = new OrdemDeServicoCrud();
         Random rand = new Random();
 
-        // Usa as peças já existentes no sistema
         List<Peca> pecasBase = pecaCrud.getInstancias();
-
         if (pecasBase.isEmpty()) {
             System.out.println("⚠️ Nenhuma peça encontrada no sistema. Carregue via CSV antes de rodar o benchmark.");
             return;
         }
 
-        // Reabastece todas as peças com uma quantidade alta
         for (Peca p : pecasBase) {
-            p.setQuantidade(quantidade); // garante que haverá peças suficientes
+            p.setQuantidade(quantidade);
         }
 
-        System.out.printf("📦 Peças disponíveis no sistema: %d\n", pecasBase.size());
-
         Runtime runtime = Runtime.getRuntime();
-        runtime.gc();
+
+        try {
+            System.gc();
+            Thread.sleep(100);
+        } catch (InterruptedException ignored) {
+        }
+
         long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
         long tempoAntes = System.nanoTime();
 
+        long tempoPecasNano = 0;
+        int totalPecasVendidas = 0;
+
         try {
+            System.gc();
+            Thread.sleep(100);
+            long memoriaAntesPecas = runtime.totalMemory() - runtime.freeMemory();
+            long tempoAntesPecas = System.nanoTime();
+
             for (int i = 0; i < quantidade; i++) {
                 String nomeCompleto = nomes.get(rand.nextInt(nomes.size())) + " " + sobrenomes.get(rand.nextInt(sobrenomes.size()));
                 Cliente cliente = clienteCrud.criar(true, nomeCompleto, "Rua X", "3199" + i, nomeCompleto + "@ex.com", "000.000.000-00");
@@ -75,55 +86,69 @@ public class BenchmarkPecasAplicadas {
                 OrdemDeServico os = osCrud.criar(true, cliente.getId());
 
                 for (int j = 0; j < rand.nextInt(2) + 1; j++) {
-                    Peca peca = pecasBase.get(rand.nextInt(pecasBase.size()));
-                    try {
-                        osCrud.venderPeca(os.getId(), peca.getId(), 1);
-                    } catch (RuntimeException e) {
-                        System.out.println("⚠️ Erro ao vender peça: " + e.getMessage());
-                    }
+                    int index = rand.nextInt(pecasBase.size());
+                    Peca base = pecasBase.get(index);
+
+                    Peca peca = pecaCrud.criar(false, base.getNome(), base.getValor(), 0);
+                    peca.adicionarEstoque(10);
+
+                    long t1 = System.nanoTime();
+                    osCrud.venderPeca(os.getId(), peca.getId(), 1);
+                    long t2 = System.nanoTime();
+
+                    tempoPecasNano += (t2 - t1);
+                    totalPecasVendidas++;
                 }
 
                 osCrud.atualizar(os.getId().toString(), true, cliente.getId(), StatusOrdemDeServico.ABERTO);
             }
+
+            System.gc();
+            Thread.sleep(100);
+            long tempoDepoisPecas = System.nanoTime();
+            long memoriaDepoisPecas = runtime.totalMemory() - runtime.freeMemory();
+
+            long tempoDepois = System.nanoTime();
+            long memoriaDepois = runtime.totalMemory() - runtime.freeMemory();
+
+            long tempoTotalMs = (tempoDepois - tempoAntes) / 1_000_000;
+            long memoriaTotalKb = (memoriaDepois - memoriaAntes) / 1024;
+
+            long tempoPecasMs = (tempoDepoisPecas - tempoAntesPecas) / 1_000_000;
+            long memoriaPecasBytes = memoriaDepoisPecas - memoriaAntesPecas;
+            long memoriaPecasKb = memoriaPecasBytes / 1024;
+            long memoriaPorPecaBytes = totalPecasVendidas > 0 ? memoriaPecasBytes / totalPecasVendidas : 0;
+
+            System.out.printf("✅ Benchmark %s: %d OS criadas\n", usarFlyweight ? "COM Flyweight" : "SEM Flyweight", quantidade);
+            System.out.printf("⏱️ Tempo total: %d ms | Tempo só instanciando peças: %d ms\n", tempoTotalMs, tempoPecasMs);
+            System.out.printf("📦 Memória total: %d KB | Memória peças: %d KB (%d bytes) | Média por peça: %d bytes\n",
+                    memoriaTotalKb, memoriaPecasKb, memoriaPecasBytes, memoriaPorPecaBytes);
+            if (usarFlyweight) {
+                System.out.printf("📦 Peças compartilhadas: %d\n", pecaCrud.getTotalCompartilhadosFlyweight());
+            }
+
+            try (FileWriter fw = new FileWriter("data/medicoes_aplicadas.txt", true)) {
+                fw.write("Benchmark Peças em OS - " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight") + " [" + quantidade + " OS]\n");
+                fw.write("Tempo total: " + tempoTotalMs + " ms\n");
+                fw.write("Tempo peças: " + tempoPecasMs + " ms\n");
+                fw.write("Memória total: " + memoriaTotalKb + " KB\n");
+                fw.write("Memória peças: " + memoriaPecasKb + " KB (" + memoriaPecasBytes + " bytes)\n");
+                fw.write("Média por peça: " + memoriaPorPecaBytes + " bytes\n");
+                if (usarFlyweight) {
+                    fw.write("Peças compartilhadas: " + pecaCrud.getTotalCompartilhadosFlyweight() + "\n");
+                }
+                fw.write("\n");
+            }
+
         } catch (Exception e) {
             System.out.println("❌ Erro durante execução do benchmark: " + e.getMessage());
+            e.printStackTrace();
         }
 
-        long tempoDepois = System.nanoTime();
-        long memoriaDepois = runtime.totalMemory() - runtime.freeMemory();
-
-        long tempoMs = (tempoDepois - tempoAntes) / 1_000_000;
-        long memoriaKb = (memoriaDepois - memoriaAntes) / 1024;
-
-        System.out.printf("✅ Benchmark %s: %d OS criadas\n", usarFlyweight ? "COM Flyweight" : "SEM Flyweight", quantidade);
-        System.out.printf("⏱️ Tempo: %d ms\n", tempoMs);
-        System.out.printf("📦 Memória: %d KB\n", memoriaKb);
-        if (usarFlyweight) {
-            System.out.printf("📦 Peças compartilhadas: %d\n", PecaFactory.getTotalInstanciasCompartilhadas());
-        }
-
-        try (FileWriter fw = new FileWriter("data/medicoes_aplicadas.txt", true)) {
-            fw.write("Benchmark Peças em OS - " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight") + "\n");
-            fw.write("Peças no sistema: " + pecasBase.size() + "\n");
-            fw.write("OS criadas: " + quantidade + "\n");
-            fw.write("Tempo: " + tempoMs + " ms\n");
-            fw.write("Memória: " + memoriaKb + " KB\n");
-            if (usarFlyweight) {
-                fw.write("Peças compartilhadas: " + PecaFactory.getTotalInstanciasCompartilhadas() + "\n");
-            }
-            fw.write("\n");
-        } catch (IOException e) {
-            System.out.println("❌ Erro ao salvar benchmark: " + e.getMessage());
-        }
-
-        limparEntidadesCriadas(!usarFlyweight);
+        limparEntidadesCriadas();
     }
 
-    /**
-     * Limpa clientes, veículos, ordens de serviço e cache compartilhado. As
-     * peças existentes no sistema são preservadas.
-     */
-    public static void limparEntidadesCriadas(boolean limparCacheFlyweight) {
+    public static void limparEntidadesCriadas() {
         Cliente.instances.clear();
         Veiculo.instances.clear();
         OrdemDeServico.instances.clear();

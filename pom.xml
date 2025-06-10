@@ -199,7 +199,8 @@
                 <mainClass>net.sourceforge.plantuml.Run</mainClass>
                 <arguments>
                   <argument>-tsvg</argument>
-                  <argument>${project.basedir}/documentation/diagrama_de_classe/uml_diagrama.puml</argument>
+                  <argument>${project.basedir}/documentation/diagrama_de_classe/uml_diagrama_completo.puml</argument>
+                  <argument>${project.basedir}/documentation/diagrama_de_classe/uml_diagrama_relacoes.puml</argument>
                 </arguments>
 
                 <!-- estas duas linhas resolvem o class-path -->

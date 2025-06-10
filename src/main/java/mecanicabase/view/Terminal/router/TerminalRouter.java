@@ -1,6 +1,7 @@
 package mecanicabase.view.Terminal.router;
 
 import java.util.Scanner;
+
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Administrador;
 import mecanicabase.view.Terminal.AgendamentoTerminalHandler;
@@ -103,16 +104,15 @@ public class TerminalRouter {
     }
 
     private void executarBenchmark() {
-        System.out.print("Digite a quantidade de ordens de serviço para gerar (ex: 100000): ");
-        int quantidade = Integer.parseInt(scanner.nextLine());
+        System.out.println("⏳ Iniciando benchmark realista com 10k, 50k e 100k OS usando as peças já cadastradas...");
 
-        System.out.println("⏳ Iniciando benchmark realista de " + quantidade + " OS...\n");
-
-        // Executa os dois modos automaticamente (com e sem Flyweight)
-        mecanicabase.infra.benchmark.BenchmarkPecasAplicadas.executarBenchmark(quantidade, true);
-        mecanicabase.infra.benchmark.BenchmarkPecasAplicadas.executarBenchmark(quantidade, false);
-
-        System.out.println("\n✅ Benchmark concluído!");
+        try {
+            mecanicabase.infra.benchmark.BenchmarkPecasAplicadas.executarTodosBenchmarks();
+            System.out.println("✅ Benchmarks concluídos com sucesso!");
+            System.out.println("📄 Resultados salvos em: ./data/medicoes_aplicadas.txt");
+        } catch (Exception e) {
+            System.out.println("❌ Erro ao executar benchmarks: " + e.getMessage());
+        }
     }
 
     /**

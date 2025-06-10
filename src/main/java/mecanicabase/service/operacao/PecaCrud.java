@@ -4,16 +4,31 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 import mecanicabase.core.Crud;
-import mecanicabase.infra.flyweight.PecaFactory;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 
 public class PecaCrud extends Crud<Peca> {
 
-    private boolean usarFlyweight = true;
+    private boolean validarDuplicidade = true;
 
-    public void setUsarFlyweight(boolean usarFlyweight) {
-        this.usarFlyweight = usarFlyweight;
+    public PecaCrud() {
+        // Ativa flyweight e define a fábrica
+        setUsarFlyweight(true, (chave, params) -> {
+            String nome = (String) params[0];
+            float valor = (float) params[1];
+            return new Peca(nome, valor, 0);
+        });
+    }
+
+    public void setValidarDuplicidade(boolean validarDuplicidade) {
+        this.validarDuplicidade = validarDuplicidade;
+    }
+
+    @Override
+    protected String gerarChaveFlyweight(Object... params) {
+        String nome = ((String) params[0]).toLowerCase();
+        float valor = (float) params[1];
+        return nome + "|" + valor;
     }
 
     @Override
@@ -28,26 +43,12 @@ public class PecaCrud extends Crud<Peca> {
 
     @Override
     protected Peca criarInstancia(Object... params) {
-        if (params[0] instanceof Peca) {
-            return (Peca) params[0];
-        }
-
         String nome = (String) params[0];
         float valor = (float) params[1];
         int quantidade = (int) params[2];
 
-        if (usarFlyweight) {
-            Peca compartilhada = PecaFactory.getPeca(nome, valor);
-
-            // Só adiciona ao estoque se ainda não estiver registrada
-            if (!Peca.instances.contains(compartilhada)) {
-                compartilhada.adicionarEstoque(quantidade);
-            }
-
-            return compartilhada;
-        } else {
-            return new Peca(nome, valor, quantidade);
-        }
+        Peca nova = new Peca(nome, valor, quantidade);
+        return nova;
     }
 
     @Override
@@ -57,10 +58,12 @@ public class PecaCrud extends Crud<Peca> {
         Integer novaQuantidade = (Integer) params[2];
 
         if (novoNome != null && !novoNome.equalsIgnoreCase(peca.getNome())) {
-            boolean nomeRepetido = Peca.instances.stream()
-                    .anyMatch(p -> p.getNome().equalsIgnoreCase(novoNome));
-            if (nomeRepetido) {
-                throw new RuntimeException("Já existe outra peça com esse nome.");
+            if (validarDuplicidade) {
+                boolean nomeRepetido = Peca.instances.stream()
+                        .anyMatch(p -> p.getNome().equalsIgnoreCase(novoNome));
+                if (nomeRepetido) {
+                    throw new RuntimeException("Já existe outra peça com esse nome.");
+                }
             }
             peca.setNome(novoNome);
         }

@@ -1,0 +1,194 @@
+@startuml
+skinparam dpi 150
+top to bottom direction
+
+class MecanicaBase
+class AgendamentoController
+class ClienteController
+class MainViewController
+class Autenticavel
+class Crud
+class "Entity"
+class Session
+class BenchmarkPecasAplicadas
+class JasyptCrypto
+class Database
+class PecaFactory
+class Agendamento
+class CategoriaDespesa
+class Despesa
+class OrdemDeServico
+class PecaItem
+class ServicoItem
+class StatusAgendamento
+class StatusOrdemDeServico
+class Elevador
+class EntradaPeca
+class Peca
+class Servico
+class Sistema
+class StatusVeiculo
+class TipoElevador
+class Veiculo
+class Administrador
+class Cliente
+class Colaborador
+class Funcionario
+class Pessoa
+class TipoFuncionario
+class AgendamentoCrud
+class CategoriaDespesaCrud
+class DespesaCrud
+class OrdemDeServicoCrud
+class GerarBalancoUseCase
+class GerarRelatorioUseCase
+class PecaCrud
+class ServicoCrud
+class VeiculoCrud
+class AdministradorCrud
+class ClienteCrud
+class FuncionarioCrud
+class UsuarioCrud
+class MainView
+class AgendamentoTerminalHandler
+class CategoriaDespesaTerminalHandler
+class ClienteTerminalHandler
+class ColaboradorTerminalHandler
+class DespesaTerminalHandler
+class GerarBalancoTerminalHandler
+class GerarRelatorioTerminalHandler
+class LoginTerminalHandler
+class OficinaTerminalHandler
+class OrdemDeServicoTerminalHandler
+class PecaTerminalHandler
+class ServicoTerminalHandler
+class VeiculoTerminalHandler
+class TerminalRouter
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Database
+"Entity" <|-- Agendamento
+Comparable <|-- Agendamento
+"Entity" <|-- CategoriaDespesa
+"Entity" <|-- Despesa
+"Entity" <|-- OrdemDeServico
+"Entity" <|-- PecaItem
+"Entity" <|-- ServicoItem
+"Entity" <|-- Elevador
+"Entity" <|-- EntradaPeca
+"Entity" <|-- Peca
+"Entity" <|-- Servico
+"Entity" <|-- Veiculo
+Colaborador <|-- Administrador
+Pessoa <|-- Cliente
+Comparable <|-- Cliente
+Pessoa <|-- Colaborador
+Autenticavel <|-- Colaborador
+Colaborador <|-- Funcionario
+"Entity" <|-- Pessoa
+Crud <|-- AgendamentoCrud
+Crud <|-- CategoriaDespesaCrud
+Crud <|-- DespesaCrud
+Crud <|-- OrdemDeServicoCrud
+Crud <|-- PecaCrud
+Crud <|-- ServicoCrud
+Crud <|-- VeiculoCrud
+UsuarioCrud <|-- AdministradorCrud
+Crud <|-- ClienteCrud
+UsuarioCrud <|-- FuncionarioCrud
+Autenticavel <|-- UsuarioCrud
+Crud <|-- UsuarioCrud
+Application <|-- MainView
+Agendamento --> "1" StatusAgendamento
+OrdemDeServico --> "1" StatusOrdemDeServico
+Elevador --> "1" TipoElevador
+Servico --> "1" TipoFuncionario
+Servico --> "1" TipoElevador
+Veiculo --> "1" StatusVeiculo
+Funcionario --> "1" TipoFuncionario
+AgendamentoController ..> Servico : <<use>> #888888
+AgendamentoController ..> Veiculo : <<use>> #888888
+AgendamentoController ..> OrdemDeServico : <<use>> #888888
+AgendamentoController ..> Agendamento : <<use>> #888888
+ClienteController ..> Cliente : <<use>> #888888
+ClienteController ..> Cliente : <<use>> #888888
+ClienteController ..> Cliente : <<use>> #888888
+Agendamento ..> StatusAgendamento : <<use>> #888888
+Agendamento ..> StatusAgendamento : <<use>> #888888
+Agendamento ..> Servico : <<use>> #888888
+Agendamento ..> OrdemDeServico : <<use>> #888888
+Agendamento ..> Funcionario : <<use>> #888888
+Agendamento ..> Veiculo : <<use>> #888888
+Agendamento ..> Elevador : <<use>> #888888
+Despesa ..> CategoriaDespesa : <<use>> #888888
+OrdemDeServico ..> StatusOrdemDeServico : <<use>> #888888
+OrdemDeServico ..> StatusOrdemDeServico : <<use>> #888888
+PecaItem ..> Peca : <<use>> #888888
+PecaItem ..> OrdemDeServico : <<use>> #888888
+ServicoItem ..> Servico : <<use>> #888888
+ServicoItem ..> OrdemDeServico : <<use>> #888888
+Elevador ..> TipoElevador : <<use>> #888888
+Elevador ..> TipoElevador : <<use>> #888888
+EntradaPeca ..> Peca : <<use>> #888888
+Servico ..> TipoFuncionario : <<use>> #888888
+Servico ..> TipoFuncionario : <<use>> #888888
+Servico ..> TipoElevador : <<use>> #888888
+Servico ..> TipoElevador : <<use>> #888888
+Veiculo ..> StatusVeiculo : <<use>> #888888
+Veiculo ..> StatusVeiculo : <<use>> #888888
+Veiculo ..> Cliente : <<use>> #888888
+Funcionario ..> TipoFuncionario : <<use>> #888888
+Funcionario ..> TipoFuncionario : <<use>> #888888
+AgendamentoCrud ..> Agendamento : <<use>> #888888
+AgendamentoCrud ..> Agendamento : <<use>> #888888
+AgendamentoCrud ..> StatusAgendamento : <<use>> #888888
+AgendamentoCrud ..> Agendamento : <<use>> #888888
+AgendamentoCrud ..> Agendamento : <<use>> #888888
+CategoriaDespesaCrud ..> CategoriaDespesa : <<use>> #888888
+CategoriaDespesaCrud ..> CategoriaDespesa : <<use>> #888888
+CategoriaDespesaCrud ..> CategoriaDespesa : <<use>> #888888
+CategoriaDespesaCrud ..> CategoriaDespesa : <<use>> #888888
+DespesaCrud ..> Despesa : <<use>> #888888
+DespesaCrud ..> Despesa : <<use>> #888888
+DespesaCrud ..> Despesa : <<use>> #888888
+DespesaCrud ..> Despesa : <<use>> #888888
+OrdemDeServicoCrud ..> OrdemDeServico : <<use>> #888888
+OrdemDeServicoCrud ..> OrdemDeServico : <<use>> #888888
+OrdemDeServicoCrud ..> OrdemDeServico : <<use>> #888888
+OrdemDeServicoCrud ..> OrdemDeServico : <<use>> #888888
+OrdemDeServicoCrud ..> PecaItem : <<use>> #888888
+GerarBalancoUseCase ..> StatusOrdemDeServico : <<use>> #888888
+PecaCrud ..> Peca : <<use>> #888888
+PecaCrud ..> Peca : <<use>> #888888
+PecaCrud ..> Peca : <<use>> #888888
+PecaCrud ..> EntradaPeca : <<use>> #888888
+ServicoCrud ..> Servico : <<use>> #888888
+ServicoCrud ..> Servico : <<use>> #888888
+ServicoCrud ..> Servico : <<use>> #888888
+ServicoCrud ..> Servico : <<use>> #888888
+VeiculoCrud ..> Veiculo : <<use>> #888888
+VeiculoCrud ..> Veiculo : <<use>> #888888
+VeiculoCrud ..> Veiculo : <<use>> #888888
+VeiculoCrud ..> Veiculo : <<use>> #888888
+AdministradorCrud ..> Administrador : <<use>> #888888
+AdministradorCrud ..> Administrador : <<use>> #888888
+AdministradorCrud ..> Administrador : <<use>> #888888
+AdministradorCrud ..> Administrador : <<use>> #888888
+ClienteCrud ..> Cliente : <<use>> #888888
+ClienteCrud ..> Cliente : <<use>> #888888
+ClienteCrud ..> Cliente : <<use>> #888888
+ClienteCrud ..> Cliente : <<use>> #888888
+FuncionarioCrud ..> Funcionario : <<use>> #888888
+FuncionarioCrud ..> Funcionario : <<use>> #888888
+FuncionarioCrud ..> Funcionario : <<use>> #888888
+FuncionarioCrud ..> Funcionario : <<use>> #888888
+ServicoTerminalHandler ..> TipoFuncionario : <<use>> #888888
+ServicoTerminalHandler ..> TipoFuncionario : <<use>> #888888
+ServicoTerminalHandler ..> TipoElevador : <<use>> #888888
+VeiculoTerminalHandler ..> Cliente : <<use>> #888888
+VeiculoTerminalHandler ..> Veiculo : <<use>> #888888
+
+@enduml

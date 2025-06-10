@@ -22,9 +22,7 @@ public class BenchmarkPecasAplicadas {
     private static final List<String> modelos = Arrays.asList("Gol", "Palio", "Civic", "Onix");
 
     public static void executarTodosBenchmarks() {
-        int[] quantidades = {10000}; 
-            //50000, 
-            //100000};
+        int[] quantidades = {10000, 50000, 100000};
         for (int qtd : quantidades) {
             executarBenchmarkCorrigido(qtd, false); // sem flyweight
             executarBenchmarkCorrigido(qtd, true);  // com flyweight

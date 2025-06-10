@@ -69,15 +69,15 @@ Avaliar a diferença de performance (tempo e memória) entre:
 
 ---
 
-## 📊 Tabela de Resultados
+### 📊 Desempenho — Flyweight **COM** × **SEM**
 
-| OS Criadas | Tempo Sem FW | Tempo Com FW | Δ Tempo | Memória Sem FW | Memória Com FW | Δ Memória |
-| ---------- | ------------ | ------------ | ------- | -------------- | -------------- | --------- |
-| 10.000     | 1.751 ms     | 1.701 ms     | 🔻 -2%  | 37.126 KB      | 37.056 KB      | 🔻 ≈0%    |
-| 50.000     | 31.293 ms    | 25.488 ms    | 🔻 -18% | 111.616 KB     | 113.462 KB     | 🔺 +1%    |
-| 100.000    | 166.365 ms   | 153.707 ms   | 🔻 -7%  | 272.192 KB     | 258.048 KB     | 🔻 -5%    |
+| OS      | Tempo&nbsp;COM (ms) | Tempo&nbsp;SEM (ms) | Δ&nbsp;Tempo | Memória&nbsp;COM (KB) | Memória&nbsp;SEM (KB) | Δ&nbsp;Memória | Peças&nbsp;compartilhadas |
+| ------- | ------------------- | ------------------- | ------------ | --------------------- | --------------------- | -------------- | ------------------------- |
+| 10 000  | 1 561               | 2 519               | ↓ 38 %       | 14 615                | 21 120                | ↓ 31 %         | 1 000                     |
+| 50 000  | 15 856              | 134 528             | ↓ 88 %       | 73 641                | 107 073               | ↓ 31 %         | 1 000                     |
+| 100 000 | 73 961              | 551 775             | ↓ 87 %       | 150 001               | 214 208               | ↓ 30 %         | 1 000                     |
 
-📌 **Observação:** o benefício do Flyweight **só se torna perceptível acima de 50 mil objetos**. A variação pode ser alta conforme o número de peças repetidas utilizadas.
+> **Flyweight traz ganhos claros a partir de ~50 k objetos**, poupando **≈ 30 % de memória** e até **≈ 90 % de tempo** quando há muitas repetições de peças.
 
 ---
 

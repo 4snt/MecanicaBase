@@ -6,7 +6,11 @@ public class UnsharedConcreteFlyweight extends Peca {
 
     private Object estadoExclusivo;
 
-    public UnsharedConcreteFlyweight(String nome, float valor, int quantidade, Object estadoExclusivo) {
+    public UnsharedConcreteFlyweight(
+            String nome,
+            float valor,
+            int quantidade,
+            Object estadoExclusivo) {
         super(nome, valor, quantidade);
         this.estadoExclusivo = estadoExclusivo;
     }
@@ -21,6 +25,9 @@ public class UnsharedConcreteFlyweight extends Peca {
 
     @Override
     public void operar(Object estadoExterno) {
-        System.out.println("Peça exclusiva com estado: " + estadoExterno + " e interno: " + estadoExclusivo);
+        System.out.println(
+                "Peça exclusiva com estado: "
+                + estadoExterno + " e interno: "
+                + estadoExclusivo);
     }
 }

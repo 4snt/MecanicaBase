@@ -135,7 +135,7 @@ public class ColaboradorTerminalHandler {
         System.out.print("Novo salário (ou ENTER): ");
         String salarioStr = scanner.nextLine();
 
-        Float salario = salarioStr.isBlank() ? null : Float.parseFloat(salarioStr);
+        Float salario = salarioStr.isBlank() ? null : Float.valueOf(salarioStr);
 
         TipoFuncionario[] tipos = TipoFuncionario.values();
         System.out.println("Funções disponíveis:");

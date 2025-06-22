@@ -31,18 +31,16 @@ public class OrdemDeServicoTerminalHandler {
 
             String opcao = scanner.nextLine();
             switch (opcao) {
-                case "1":
+                case "1" ->
                     listar();
-                    break;
-                case "2":
+                case "2" ->
                     adicionarPeca();
-                    break;
-                case "3":
+                case "3" ->
                     finalizar();
-                    break;
-                case "0":
+                case "0" -> {
                     return;
-                default:
+                }
+                default ->
                     System.out.println("Opção inválida.");
             }
         }

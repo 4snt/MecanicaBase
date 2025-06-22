@@ -21,6 +21,8 @@ public class OficinaTerminalHandler {
      * Construtor do handler de oficina. Inicializa os sub-handlers.
      *
      * @param scanner Scanner compartilhado com o sistema.
+     * @param usarFlyweight Define se o padrão Flyweight será utilizado para
+     * otimizar o gerenciamento de peças.
      */
     public OficinaTerminalHandler(Scanner scanner, boolean usarFlyweight) {
         this.scanner = scanner;

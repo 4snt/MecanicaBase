@@ -32,21 +32,18 @@ public class CategoriaDespesaTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     criar();
-                    break;
-                case "2":
+                case "2" ->
                     listar();
-                    break;
-                case "3":
+                case "3" ->
                     atualizar();
-                    break;
-                case "4":
+                case "4" ->
                     remover();
-                    break;
-                case "0":
+                case "0" -> {
                     return;
-                default:
+                }
+                default ->
                     System.out.println("Opção inválida.");
             }
         }

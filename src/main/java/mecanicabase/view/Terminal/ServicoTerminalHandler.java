@@ -192,18 +192,18 @@ public class ServicoTerminalHandler {
     private Boolean perguntarBoolean(String label) {
         System.out.print(label);
         String entrada = scanner.nextLine();
-        return entrada.isBlank() ? null : Boolean.parseBoolean(entrada);
+        return entrada.isBlank() ? null : Boolean.valueOf(entrada);
     }
 
     private Float perguntarFloat(String label) {
         System.out.print(label);
         String entrada = scanner.nextLine();
-        return entrada.isBlank() ? null : Float.parseFloat(entrada);
+        return entrada.isBlank() ? null : Float.valueOf(entrada);
     }
 
     private Integer perguntarInt(String label) {
         System.out.print(label);
         String entrada = scanner.nextLine();
-        return entrada.isBlank() ? null : Integer.parseInt(entrada);
+        return entrada.isBlank() ? null : Integer.valueOf(entrada);
     }
 }

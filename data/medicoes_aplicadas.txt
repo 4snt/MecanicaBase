@@ -1,45 +1,75 @@
-Benchmark PeÃ§as em OS - SEM Flyweight [10000 OS]
-Tempo total: 2724 ms
-Tempo peÃ§as: 2614 ms
-MemÃ³ria total: 18589 KB
-MemÃ³ria peÃ§as: 19162 KB (19622904 bytes)
-MÃ©dia por peÃ§a: 1308 bytes
+Benchmark Peças em OS - SEM Flyweight [1000 OS]
+Tempo total: 435 ms
+Tempo peças: 309 ms
+Memória total: 1963 KB
+Memória peças: 1963 KB (2010864 bytes)
+Média por peça: 1304 bytes
 
-Benchmark PeÃ§as em OS - COM Flyweight [10000 OS]
-Tempo total: 3667 ms
-Tempo peÃ§as: 3557 ms
-MemÃ³ria total: 15299 KB
-MemÃ³ria peÃ§as: 15299 KB (15666952 bytes)
-MÃ©dia por peÃ§a: 1044 bytes
-PeÃ§as compartilhadas: 952
+Benchmark Peças em OS - COM Flyweight [1000 OS]
+Tempo total: 361 ms
+Tempo peças: 237 ms
+Memória total: 1742 KB
+Memória peças: 1742 KB (1784448 bytes)
+Média por peça: 1203 bytes
+Peças compartilhadas: 647
 
-Benchmark PeÃ§as em OS - SEM Flyweight [10000 OS]
-Tempo total: 2671 ms
-Tempo peÃ§as: 2544 ms
-MemÃ³ria total: 18506 KB
-MemÃ³ria peÃ§as: 19079 KB (19537840 bytes)
-MÃ©dia por peÃ§a: 1301 bytes
+Benchmark Peças em OS - SEM Flyweight [5000 OS]
+Tempo total: 1231 ms
+Tempo peças: 1108 ms
+Memória total: 9669 KB
+Memória peças: 9669 KB (9901328 bytes)
+Média por peça: 1319 bytes
 
-Benchmark PeÃ§as em OS - COM Flyweight [10000 OS]
-Tempo total: 3378 ms
-Tempo peÃ§as: 3254 ms
-MemÃ³ria total: 14796 KB
-MemÃ³ria peÃ§as: 14796 KB (15151696 bytes)
-MÃ©dia por peÃ§a: 1012 bytes
-PeÃ§as compartilhadas: 100
+Benchmark Peças em OS - COM Flyweight [5000 OS]
+Tempo total: 1324 ms
+Tempo peças: 1201 ms
+Memória total: 7862 KB
+Memória peças: 7862 KB (8050832 bytes)
+Média por peça: 1077 bytes
+Peças compartilhadas: 933
 
-Benchmark PeÃ§as em OS - SEM Flyweight [10000 OS]
-Tempo total: 2702 ms
-Tempo peÃ§as: 2588 ms
-MemÃ³ria total: 18789 KB
-MemÃ³ria peÃ§as: 19455 KB (19922336 bytes)
-MÃ©dia por peÃ§a: 1329 bytes
+Benchmark Peças em OS - SEM Flyweight [10000 OS]
+Tempo total: 3230 ms
+Tempo peças: 3121 ms
+Memória total: 18592 KB
+Memória peças: 18592 KB (19038776 bytes)
+Média por peça: 1274 bytes
 
-Benchmark PeÃ§as em OS - COM Flyweight [10000 OS]
-Tempo total: 3043 ms
-Tempo peÃ§as: 2926 ms
-MemÃ³ria total: 14901 KB
-MemÃ³ria peÃ§as: 14901 KB (15259360 bytes)
-MÃ©dia por peÃ§a: 1021 bytes
-PeÃ§as compartilhadas: 99
+Benchmark Peças em OS - COM Flyweight [10000 OS]
+Tempo total: 3858 ms
+Tempo peças: 3734 ms
+Memória total: 15109 KB
+Memória peças: 15109 KB (15471840 bytes)
+Média por peça: 1026 bytes
+Peças compartilhadas: 974
+
+Benchmark Peças em OS - SEM Flyweight [50000 OS]
+Tempo total: 88091 ms
+Tempo peças: 87965 ms
+Memória total: 93718 KB
+Memória peças: 93718 KB (95968240 bytes)
+Média por peça: 1279 bytes
+
+Benchmark Peças em OS - COM Flyweight [50000 OS]
+Tempo total: 154962 ms
+Tempo peças: 154837 ms
+Memória total: 74417 KB
+Memória peças: 74417 KB (76203136 bytes)
+Média por peça: 1018 bytes
+Peças compartilhadas: 995
+
+Benchmark Peças em OS - SEM Flyweight [100000 OS]
+Tempo total: 680593 ms
+Tempo peças: 680466 ms
+Memória total: 189520 KB
+Memória peças: 189520 KB (194069136 bytes)
+Média por peça: 1292 bytes
+
+Benchmark Peças em OS - COM Flyweight [100000 OS]
+Tempo total: 863457 ms
+Tempo peças: 863316 ms
+Memória total: 149610 KB
+Memória peças: 149610 KB (153200664 bytes)
+Média por peça: 1022 bytes
+Peças compartilhadas: 997
 

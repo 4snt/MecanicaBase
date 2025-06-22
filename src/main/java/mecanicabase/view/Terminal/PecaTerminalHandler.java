@@ -34,28 +34,23 @@ public class PecaTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     criar();
-                    break;
-                case "2":
+                case "2" ->
                     listar();
-                    break;
-                case "3":
+                case "3" ->
                     atualizar();
-                    break;
-                case "4":
+                case "4" ->
                     remover();
-                    break;
-                case "5":
+                case "5" ->
                     entradaManual();
-                    break;
-                case "6":
+                case "6" ->
                     importarCSV();
-                    break;
 
-                case "0":
+                case "0" -> {
                     return;
-                default:
+                }
+                default ->
                     System.out.println("Opção inválida.");
             }
         }
@@ -113,11 +108,11 @@ public class PecaTerminalHandler {
 
         System.out.print("Novo valor (ENTER para manter): ");
         String valorStr = scanner.nextLine();
-        Float valor = valorStr.isBlank() ? null : Float.parseFloat(valorStr);
+        Float valor = valorStr.isBlank() ? null : Float.valueOf(valorStr);
 
         System.out.print("Nova quantidade (ENTER para manter): ");
         String qtdStr = scanner.nextLine();
-        Integer quantidade = qtdStr.isBlank() ? null : Integer.parseInt(qtdStr);
+        Integer quantidade = qtdStr.isBlank() ? null : Integer.valueOf(qtdStr);
 
         try {
             Peca atualizada = pecaCrud.atualizar(peca.getId().toString(), true, nome, valor, quantidade);

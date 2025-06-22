@@ -57,47 +57,40 @@ public class TerminalRouter {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     new ClienteTerminalHandler(scanner).menu();
-                    break;
-                case "2":
+                case "2" ->
                     new OficinaTerminalHandler(scanner, true).menu();
-                    break;
-                case "3":
+                case "3" ->
                     new ServicoTerminalHandler(scanner).menu();
-                    break;
-                case "4":
+                case "4" ->
                     new AgendamentoTerminalHandler(scanner).menu();
-                    break;
-                case "5":
+                case "5" ->
                     new OrdemDeServicoTerminalHandler(scanner, true).menu();
-                    break;
-                case "6":
+                case "6" ->
                     executarBenchmark();
-                    break;
-                case "7": {
+                case "7" -> {
                     if (isAdmin) {
                         new ColaboradorTerminalHandler(scanner).menu();
                     } else {
                         System.out.println("Opção inválida.");
                     }
-                    break;
+
                 }
-                case "8": {
+                case "8" -> {
                     if (isAdmin) {
                         menuFinanceiro();
                     } else {
                         System.out.println("Opção inválida.");
                     }
-                    break;
+
                 }
-                case "0": {
+                case "0" -> {
                     System.out.println("Encerrando...");
                     return;
                 }
-                default:
+                default ->
                     System.out.println("Opção inválida.");
-                    break;
             }
         }
     }
@@ -129,23 +122,19 @@ public class TerminalRouter {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     new CategoriaDespesaTerminalHandler(scanner).menu();
-                    break;
-                case "2":
+                case "2" ->
                     new DespesaTerminalHandler(scanner).menu();
-                    break;
-                case "3":
+                case "3" ->
                     new GerarRelatorioTerminalHandler(scanner).menu();
-                    break;
-                case "4":
+                case "4" ->
                     new GerarBalancoTerminalHandler(scanner).menu();
-                    break;
-                case "0":
+                case "0" -> {
                     return;
-                default:
+                }
+                default ->
                     System.out.println("Opção inválida.");
-                    break;
             }
         }
     }

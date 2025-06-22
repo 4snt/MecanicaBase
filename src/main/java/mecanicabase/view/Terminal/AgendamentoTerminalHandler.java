@@ -1,8 +1,10 @@
 package mecanicabase.view.Terminal;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
+
 import mecanicabase.controller.AgendamentoController;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
@@ -107,8 +109,12 @@ public class AgendamentoTerminalHandler {
 
             System.out.println("✅ Agendamento criado: " + agendamento.getId());
 
-        } catch (Exception e) {
-            System.out.println("❌ Erro ao criar agendamento: " + e.getMessage());
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            System.out.println("❌ Entrada inválida. Verifique os números digitados.");
+        } catch (DateTimeParseException e) {
+            System.out.println("❌ Data no formato incorreto. Use yyyy-MM-ddTHH:mm");
+        } catch (RuntimeException e) {
+            System.out.println("❌ Erro inesperado: " + e.getMessage());
         }
     }
 

@@ -34,21 +34,18 @@ public class DespesaTerminalHandler {
             String opcao = scanner.nextLine();
 
             switch (opcao) {
-                case "1":
+                case "1" ->
                     criar();
-                    break;
-                case "2":
+                case "2" ->
                     listar();
-                    break;
-                case "3":
+                case "3" ->
                     atualizar();
-                    break;
-                case "4":
+                case "4" ->
                     remover();
-                    break;
-                case "0":
+                case "0" -> {
                     return;
-                default:
+                }
+                default ->
                     System.out.println("Opção inválida.");
             }
         }
@@ -127,7 +124,7 @@ public class DespesaTerminalHandler {
 
         System.out.print("Novo valor (ENTER para manter): ");
         String novoValorStr = scanner.nextLine();
-        Float novoValor = novoValorStr.isBlank() ? null : Float.parseFloat(novoValorStr);
+        Float novoValor = novoValorStr.isBlank() ? null : Float.valueOf(novoValorStr);
 
         Despesa atualizada = crud.atualizar(d.getId().toString(), true, novaDescricao, novoValor);
         System.out.println(atualizada != null ? "✅ Despesa atualizada." : "❌ Erro ao atualizar.");

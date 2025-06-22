@@ -43,23 +43,23 @@ public class LoginTerminalHandler {
         System.out.print("Senha: ");
         String senha = scanner.nextLine();
 
-        Colaborador colaborador = null;
-
-        if (tipo.equals("1")) {
-            colaborador = funcionarioCrud.login(email, senha);
-        } else if (tipo.equals("2")) {
-            colaborador = administradorCrud.login(email, senha);
-        } else {
-            System.out.println("Tipo inválido.");
-            return false;
-        }
+        Colaborador colaborador = switch (tipo) {
+            case "1" ->
+                funcionarioCrud.login(email, senha);
+            case "2" ->
+                administradorCrud.login(email, senha);
+            default -> {
+                System.out.println("Tipo inválido.");
+                yield null;
+            }
+        };
 
         if (colaborador != null) {
             Session.setPessoaLogado(colaborador);
-            System.out.println("Login realizado com sucesso. Bem-vindo, " + colaborador.getNome() + "!");
+            System.out.println("✅ Login realizado com sucesso. Bem-vindo, " + colaborador.getNome() + "!");
             return true;
         } else {
-            System.out.println("Credenciais inválidas.");
+            System.out.println("❌ Credenciais inválidas.");
             return false;
         }
     }

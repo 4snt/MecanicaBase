@@ -10,7 +10,14 @@ import mecanicabase.service.usuarios.ClienteCrud;
  */
 public class ClienteController {
 
-    private final ClienteCrud crud = new ClienteCrud();
+    private final ClienteCrud crud;
+
+    /**
+     * Construtor que recebe o ClienteCrud vindo do ApplicationContext.
+     */
+    public ClienteController(ClienteCrud crud) {
+        this.crud = crud;
+    }
 
     /**
      * Cria um novo cliente com os dados fornecidos.
@@ -26,6 +33,9 @@ public class ClienteController {
         return crud.listarTodos();
     }
 
+    /**
+     * Lista clientes por filtro (nome ou email).
+     */
     public List<Cliente> listar(String filtro) {
         return crud.buscarPorFiltro(filtro);
     }

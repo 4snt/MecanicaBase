@@ -7,17 +7,16 @@ import mecanicabase.model.financeiro.CategoriaDespesa;
 import mecanicabase.service.financeiro.CategoriaDespesaCrud;
 
 /**
- * Handler de terminal para gerenciamento de categorias de despesa. Usa o CRUD
- * genérico.
+ * Handler de terminal para gerenciamento de categorias de despesa.
  */
 public class CategoriaDespesaTerminalHandler {
 
     private final Scanner scanner;
-    private final CategoriaDespesaCrud crud = new CategoriaDespesaCrud() {
-    };
+    private final CategoriaDespesaCrud crud;
 
-    public CategoriaDespesaTerminalHandler(Scanner scanner) {
+    public CategoriaDespesaTerminalHandler(Scanner scanner, CategoriaDespesaCrud crud) {
         this.scanner = scanner;
+        this.crud = crud;
     }
 
     public void menu() {
@@ -58,7 +57,7 @@ public class CategoriaDespesaTerminalHandler {
             return;
         }
 
-        CategoriaDespesa categoria = crud.criar(true, titulo); // ✅ passa `true` explicitamente
+        CategoriaDespesa categoria = crud.criar(true, titulo);
         System.out.println("✅ Categoria criada com ID: " + categoria.getId());
     }
 
@@ -95,7 +94,7 @@ public class CategoriaDespesaTerminalHandler {
                 return;
             }
 
-            crud.atualizar(idStr, true, novoTitulo); // ✅ passa `true` explicitamente
+            crud.atualizar(idStr, true, novoTitulo);
             System.out.println("✅ Categoria atualizada com sucesso.");
 
         } catch (IllegalArgumentException e) {

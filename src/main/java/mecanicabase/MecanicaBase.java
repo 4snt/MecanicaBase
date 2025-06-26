@@ -1,15 +1,30 @@
 package mecanicabase;
 
+import javax.swing.SwingUtilities;
+import mecanicabase.infra.ApplicationContext;
+import mecanicabase.infra.EnvConfig;
 import mecanicabase.infra.db.Database;
-import mecanicabase.view.Terminal.router.TerminalRouter;
+import mecanicabase.view.swing.MainSwingView;
 
 public class MecanicaBase {
 
     public static void main(String[] args) {
+
         Database.load();
 
-        new TerminalRouter().start();
+        boolean interfaceAtiva = EnvConfig.INSTANCE.get("INTERFACE", "true").equalsIgnoreCase("true");
 
-        Database.save(); // salva no final do terminal
+        ApplicationContext context = new ApplicationContext();
+
+        if (interfaceAtiva) {
+            SwingUtilities.invokeLater(() -> {
+                new MainSwingView(context).setVisible(true);
+            });
+        } else {
+
+            context.router.start();
+        }
+
+        Database.save();
     }
 }

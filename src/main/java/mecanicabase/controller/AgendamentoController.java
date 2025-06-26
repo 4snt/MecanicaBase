@@ -18,7 +18,11 @@ import mecanicabase.service.financeiro.AgendamentoCrud;
  */
 public class AgendamentoController {
 
-    private final AgendamentoCrud crud = new AgendamentoCrud();
+    private final AgendamentoCrud crud;
+
+    public AgendamentoController(AgendamentoCrud crud) {
+        this.crud = crud;
+    }
 
     /**
      * Cria um novo agendamento, alocando automaticamente os recursos

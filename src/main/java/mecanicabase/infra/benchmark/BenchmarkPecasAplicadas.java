@@ -32,7 +32,7 @@ public class BenchmarkPecasAplicadas {
     public static void executarBenchmarkCorrigido(int quantidade, boolean usarFlyweight) {
         System.out.println("\n🔁 Benchmark " + (usarFlyweight ? "COM Flyweight" : "SEM Flyweight") + " (" + quantidade + " OS)");
 
-        PecaCrud pecaCrud = new PecaCrud(usarFlyweight); // ✅ construtor novo
+        PecaCrud pecaCrud = new PecaCrud(); // ✅ construtor novo
 
         ClienteCrud clienteCrud = new ClienteCrud();
         VeiculoCrud veiculoCrud = new VeiculoCrud();

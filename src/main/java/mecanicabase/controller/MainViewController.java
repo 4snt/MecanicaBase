@@ -1,92 +1,113 @@
 package mecanicabase.controller;
 
-import java.util.Scanner;
+import java.io.IOException;
+
 import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import mecanicabase.infra.ApplicationContext;
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Administrador;
-import mecanicabase.view.Terminal.AgendamentoTerminalHandler;
-import mecanicabase.view.Terminal.CategoriaDespesaTerminalHandler;
-import mecanicabase.view.Terminal.ClienteTerminalHandler;
-import mecanicabase.view.Terminal.ColaboradorTerminalHandler;
-import mecanicabase.view.Terminal.DespesaTerminalHandler;
-import mecanicabase.view.Terminal.GerarBalancoTerminalHandler;
-import mecanicabase.view.Terminal.GerarRelatorioTerminalHandler;
-import mecanicabase.view.Terminal.OficinaTerminalHandler;
-import mecanicabase.view.Terminal.OrdemDeServicoTerminalHandler;
-import mecanicabase.view.Terminal.ServicoTerminalHandler;
 
 public class MainViewController {
 
-    private final Scanner scanner = new Scanner(System.in);
-
     @FXML
     private MFXButton btnClientes;
-
     @FXML
     private MFXButton btnOficina;
-
     @FXML
     private MFXButton btnServicos;
-
     @FXML
     private MFXButton btnAgendamentos;
-
     @FXML
     private MFXButton btnOrdemServico;
-
     @FXML
     private MFXButton btnColaboradores;
-
     @FXML
     private MFXButton btnFinanceiro;
-
     @FXML
     private VBox adminSection;
 
+    private final ApplicationContext context;
+
+    public MainViewController(ApplicationContext context) {
+        this.context = context;
+    }
+
     @FXML
     public void initialize() {
-        // Exibe a área admin somente se for um administrador
         boolean isAdmin = Session.getPessoaLogado() instanceof Administrador;
         adminSection.setVisible(isAdmin);
     }
 
     @FXML
     private void abrirClientes() {
-        new ClienteTerminalHandler(scanner).menu();
+        abrirTela("/mecanicabase/view/fxml/ClienteView.fxml", "Gestão de Clientes");
     }
 
     @FXML
     private void abrirOficina() {
-        new OficinaTerminalHandler(scanner, true).menu();
+        abrirTela("/mecanicabase/view/fxml/OficinaView.fxml", "Gestão de Oficina");
     }
 
     @FXML
     private void abrirServicos() {
-        new ServicoTerminalHandler(scanner).menu();
+        abrirTela("/mecanicabase/view/fxml/ServicoView.fxml", "Gestão de Serviços");
     }
 
     @FXML
     private void abrirAgendamentos() {
-        new AgendamentoTerminalHandler(scanner).menu();
+        abrirTela("/mecanicabase/view/fxml/AgendamentoView.fxml", "Gestão de Agendamentos");
     }
 
     @FXML
     private void abrirOrdens() {
-        new OrdemDeServicoTerminalHandler(scanner, true).menu();
+        abrirTela("/mecanicabase/view/fxml/OrdemServicoView.fxml", "Gestão de Ordens de Serviço");
     }
 
     @FXML
     private void abrirColaboradores() {
-        new ColaboradorTerminalHandler(scanner).menu();
+        abrirTela("/mecanicabase/view/fxml/ColaboradorView.fxml", "Gestão de Colaboradores");
     }
 
     @FXML
     private void abrirFinanceiro() {
-        new CategoriaDespesaTerminalHandler(scanner).menu();
-        new DespesaTerminalHandler(scanner).menu();
-        new GerarRelatorioTerminalHandler(scanner).menu();
-        new GerarBalancoTerminalHandler(scanner).menu();
+        abrirTela("/mecanicabase/view/fxml/FinanceiroView.fxml", "Gestão Financeira");
+    }
+
+    private void abrirTela(String fxml, String titulo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml));
+            loader.setControllerFactory(param -> {
+                try {
+                    String name = fxml.substring(fxml.lastIndexOf('/') + 1, fxml.lastIndexOf("View.fxml"));
+                    return Class.forName("mecanicabase.controller." + capitalize(name) + "Controller")
+                            .getConstructor(ApplicationContext.class)
+                            .newInstance(context);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle(titulo);
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 }

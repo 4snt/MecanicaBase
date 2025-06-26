@@ -21,13 +21,15 @@ public class OficinaTerminalHandler {
      * Construtor do handler de oficina. Inicializa os sub-handlers.
      *
      * @param scanner Scanner compartilhado com o sistema.
-     * @param usarFlyweight Define se o padrão Flyweight será utilizado para
-     * otimizar o gerenciamento de peças.
+     * @param veiculoHandler Handler de veículos
+     * @param pecaHandler Handler de peças (estoque)
      */
-    public OficinaTerminalHandler(Scanner scanner, boolean usarFlyweight) {
+    public OficinaTerminalHandler(Scanner scanner,
+            VeiculoTerminalHandler veiculoHandler,
+            PecaTerminalHandler pecaHandler) {
         this.scanner = scanner;
-        this.veiculoTerminalHandler = new VeiculoTerminalHandler(scanner);
-        this.pecaTerminalHandler = new PecaTerminalHandler(scanner, usarFlyweight);
+        this.veiculoTerminalHandler = veiculoHandler;
+        this.pecaTerminalHandler = pecaHandler;
     }
 
     /**
@@ -36,7 +38,6 @@ public class OficinaTerminalHandler {
      */
     public void menu() {
         while (true) {
-            // Exibe as opções do menu principal
             System.out.println("\n=== MENU PRINCIPAL - OFICINA ===");
             System.out.println("1 - Veículos");
             System.out.println("2 - Estoque");
@@ -45,7 +46,6 @@ public class OficinaTerminalHandler {
             System.out.print("Escolha: ");
             String opcao = scanner.nextLine();
 
-            // Executa a ação conforme a opção escolhida
             switch (opcao) {
                 case "1" ->
                     veiculoTerminalHandler.menu();
@@ -53,10 +53,10 @@ public class OficinaTerminalHandler {
                     pecaTerminalHandler.menu();
                 case "0" -> {
                     System.out.println("Saindo do sistema...");
-                    return; // Encerra o menu
+                    return;
                 }
                 default ->
-                    System.out.println("Opção inválida."); // Tratamento para entradas incorretas
+                    System.out.println("Opção inválida.");
             }
         }
     }

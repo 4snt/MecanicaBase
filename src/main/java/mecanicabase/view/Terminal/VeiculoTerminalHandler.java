@@ -10,10 +10,12 @@ import mecanicabase.service.operacao.VeiculoCrud;
 public class VeiculoTerminalHandler {
 
     private final Scanner scanner;
-    private final VeiculoCrud veiculoCrud = new VeiculoCrud();
+    private final VeiculoCrud veiculoCrud;
 
-    public VeiculoTerminalHandler(Scanner scanner) {
+    // ✅ Construtor correto
+    public VeiculoTerminalHandler(Scanner scanner, VeiculoCrud veiculoCrud) {
         this.scanner = scanner;
+        this.veiculoCrud = veiculoCrud;
     }
 
     public void menu() {
@@ -68,7 +70,7 @@ public class VeiculoTerminalHandler {
 
         Veiculo v = veiculoCrud.criar(true, cor, ano, placa, modelo, cliente.getId());
         cliente.addVeiculo(v.getId());
-        System.out.println("Veículo criado com sucesso: " + v.getId());
+        System.out.println("✅ Veículo criado com sucesso: " + v.getId());
     }
 
     private void listar() {
@@ -125,8 +127,18 @@ public class VeiculoTerminalHandler {
             }
         }
 
-        veiculoCrud.atualizar(v.getId().toString(), true, cor, ano, placa, modelo, cliente.getId(), v.getStatus());
-        System.out.println("Veículo atualizado.");
+        veiculoCrud.atualizar(
+                v.getId().toString(),
+                true,
+                cor,
+                ano,
+                placa,
+                modelo,
+                cliente.getId(),
+                v.getStatus()
+        );
+
+        System.out.println("✅ Veículo atualizado.");
     }
 
     private void remover() {
@@ -136,9 +148,9 @@ public class VeiculoTerminalHandler {
         }
         boolean sucesso = veiculoCrud.removerPorId(v.getId().toString());
         if (sucesso) {
-            System.out.println("Veículo removido.");
+            System.out.println("✅ Veículo removido.");
         } else {
-            System.out.println("Erro ao remover veículo.");
+            System.out.println("❌ Erro ao remover veículo.");
         }
     }
 

@@ -12,12 +12,14 @@ import mecanicabase.service.operacao.PecaCrud;
 public class OrdemDeServicoTerminalHandler {
 
     private final Scanner scanner;
-    private final OrdemDeServicoCrud crud = new OrdemDeServicoCrud();
+    private final OrdemDeServicoCrud crud;
     private final PecaCrud pecaCrud;
 
-    public OrdemDeServicoTerminalHandler(Scanner scanner, boolean usarFlyweight) {
+    // ✅ Construtor correto
+    public OrdemDeServicoTerminalHandler(Scanner scanner, OrdemDeServicoCrud crud, PecaCrud pecaCrud) {
         this.scanner = scanner;
-        this.pecaCrud = new PecaCrud(usarFlyweight); // ✅ modo configurável
+        this.crud = crud;
+        this.pecaCrud = pecaCrud;
     }
 
     public void menu() {
@@ -68,6 +70,11 @@ public class OrdemDeServicoTerminalHandler {
 
         System.out.print("Escolha a OS: ");
         int indexOS = Integer.parseInt(scanner.nextLine()) - 1;
+        if (indexOS < 0 || indexOS >= ordens.size()) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
         OrdemDeServico os = ordens.get(indexOS);
 
         List<Peca> pecas = pecaCrud.listarTodos();
@@ -82,6 +89,11 @@ public class OrdemDeServicoTerminalHandler {
 
         System.out.print("Escolha a peça: ");
         int indexPeca = Integer.parseInt(scanner.nextLine()) - 1;
+        if (indexPeca < 0 || indexPeca >= pecas.size()) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
         Peca peca = pecas.get(indexPeca);
 
         System.out.print("Quantidade: ");
@@ -108,6 +120,11 @@ public class OrdemDeServicoTerminalHandler {
 
         System.out.print("Escolha a OS para finalizar: ");
         int index = Integer.parseInt(scanner.nextLine()) - 1;
+        if (index < 0 || index >= ordens.size()) {
+            System.out.println("Opção inválida.");
+            return;
+        }
+
         OrdemDeServico os = ordens.get(index);
 
         try {

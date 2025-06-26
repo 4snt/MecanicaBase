@@ -43,3 +43,8 @@ Pe�as importadas: 1000
 Tempo: 197 ms
 Mem�ria: 4277 KB
 
+Importação de Peças (CSV)
+Peças importadas: 100
+Tempo: 64 ms
+Memória: 3317 KB
+

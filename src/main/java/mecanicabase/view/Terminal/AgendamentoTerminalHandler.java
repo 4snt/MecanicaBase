@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
-
 import mecanicabase.controller.AgendamentoController;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
@@ -21,16 +20,29 @@ import mecanicabase.service.usuarios.ClienteCrud;
 public class AgendamentoTerminalHandler {
 
     private final Scanner scanner;
-    private final AgendamentoCrud agendamentoCrud = new AgendamentoCrud();
-    private final OrdemDeServicoCrud crud = new OrdemDeServicoCrud();
+    private final AgendamentoCrud agendamentoCrud;
+    private final OrdemDeServicoCrud ordemCrud;
+    private final ClienteCrud clienteCrud;
+    private final VeiculoCrud veiculoCrud;
+    private final ServicoCrud servicoCrud;
+    private final AgendamentoController agendamentoController;
 
-    private final ClienteCrud listarClientes = new ClienteCrud();
-    private final VeiculoCrud listarVeiculos = new VeiculoCrud();
-    private final ServicoCrud servicoCrud = new ServicoCrud();
-    private final AgendamentoController agendamentoController = new AgendamentoController();
-
-    public AgendamentoTerminalHandler(Scanner scanner) {
+    public AgendamentoTerminalHandler(
+            Scanner scanner,
+            AgendamentoCrud agendamentoCrud,
+            OrdemDeServicoCrud ordemCrud,
+            ClienteCrud clienteCrud,
+            VeiculoCrud veiculoCrud,
+            ServicoCrud servicoCrud,
+            AgendamentoController agendamentoController
+    ) {
         this.scanner = scanner;
+        this.agendamentoCrud = agendamentoCrud;
+        this.ordemCrud = ordemCrud;
+        this.clienteCrud = clienteCrud;
+        this.veiculoCrud = veiculoCrud;
+        this.servicoCrud = servicoCrud;
+        this.agendamentoController = agendamentoController;
     }
 
     public void menu() {
@@ -64,7 +76,7 @@ public class AgendamentoTerminalHandler {
 
     private void criar() {
         try {
-            List<Cliente> clientes = listarClientes.listarTodos();
+            List<Cliente> clientes = clienteCrud.listarTodos();
             if (clientes.isEmpty()) {
                 System.out.println("Nenhum cliente encontrado.");
                 return;
@@ -76,7 +88,7 @@ public class AgendamentoTerminalHandler {
             System.out.print("Escolha o cliente: ");
             Cliente cliente = clientes.get(Integer.parseInt(scanner.nextLine()) - 1);
 
-            List<Veiculo> veiculos = listarVeiculos.buscarPorFiltro(cliente.getId().toString());
+            List<Veiculo> veiculos = veiculoCrud.buscarPorFiltro(cliente.getId().toString());
             if (veiculos.isEmpty()) {
                 System.out.println("Este cliente não possui veículos.");
                 return;
@@ -101,7 +113,7 @@ public class AgendamentoTerminalHandler {
             System.out.print("Data e hora desejada (yyyy-MM-ddTHH:mm): ");
             LocalDateTime data = LocalDateTime.parse(scanner.nextLine());
 
-            OrdemDeServico ordem = crud.criar(true, cliente.getId());
+            OrdemDeServico ordem = ordemCrud.criar(true, cliente.getId());
 
             Agendamento agendamento = agendamentoController.criarAgendamentoComAlocacao(
                     data, servico, problema, veiculo, ordem

@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <actions>
+    <!-- Ação para rodar o modo Terminal -->
     <action>
-        <actionName>run</actionName>
-
+        <actionName>run-terminal</actionName>
         <packagings>
             <packaging>jar</packaging>
         </packagings>
-
         <goals>
-            <goal>process-classes</goal>
-            <goal>org.codehaus.mojo:exec-maven-plugin:3.1.0:exec</goal>
+            <goal>javafx:run</goal>
         </goals>
-
         <properties>
-            <!-- Somente o que será passado à JVM -->
-            <exec.vmArgs>-Dapp.version=${project.version}</exec.vmArgs>
-
-            <!-- A linha completa que o plugin usará -->
-            <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
-
+            <main.class>mecanicabase.MecanicaBase</main.class>
+            <exec.args></exec.args>
             <exec.appArgs></exec.appArgs>
-            <exec.mainClass>mecanicabase.MecanicaBase</exec.mainClass>
-            <exec.executable>java</exec.executable>
+            <exec.vmArgs></exec.vmArgs>
+        </properties>
+    </action>
+
+    <!-- Ação para rodar o modo Interface (JavaFX) -->
+    <action>
+        <actionName>run-interface</actionName>
+        <packagings>
+            <packaging>jar</packaging>
+        </packagings>
+        <goals>
+            <goal>javafx:run</goal>
+        </goals>
+        <properties>
+            <main.class>mecanicabase.MainView</main.class>
+            <exec.args></exec.args>
+            <exec.appArgs></exec.appArgs>
+            <exec.vmArgs></exec.vmArgs>
         </properties>
     </action>
 </actions>

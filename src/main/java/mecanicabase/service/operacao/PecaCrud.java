@@ -3,9 +3,9 @@ package mecanicabase.service.operacao;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
-
 import mecanicabase.core.Crud;
 import mecanicabase.flyweight.PecaFlyweightFactory;
+import mecanicabase.infra.EnvConfig;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 
@@ -15,8 +15,8 @@ public class PecaCrud extends Crud<Peca> {
     private final boolean modoFlyweight;
     private final PecaFlyweightFactory flyweightFactory;
 
-    public PecaCrud(boolean usarFlyweight) {
-        this.modoFlyweight = usarFlyweight;
+    public PecaCrud() {
+        this.modoFlyweight = EnvConfig.INSTANCE.getBoolean("USE_FLYWEIGHT", true);
         this.flyweightFactory = new PecaFlyweightFactory();
     }
 

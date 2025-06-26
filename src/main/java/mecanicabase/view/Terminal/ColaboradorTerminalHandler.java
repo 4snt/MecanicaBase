@@ -7,18 +7,16 @@ import mecanicabase.model.usuarios.TipoFuncionario;
 import mecanicabase.service.usuarios.AdministradorCrud;
 import mecanicabase.service.usuarios.FuncionarioCrud;
 
-/**
- * Handler de terminal para gestão de colaboradores. Permite criar, listar,
- * atualizar e remover Funcionários e Administradores.
- */
 public class ColaboradorTerminalHandler {
 
     private final Scanner scanner;
-    private final FuncionarioCrud funcionarioCrud = new FuncionarioCrud();
-    private final AdministradorCrud administradorCrud = new AdministradorCrud();
+    private final FuncionarioCrud funcionarioCrud;
+    private final AdministradorCrud administradorCrud;
 
-    public ColaboradorTerminalHandler(Scanner scanner) {
+    public ColaboradorTerminalHandler(Scanner scanner, FuncionarioCrud funcionarioCrud, AdministradorCrud administradorCrud) {
         this.scanner = scanner;
+        this.funcionarioCrud = funcionarioCrud;
+        this.administradorCrud = administradorCrud;
     }
 
     public void menu() {
@@ -92,7 +90,7 @@ public class ColaboradorTerminalHandler {
         TipoFuncionario funcao = tipos[escolha - 1];
 
         Funcionario f = funcionarioCrud.criar(true, nome, funcao, email, senha, cpf, telefone, endereco, salario);
-        System.out.println("Funcionário criado com ID: " + f.getId());
+        System.out.println("✅ Funcionário criado com ID: " + f.getId());
     }
 
     private void criarAdministrador() {
@@ -110,7 +108,7 @@ public class ColaboradorTerminalHandler {
         String endereco = scanner.nextLine();
 
         Administrador a = administradorCrud.criar(true, nome, email, senha, cpf, telefone, endereco);
-        System.out.println("Administrador criado com ID: " + a.getId());
+        System.out.println("✅ Administrador criado com ID: " + a.getId());
     }
 
     private void listarFuncionarios() {
@@ -156,7 +154,7 @@ public class ColaboradorTerminalHandler {
         }
 
         funcionarioCrud.atualizar(id, true, nome, senha, telefone, endereco, funcao, salario);
-        System.out.println("Funcionário atualizado.");
+        System.out.println("✅ Funcionário atualizado.");
     }
 
     private void atualizarAdministrador() {
@@ -172,20 +170,20 @@ public class ColaboradorTerminalHandler {
         String endereco = scanner.nextLine();
 
         administradorCrud.atualizar(id, true, nome, senha, telefone, endereco);
-        System.out.println("Administrador atualizado.");
+        System.out.println("✅ Administrador atualizado.");
     }
 
     private void removerFuncionario() {
         System.out.print("ID do funcionário: ");
         String id = scanner.nextLine();
         boolean removido = funcionarioCrud.removerPorId(id);
-        System.out.println(removido ? "Funcionário removido." : "Funcionário não encontrado.");
+        System.out.println(removido ? "✅ Funcionário removido." : "❌ Funcionário não encontrado.");
     }
 
     private void removerAdministrador() {
         System.out.print("ID do administrador: ");
         String id = scanner.nextLine();
         boolean removido = administradorCrud.removerPorId(id);
-        System.out.println(removido ? "Administrador removido." : "Administrador não encontrado.");
+        System.out.println(removido ? "✅ Administrador removido." : "❌ Administrador não encontrado.");
     }
 }

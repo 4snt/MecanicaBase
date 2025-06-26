@@ -1,19 +1,10 @@
 package mecanicabase.view.Terminal.router;
 
 import java.util.Scanner;
+import mecanicabase.infra.ApplicationContext;
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Administrador;
-import mecanicabase.view.Terminal.AgendamentoTerminalHandler;
-import mecanicabase.view.Terminal.CategoriaDespesaTerminalHandler;
-import mecanicabase.view.Terminal.ClienteTerminalHandler;
-import mecanicabase.view.Terminal.ColaboradorTerminalHandler;
-import mecanicabase.view.Terminal.DespesaTerminalHandler;
-import mecanicabase.view.Terminal.GerarBalancoTerminalHandler;
-import mecanicabase.view.Terminal.GerarRelatorioTerminalHandler;
 import mecanicabase.view.Terminal.LoginTerminalHandler;
-import mecanicabase.view.Terminal.OficinaTerminalHandler;
-import mecanicabase.view.Terminal.OrdemDeServicoTerminalHandler;
-import mecanicabase.view.Terminal.ServicoTerminalHandler;
 
 /**
  * Classe responsável por controlar o fluxo principal do sistema via terminal.
@@ -23,15 +14,16 @@ import mecanicabase.view.Terminal.ServicoTerminalHandler;
  */
 public class TerminalRouter {
 
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+    private final ApplicationContext context;
 
-    /**
-     * Inicia o roteador principal do sistema terminal. Primeiro realiza o login
-     * do usuário, e em seguida apresenta o menu principal. O menu exibido pode
-     * variar dependendo se o usuário logado é um administrador.
-     */
+    public TerminalRouter(ApplicationContext context) {
+        this.context = context;
+        this.scanner = context.scanner;
+    }
+
     public void start() {
-        LoginTerminalHandler loginHandler = new LoginTerminalHandler(scanner);
+        LoginTerminalHandler loginHandler = context.loginHandler;
 
         boolean loggedIn = false;
         while (!loggedIn) {
@@ -58,24 +50,23 @@ public class TerminalRouter {
 
             switch (opcao) {
                 case "1" ->
-                    new ClienteTerminalHandler(scanner).menu();
+                    context.clienteHandler.menu();
                 case "2" ->
-                    new OficinaTerminalHandler(scanner, true).menu();
+                    context.oficinaHandler.menu();
                 case "3" ->
-                    new ServicoTerminalHandler(scanner).menu();
+                    context.servicoHandler.menu();
                 case "4" ->
-                    new AgendamentoTerminalHandler(scanner).menu();
+                    context.agendamentoHandler.menu();
                 case "5" ->
-                    new OrdemDeServicoTerminalHandler(scanner, true).menu();
+                    context.ordemHandler.menu();
                 case "6" ->
                     executarBenchmark();
                 case "7" -> {
                     if (isAdmin) {
-                        new ColaboradorTerminalHandler(scanner).menu();
+                        context.colaboradorHandler.menu();
                     } else {
                         System.out.println("Opção inválida.");
                     }
-
                 }
                 case "8" -> {
                     if (isAdmin) {
@@ -83,7 +74,6 @@ public class TerminalRouter {
                     } else {
                         System.out.println("Opção inválida.");
                     }
-
                 }
                 case "0" -> {
                     System.out.println("Encerrando...");
@@ -107,9 +97,6 @@ public class TerminalRouter {
         }
     }
 
-    /**
-     * Exibe o submenu financeiro com opções restritas a administradores.
-     */
     private void menuFinanceiro() {
         while (true) {
             System.out.println("\n=== MENU FINANCEIRO ===");
@@ -123,13 +110,13 @@ public class TerminalRouter {
 
             switch (opcao) {
                 case "1" ->
-                    new CategoriaDespesaTerminalHandler(scanner).menu();
+                    context.categoriaHandler.menu();
                 case "2" ->
-                    new DespesaTerminalHandler(scanner).menu();
+                    context.despesaHandler.menu();
                 case "3" ->
-                    new GerarRelatorioTerminalHandler(scanner).menu();
+                    context.relatorioHandler.menu();
                 case "4" ->
-                    new GerarBalancoTerminalHandler(scanner).menu();
+                    context.balancoHandler.menu();
                 case "0" -> {
                     return;
                 }

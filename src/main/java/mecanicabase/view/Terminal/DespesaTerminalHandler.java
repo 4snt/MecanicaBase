@@ -8,18 +8,18 @@ import mecanicabase.service.financeiro.CategoriaDespesaCrud;
 import mecanicabase.service.financeiro.DespesaCrud;
 
 /**
- * Handler de terminal responsável por operações relacionadas a despesas. Usa o
- * CRUD genérico para criar, listar, atualizar e remover.
+ * Handler de terminal responsável por operações relacionadas a despesas.
  */
 public class DespesaTerminalHandler {
 
     private final Scanner scanner;
-    private final DespesaCrud crud = new DespesaCrud();
-    private final CategoriaDespesaCrud categoriaCrud = new CategoriaDespesaCrud() {
-    };
+    private final DespesaCrud despesaCrud;
+    private final CategoriaDespesaCrud categoriaCrud;
 
-    public DespesaTerminalHandler(Scanner scanner) {
+    public DespesaTerminalHandler(Scanner scanner, DespesaCrud despesaCrud, CategoriaDespesaCrud categoriaCrud) {
         this.scanner = scanner;
+        this.despesaCrud = despesaCrud;
+        this.categoriaCrud = categoriaCrud;
     }
 
     public void menu() {
@@ -79,7 +79,7 @@ public class DespesaTerminalHandler {
         float valor = Float.parseFloat(scanner.nextLine());
 
         try {
-            Despesa d = crud.criar(true, categoria.getId(), descricao, valor);
+            Despesa d = despesaCrud.criar(true, categoria.getId(), descricao, valor);
             System.out.println("✅ Despesa criada: " + d.getId());
         } catch (Exception e) {
             System.out.println("❌ Erro: " + e.getMessage());
@@ -87,7 +87,7 @@ public class DespesaTerminalHandler {
     }
 
     private void listar() {
-        List<Despesa> despesas = crud.listarTodos();
+        List<Despesa> despesas = despesaCrud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -97,7 +97,7 @@ public class DespesaTerminalHandler {
     }
 
     private void atualizar() {
-        List<Despesa> despesas = crud.listarTodos();
+        List<Despesa> despesas = despesaCrud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -126,12 +126,12 @@ public class DespesaTerminalHandler {
         String novoValorStr = scanner.nextLine();
         Float novoValor = novoValorStr.isBlank() ? null : Float.valueOf(novoValorStr);
 
-        Despesa atualizada = crud.atualizar(d.getId().toString(), true, novaDescricao, novoValor);
+        Despesa atualizada = despesaCrud.atualizar(d.getId().toString(), true, novaDescricao, novoValor);
         System.out.println(atualizada != null ? "✅ Despesa atualizada." : "❌ Erro ao atualizar.");
     }
 
     private void remover() {
-        List<Despesa> despesas = crud.listarTodos();
+        List<Despesa> despesas = despesaCrud.listarTodos();
         if (despesas.isEmpty()) {
             System.out.println("Nenhuma despesa encontrada.");
             return;
@@ -149,7 +149,7 @@ public class DespesaTerminalHandler {
         }
 
         Despesa d = despesas.get(index);
-        boolean ok = crud.removerPorId(d.getId().toString());
+        boolean ok = despesaCrud.removerPorId(d.getId().toString());
         System.out.println(ok ? "✅ Despesa removida." : "❌ Falha ao remover.");
     }
 }

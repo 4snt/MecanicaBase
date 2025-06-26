@@ -6,13 +6,17 @@ import java.util.UUID;
 import mecanicabase.controller.ClienteController;
 import mecanicabase.model.usuarios.Cliente;
 
+/**
+ * Handler responsável pelas operações de terminal para Cliente.
+ */
 public class ClienteTerminalHandler {
 
     private final Scanner scanner;
-    private final ClienteController controller = new ClienteController();
+    private final ClienteController controller;
 
-    public ClienteTerminalHandler(Scanner scanner) {
+    public ClienteTerminalHandler(Scanner scanner, ClienteController controller) {
         this.scanner = scanner;
+        this.controller = controller;
     }
 
     public void menu() {
@@ -61,16 +65,23 @@ public class ClienteTerminalHandler {
         String cpf = scanner.nextLine();
 
         Cliente cliente = controller.criar(nome, endereco, telefone, email, cpf);
-        System.out.println("Criado: " + cliente.getId());
+        System.out.println("✅ Cliente criado com ID: " + cliente.getId());
     }
 
     private void listar() {
         System.out.print("Filtro (nome ou email): ");
         String filtro = scanner.nextLine();
         List<Cliente> clientes = controller.listar(filtro);
-        for (Cliente c : clientes) {
-            System.out.println(c.getId() + " - " + c.getNome() + " - " + c.getEmail());
+
+        if (clientes.isEmpty()) {
+            System.out.println("Nenhum cliente encontrado.");
+            return;
         }
+
+        System.out.println("\n=== CLIENTES ENCONTRADOS ===");
+        clientes.forEach(c -> System.out.println(
+                c.getId() + " - " + c.getNome() + " - " + c.getEmail()
+        ));
     }
 
     private void buscar() {
@@ -80,7 +91,7 @@ public class ClienteTerminalHandler {
         try {
             UUID.fromString(id);
         } catch (IllegalArgumentException e) {
-            System.out.println("ID inválido. Certifique-se de digitar um UUID válido.");
+            System.out.println("❌ ID inválido. Use um UUID válido.");
             return;
         }
 
@@ -89,7 +100,7 @@ public class ClienteTerminalHandler {
             System.out.println("Nome: " + c.getNome());
             System.out.println("Email: " + c.getEmail());
         } else {
-            System.out.println("Não encontrado.");
+            System.out.println("❌ Cliente não encontrado.");
         }
     }
 
@@ -110,10 +121,9 @@ public class ClienteTerminalHandler {
         }
 
         System.out.print("Escolha o número do cliente: ");
-        String escolha = scanner.nextLine();
         int indice;
         try {
-            indice = Integer.parseInt(escolha) - 1;
+            indice = Integer.parseInt(scanner.nextLine()) - 1;
             if (indice < 0 || indice >= clientes.size()) {
                 System.out.println("Número inválido.");
                 return;
@@ -145,11 +155,15 @@ public class ClienteTerminalHandler {
         String cpf = scanner.nextLine();
         cpf = cpf.isBlank() ? null : cpf;
 
-        Cliente atualizado = controller.atualizar(selecionado.getId().toString(), nome, endereco, telefone, email, cpf);
+        Cliente atualizado = controller.atualizar(
+                selecionado.getId().toString(),
+                nome, endereco, telefone, email, cpf
+        );
+
         if (atualizado != null) {
-            System.out.println("Atualizado.");
+            System.out.println("✅ Cliente atualizado.");
         } else {
-            System.out.println("Erro ao atualizar o cliente.");
+            System.out.println("❌ Erro ao atualizar o cliente.");
         }
     }
 
@@ -170,10 +184,9 @@ public class ClienteTerminalHandler {
         }
 
         System.out.print("Escolha o número do cliente para remover: ");
-        String escolha = scanner.nextLine();
         int indice;
         try {
-            indice = Integer.parseInt(escolha) - 1;
+            indice = Integer.parseInt(scanner.nextLine()) - 1;
             if (indice < 0 || indice >= clientes.size()) {
                 System.out.println("Número inválido.");
                 return;
@@ -185,9 +198,9 @@ public class ClienteTerminalHandler {
 
         Cliente selecionado = clientes.get(indice);
         if (controller.remover(selecionado.getId().toString())) {
-            System.out.println("Removido.");
+            System.out.println("✅ Cliente removido.");
         } else {
-            System.out.println("Cliente não encontrado.");
+            System.out.println("❌ Cliente não encontrado.");
         }
     }
 }

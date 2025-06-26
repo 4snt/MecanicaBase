@@ -8,28 +8,20 @@ import mecanicabase.service.usuarios.FuncionarioCrud;
 
 /**
  * Handler responsável por realizar o processo de login via terminal. Permite
- * login como Funcionário ou Administrador com verificação de e-mail e senha.
+ * login como Funcionário ou Administrador.
  */
 public class LoginTerminalHandler {
 
     private final Scanner scanner;
-    private final FuncionarioCrud funcionarioCrud = new FuncionarioCrud();
-    private final AdministradorCrud administradorCrud = new AdministradorCrud();
+    private final FuncionarioCrud funcionarioCrud;
+    private final AdministradorCrud administradorCrud;
 
-    /**
-     * Constrói o manipulador de login com um scanner para entrada de dados.
-     *
-     * @param scanner Scanner para capturar entradas do usuário no terminal.
-     */
-    public LoginTerminalHandler(Scanner scanner) {
+    public LoginTerminalHandler(Scanner scanner, FuncionarioCrud funcionarioCrud, AdministradorCrud administradorCrud) {
         this.scanner = scanner;
+        this.funcionarioCrud = funcionarioCrud;
+        this.administradorCrud = administradorCrud;
     }
 
-    /**
-     * Executa o processo de login para Funcionário ou Administrador.
-     *
-     * @return true se o login for bem-sucedido, false caso contrário.
-     */
     public boolean login() {
         System.out.println("=== TIPO DE LOGIN ===");
         System.out.println("1 - Funcionário");

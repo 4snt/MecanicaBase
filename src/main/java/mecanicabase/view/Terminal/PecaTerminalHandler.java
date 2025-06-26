@@ -15,9 +15,9 @@ public class PecaTerminalHandler {
     private final Scanner scanner;
     private final PecaCrud pecaCrud;
 
-    public PecaTerminalHandler(Scanner scanner, boolean usarFlyweight) {
+    public PecaTerminalHandler(Scanner scanner, PecaCrud pecaCrud) {
         this.scanner = scanner;
-        this.pecaCrud = new PecaCrud(usarFlyweight); // ✅ modo configurável
+        this.pecaCrud = pecaCrud;
     }
 
     public void menu() {
@@ -46,7 +46,6 @@ public class PecaTerminalHandler {
                     entradaManual();
                 case "6" ->
                     importarCSV();
-
                 case "0" -> {
                     return;
                 }
@@ -182,13 +181,11 @@ public class PecaTerminalHandler {
             return;
         }
 
-        // Lista arquivos disponíveis
         System.out.println("📄 Arquivos CSV disponíveis:");
         for (int i = 0; i < arquivos.length; i++) {
-            System.out.printf("%d - %s%n", i + 1, arquivos[i].getName());
+            System.out.printf("[%d] %s%n", i + 1, arquivos[i].getName());
         }
 
-        // Escolha do arquivo
         System.out.print("Escolha um arquivo pelo número: ");
         int escolha;
         try {
@@ -205,7 +202,7 @@ public class PecaTerminalHandler {
         String caminho = arquivos[escolha - 1].getPath();
 
         Runtime runtime = Runtime.getRuntime();
-        runtime.gc(); // limpa lixo antes
+        runtime.gc();
         long memoriaAntes = runtime.totalMemory() - runtime.freeMemory();
         long tempoAntes = System.nanoTime();
 
@@ -217,25 +214,19 @@ public class PecaTerminalHandler {
             while ((linha = br.readLine()) != null) {
                 linhaArquivo++;
 
-                // Remove ponto-e-vírgula extras no final da linha
                 linha = linha.replaceAll(";+$", "");
-
-                // Divide por vírgula, que é o separador correto do seu CSV
                 String[] partes = linha.split(",");
 
-                // Remove colunas extras (caso tenha)
                 if (partes.length > 3) {
                     partes = new String[]{partes[0], partes[1], partes[2]};
                 }
 
-                // Pula o cabeçalho, garantindo que tenha partes suficientes
                 if (linhaArquivo == 1 && partes.length >= 2
                         && partes[0].toLowerCase().contains("nome")
                         && partes[1].toLowerCase().contains("valor")) {
                     continue;
                 }
 
-                // Linha inválida se menos que 3 colunas
                 if (partes.length < 3) {
                     System.out.printf("⚠️ Linha %d inválida: %s%n", linhaArquivo, linha);
                     continue;
@@ -284,5 +275,4 @@ public class PecaTerminalHandler {
             System.out.println("⚠️ Falha ao salvar benchmark: " + e.getMessage());
         }
     }
-
 }

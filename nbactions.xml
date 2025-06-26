@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <actions>
     <!-- Ação para rodar o modo Terminal -->
     <action>
@@ -27,7 +26,7 @@
             <goal>javafx:run</goal>
         </goals>
         <properties>
-            <main.class>mecanicabase.MainView</main.class>
+            <main.class>mecanicabase.MecanicaBase</main.class>
             <exec.args></exec.args>
             <exec.appArgs></exec.appArgs>
             <exec.vmArgs></exec.vmArgs>

@@ -80,9 +80,15 @@ public class ClienteTerminalHandler {
         }
 
         System.out.println("\n=== CLIENTES ENCONTRADOS ===");
-        clientes.forEach(c -> System.out.println(
-                c.getId() + " - " + c.getNome() + " - " + c.getEmail()
-        ));
+        for (Cliente c : clientes) {
+            System.out.println("ID: " + c.getId());
+            System.out.println("Nome: " + c.getNome());
+            System.out.println("CPF: " + c.getCpf());
+            System.out.println("Endereço: " + c.getEndereco());
+            System.out.println("Email: " + c.getEmail());
+            System.out.println("Telefone: " + c.getTelefone());
+            System.out.println("--------------------------");
+        }
     }
 
     private void buscar() {
@@ -98,8 +104,12 @@ public class ClienteTerminalHandler {
 
         Cliente c = controller.buscarPorId(id);
         if (c != null) {
+            System.out.println("ID: " + c.getId());
             System.out.println("Nome: " + c.getNome());
+            System.out.println("CPF: " + c.getCpf());
+            System.out.println("Endereço: " + c.getEndereco());
             System.out.println("Email: " + c.getEmail());
+            System.out.println("Telefone: " + c.getTelefone());
         } else {
             System.out.println("❌ Cliente não encontrado.");
         }

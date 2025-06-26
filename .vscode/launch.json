@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "MainSwingView",
+      "request": "launch",
+      "mainClass": "mecanicabase.view.swing.MainSwingView",
+      "projectName": "MecanicaBase"
+    },
+    {
+      "type": "java",
       "name": "MainView",
       "request": "launch",
       "mainClass": "mecanicabase.MainView",

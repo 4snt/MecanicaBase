@@ -25,7 +25,7 @@ public class ClientePanel extends BasePanel {
 
     @Override
     protected void setupTable() {
-        String[] columns = {"Selecionar", "ID", "Nome", "CPF", "Endereço", "Email", "Telefone"};
+        String[] columns = {"Selecionar", "ID", "Nome", "CPF", "Telefone", "Endereço", "Email"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -81,9 +81,9 @@ public class ClientePanel extends BasePanel {
                     cliente.getId(),
                     cliente.getNome(),
                     cliente.getCpf(),
+                    cliente.getTelefone(), // Corrigido: Telefone antes de Endereço
                     cliente.getEndereco(),
-                    cliente.getEmail(),
-                    cliente.getTelefone()
+                    cliente.getEmail()
                 };
                 tableModel.addRow(row);
             }
@@ -95,7 +95,7 @@ public class ClientePanel extends BasePanel {
     private void novoCliente() {
         clearForm();
         clienteEditandoId = null;
-        showFormDialog("Novo Cliente");
+        showFormDialog((javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), "Novo Cliente");
     }
 
     private void editarCliente() {
@@ -109,17 +109,17 @@ public class ClientePanel extends BasePanel {
 
         String nome = (String) tableModel.getValueAt(selectedRow, 2);
         String cpf = (String) tableModel.getValueAt(selectedRow, 3);
-        String endereco = (String) tableModel.getValueAt(selectedRow, 4);
-        String email = (String) tableModel.getValueAt(selectedRow, 5);
-        String telefone = (String) tableModel.getValueAt(selectedRow, 6);
+        String telefone = (String) tableModel.getValueAt(selectedRow, 4);
+        String endereco = (String) tableModel.getValueAt(selectedRow, 5);
+        String email = (String) tableModel.getValueAt(selectedRow, 6);
 
         nomeField.setText(nome);
         cpfField.setText(cpf);
+        telefoneField.setText(telefone);
         enderecoField.setText(endereco);
         emailField.setText(email);
-        telefoneField.setText(telefone);
 
-        showFormDialog("Editar Cliente");
+        showFormDialog((javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), "Editar Cliente");
     }
 
     private void excluirCliente() {
@@ -193,7 +193,7 @@ public class ClientePanel extends BasePanel {
                 showError("CPF inválido. Digite apenas números (11 dígitos).");
                 return false;
             }
-            if (!email.isEmpty() && !email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,}$")) {
+            if (!email.isEmpty() && !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
                 showError("E-mail inválido.");
                 return false;
             }
@@ -246,9 +246,9 @@ public class ClientePanel extends BasePanel {
                     cliente.getId(),
                     cliente.getNome(),
                     cliente.getCpf(),
+                    cliente.getTelefone(), // Corrigido: Telefone antes de Endereço
                     cliente.getEndereco(),
-                    cliente.getEmail(),
-                    cliente.getTelefone()
+                    cliente.getEmail()
                 };
                 tableModel.addRow(row);
             }

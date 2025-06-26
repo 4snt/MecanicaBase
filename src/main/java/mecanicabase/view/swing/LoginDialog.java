@@ -72,7 +72,7 @@ public class LoginDialog extends JDialog {
         usuarioField = new JTextField(20);
         gbc.gridx = 0;
         gbc.gridy = linha;
-        formPanel.add(new JLabel("Usuário:"), gbc);
+        formPanel.add(new JLabel("E-mail:"), gbc); // Alterado para E-mail
 
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -125,6 +125,10 @@ public class LoginDialog extends JDialog {
         String usuario = usuarioField.getText().trim();
         String senha = new String(senhaField.getPassword());
 
+        System.out.println("[DEBUG] Tipo de usuário selecionado: " + tipoUsuario);
+        System.out.println("[DEBUG] E-mail informado: " + usuario);
+        System.out.println("[DEBUG] Senha informada: " + senha);
+
         if (usuario.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, preencha usuário e senha.",
@@ -136,10 +140,14 @@ public class LoginDialog extends JDialog {
             Colaborador colaborador = null;
 
             if ("Funcionário".equals(tipoUsuario)) {
+                System.out.println("[DEBUG] Chamando context.funcionarioCrud.login()");
                 colaborador = context.funcionarioCrud.login(usuario, senha);
             } else if ("Administrador".equals(tipoUsuario)) {
+                System.out.println("[DEBUG] Chamando context.administradorCrud.login()");
                 colaborador = context.administradorCrud.login(usuario, senha);
             }
+
+            System.out.println("[DEBUG] colaborador retornado: " + (colaborador != null ? colaborador.getNome() : "null"));
 
             if (colaborador != null) {
                 Session.setPessoaLogado(colaborador);
@@ -156,6 +164,7 @@ public class LoginDialog extends JDialog {
             JOptionPane.showMessageDialog(this,
                     "Erro ao realizar login: " + e.getMessage(),
                     "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace(); // Adicionado para depuração
         }
 
     }

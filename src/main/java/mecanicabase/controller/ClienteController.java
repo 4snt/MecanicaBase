@@ -1,6 +1,7 @@
 package mecanicabase.controller;
 
 import java.util.List;
+
 import mecanicabase.model.usuarios.Cliente;
 import mecanicabase.service.usuarios.ClienteCrud;
 
@@ -22,8 +23,8 @@ public class ClienteController {
     /**
      * Cria um novo cliente com os dados fornecidos.
      */
-    public Cliente criar(String nome, String endereco, String telefone, String email, String cpf) {
-        return crud.criar(true, nome, endereco, telefone, email, cpf);
+    public Cliente criar(String nome, String telefone, String endereco, String email, String cpf) {
+        return crud.criar(true, nome, telefone, endereco, email, cpf);
     }
 
     /**
@@ -50,8 +51,8 @@ public class ClienteController {
     /**
      * Atualiza os dados de um cliente com base no ID.
      */
-    public Cliente atualizar(String id, String nome, String endereco, String telefone, String email, String cpf) {
-        return crud.atualizar(id, true, nome, endereco, telefone, email, cpf);
+    public Cliente atualizar(String id, String nome, String telefone, String endereco, String email, String cpf) {
+        return crud.atualizar(id, true, nome, telefone, endereco, email, cpf);
     }
 
     /**

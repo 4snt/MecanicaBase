@@ -5,6 +5,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Classe base para operações CRUD (Create, Read, Update, Delete) genéricas.
+ * <p>
+ * Para garantir o funcionamento correto dos métodos de atualização e remoção, é
+ * necessário que todas as entidades já existentes na lista retornada por
+ * {@link #getInstancias()} estejam indexadas no mapa interno
+ * {@code indexPorId}. Recomenda-se que subclasses chamem o método
+ * {@link #reindexar()} no construtor.
+ * </p>
+ * <p>
+ * Exemplo de uso no construtor da subclasse:
+ * <pre>
+ *   public MinhaEntidadeCrud() {
+ *       reindexar();
+ *   }
+ * </pre>
+ * </p>
+ *
+ * @param <T> Tipo da entidade
+ */
 public abstract class Crud<T> {
 
     protected abstract List<T> getInstancias();
@@ -24,6 +44,14 @@ public abstract class Crud<T> {
     }
 
     private final Map<UUID, T> indexPorId = new HashMap<>();
+
+    // Novo método para reindexar entidades já existentes
+    protected void reindexar() {
+        indexPorId.clear();
+        for (T entidade : getInstancias()) {
+            indexPorId.put(getId(entidade), entidade);
+        }
+    }
 
     public T buscarPorId(String id) {
         return buscarPorId(UUID.fromString(id));
@@ -68,12 +96,11 @@ public abstract class Crud<T> {
         if (entidade == null) {
             return null;
         }
-
         if (validar && !validarAtualizacao(entidade, params)) {
-            throw new IllegalArgumentException("Validação falhou ao atualizar entidade.");
+            return null;
         }
-
         atualizarInstancia(entidade, params);
+        // Se usar Map, reindexe se necessário:
         indexPorId.put(getId(entidade), entidade);
         return entidade;
     }

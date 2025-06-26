@@ -2,10 +2,26 @@ package mecanicabase.service.usuarios;
 
 import java.util.List;
 import java.util.UUID;
+
 import mecanicabase.core.Crud;
 import mecanicabase.model.usuarios.Cliente;
 
+/**
+ * CRUD específico para a entidade Cliente.
+ * <p>
+ * Garante que os métodos de atualização e exclusão funcionem corretamente ao
+ * reindexar todos os clientes existentes no construtor.
+ * </p>
+ * <p>
+ * Caso outros módulos usem listas estáticas para armazenar entidades,
+ * recomenda-se aplicar o mesmo padrão de reindexação no construtor.
+ * </p>
+ */
 public class ClienteCrud extends Crud<Cliente> {
+
+    public ClienteCrud() {
+        reindexar();
+    }
 
     @Override
     protected List<Cliente> getInstancias() {
@@ -27,33 +43,29 @@ public class ClienteCrud extends Crud<Cliente> {
     @Override
     protected Cliente criarInstancia(Object... params) {
         String nome = (String) params[0];
-        String endereco = (String) params[1];
-        String telefone = (String) params[2];
+        String telefone = (String) params[1];
+        String endereco = (String) params[2];
         String email = (String) params[3];
         String cpf = (String) params[4];
-        Cliente cliente = new Cliente(nome, endereco, telefone, email, cpf);
-
-        Cliente.instances.add(cliente);
-
-        return cliente;
+        return new Cliente(nome, telefone, endereco, email, cpf);
     }
 
     @Override
     protected void atualizarInstancia(Cliente cliente, Object... params) {
         String nome = (String) params[0];
-        String endereco = (String) params[1];
-        String telefone = (String) params[2];
+        String telefone = (String) params[1];
+        String endereco = (String) params[2];
         String email = (String) params[3];
         String cpf = (String) params[4];
 
         if (nome != null) {
             cliente.setNome(nome);
         }
-        if (endereco != null) {
-            cliente.setEndereco(endereco);
-        }
         if (telefone != null) {
             cliente.setTelefone(telefone);
+        }
+        if (endereco != null) {
+            cliente.setEndereco(endereco);
         }
         if (email != null) {
             cliente.setEmail(email);
@@ -61,6 +73,7 @@ public class ClienteCrud extends Crud<Cliente> {
         if (cpf != null) {
             cliente.setCpf(cpf);
         }
+        System.out.println("Atualizando cliente: " + cliente.getId() + " - " + nome + ", " + telefone + ", " + endereco + ", " + email + ", " + cpf);
     }
 
     @Override
@@ -72,7 +85,6 @@ public class ClienteCrud extends Crud<Cliente> {
 
     @Override
     protected boolean validarAtualizacao(Cliente cliente, Object... params) {
-        // Evita sobrescrever com valores nulos ou em branco
         return cliente != null;
     }
 }

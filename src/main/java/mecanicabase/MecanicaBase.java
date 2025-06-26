@@ -1,6 +1,7 @@
 package mecanicabase;
 
 import javax.swing.SwingUtilities;
+
 import mecanicabase.infra.ApplicationContext;
 import mecanicabase.infra.EnvConfig;
 import mecanicabase.infra.db.Database;

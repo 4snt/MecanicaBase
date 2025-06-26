@@ -2,14 +2,13 @@ package mecanicabase.view.swing.panels;
 
 import java.util.List;
 import java.util.UUID;
+
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 import mecanicabase.infra.ApplicationContext;
 import mecanicabase.model.usuarios.Cliente;
 
-/**
- * Painel Swing para gerenciamento de clientes.
- */
 public class ClientePanel extends BasePanel {
 
     private JTextField nomeField;
@@ -17,6 +16,8 @@ public class ClientePanel extends BasePanel {
     private JTextField telefoneField;
     private JTextField emailField;
     private JTextField enderecoField;
+    private JTextField buscaField;
+    private UUID clienteEditandoId = null;
 
     public ClientePanel(ApplicationContext context) {
         super(context, "Gestão de Clientes");
@@ -24,11 +25,19 @@ public class ClientePanel extends BasePanel {
 
     @Override
     protected void setupTable() {
-        String[] columns = {"ID", "Nome", "CPF", "Telefone", "Email", "Endereço"};
+        String[] columns = {"Selecionar", "ID", "Nome", "CPF", "Endereço", "Email", "Telefone"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // Tabela somente leitura
+                return column == 0; // Só o checkbox é editável
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) {
+                    return Boolean.class;
+                }
+                return String.class;
             }
         };
         table = new javax.swing.JTable(tableModel);
@@ -41,6 +50,9 @@ public class ClientePanel extends BasePanel {
         buttonPanel.add(createButton("Editar", this::editarCliente));
         buttonPanel.add(createButton("Excluir", this::excluirCliente));
         buttonPanel.add(createButton("Atualizar", this::loadData));
+        buscaField = new JTextField(15);
+        buttonPanel.add(buscaField);
+        buttonPanel.add(createButton("Buscar", this::buscarCliente));
     }
 
     @Override
@@ -61,17 +73,17 @@ public class ClientePanel extends BasePanel {
     @Override
     protected void loadData() {
         tableModel.setRowCount(0);
-        
         try {
             List<Cliente> clientes = context.clienteCrud.listarTodos();
             for (Cliente cliente : clientes) {
                 Object[] row = {
+                    false,
                     cliente.getId(),
                     cliente.getNome(),
                     cliente.getCpf(),
-                    cliente.getTelefone(),
+                    cliente.getEndereco(),
                     cliente.getEmail(),
-                    cliente.getEndereco()
+                    cliente.getTelefone()
                 };
                 tableModel.addRow(row);
             }
@@ -82,6 +94,7 @@ public class ClientePanel extends BasePanel {
 
     private void novoCliente() {
         clearForm();
+        clienteEditandoId = null;
         showFormDialog("Novo Cliente");
     }
 
@@ -90,43 +103,77 @@ public class ClientePanel extends BasePanel {
             showMessage("Selecione um cliente para editar.");
             return;
         }
-
         int selectedRow = getSelectedRowIndex();
-        UUID clienteId = (UUID) tableModel.getValueAt(selectedRow, 0);
-        
-        try {
-            Cliente cliente = context.clienteCrud.buscarPorId(clienteId);
-            if (cliente != null) {
-                preencherFormulario(cliente);
-                showFormDialog("Editar Cliente");
-            } else {
-                showError("Cliente não encontrado.");
-            }
-        } catch (Exception e) {
-            showError("Erro ao carregar cliente: " + e.getMessage());
-        }
+        Object value = tableModel.getValueAt(selectedRow, 1); // Coluna 1 é o ID
+        clienteEditandoId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
+
+        String nome = (String) tableModel.getValueAt(selectedRow, 2);
+        String cpf = (String) tableModel.getValueAt(selectedRow, 3);
+        String endereco = (String) tableModel.getValueAt(selectedRow, 4);
+        String email = (String) tableModel.getValueAt(selectedRow, 5);
+        String telefone = (String) tableModel.getValueAt(selectedRow, 6);
+
+        nomeField.setText(nome);
+        cpfField.setText(cpf);
+        enderecoField.setText(endereco);
+        emailField.setText(email);
+        telefoneField.setText(telefone);
+
+        showFormDialog("Editar Cliente");
     }
 
     private void excluirCliente() {
-        if (!hasSelection()) {
-            showMessage("Selecione um cliente para excluir.");
-            return;
+        boolean algumSelecionado = false;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Boolean checked = (Boolean) tableModel.getValueAt(i, 0);
+            if (checked != null && checked) {
+                algumSelecionado = true;
+                Object value = tableModel.getValueAt(i, 1);
+                try {
+                    System.out.println("Tentando excluir linha " + i + " - valor ID: " + value + " (" + (value != null ? value.getClass() : "null") + ")");
+                    UUID clienteId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
+                    System.out.println("UUID convertido: " + clienteId);
+                    boolean removido = context.clienteCrud.removerPorId(clienteId.toString());
+                    System.out.println("Removido? " + removido);
+                    if (!removido) {
+                        showError("Não foi possível remover o cliente de ID: " + clienteId);
+                    }
+                } catch (Exception e) {
+                    showError("Erro ao excluir cliente de ID: " + value + " - " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
         }
-
-        if (!confirmAction("Tem certeza que deseja excluir este cliente?")) {
-            return;
+        if (!algumSelecionado) {
+            if (!hasSelection()) {
+                showMessage("Selecione um cliente para excluir.");
+                return;
+            }
+            int selectedRow = getSelectedRowIndex();
+            Object value = tableModel.getValueAt(selectedRow, 1);
+            try {
+                System.out.println("Tentando excluir selecionado - valor ID: " + value + " (" + (value != null ? value.getClass() : "null") + ")");
+                if (value != null) {
+                    UUID clienteId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
+                    System.out.println("UUID convertido: " + clienteId);
+                    boolean removido = context.clienteCrud.removerPorId(clienteId.toString());
+                    System.out.println("Removido? " + removido);
+                    if (removido) {
+                        showMessage("Cliente excluído com sucesso!");
+                    } else {
+                        showError("Cliente não encontrado para exclusão.");
+                    }
+                } else {
+                    showError("ID do cliente é nulo.");
+                }
+            } catch (Exception e) {
+                showError("Erro ao excluir cliente: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            showMessage("Clientes selecionados excluídos!");
         }
-
-        int selectedRow = getSelectedRowIndex();
-        UUID clienteId = (UUID) tableModel.getValueAt(selectedRow, 0);
-        
-        try {
-            context.clienteCrud.removerPorId(clienteId.toString());
-            showMessage("Cliente excluído com sucesso!");
-            loadData();
-        } catch (Exception e) {
-            showError("Erro ao excluir cliente: " + e.getMessage());
-        }
+        loadData();
     }
 
     @Override
@@ -142,17 +189,30 @@ public class ClientePanel extends BasePanel {
                 showError("Nome e CPF são obrigatórios.");
                 return false;
             }
+            if (!cpf.matches("\\d{11}")) {
+                showError("CPF inválido. Digite apenas números (11 dígitos).");
+                return false;
+            }
+            if (!email.isEmpty() && !email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,}$")) {
+                showError("E-mail inválido.");
+                return false;
+            }
+            if (!telefone.isEmpty() && !telefone.matches("^\\(?\\d{2}\\)?\\s?\\d{4,5}-?\\d{4}$")) {
+                showError("Telefone inválido.");
+                return false;
+            }
 
-            // Use the CRUD API correctly - parameters: nome, endereco, telefone, email, cpf
-            if (hasSelection()) {
-                // For now, just show message - editing not implemented
-                showMessage("Funcionalidade de edição em desenvolvimento.");
+            if (clienteEditandoId != null) {
+                context.clienteCrud.atualizar(clienteEditandoId.toString(), true, nome, telefone, endereco, email, cpf);
+                showMessage("Cliente atualizado com sucesso!");
             } else {
-                context.clienteCrud.criar(true, nome, endereco, telefone, email, cpf);
+                context.clienteCrud.criar(true, nome, telefone, endereco, email, cpf);
                 showMessage("Cliente criado com sucesso!");
             }
 
+            clienteEditandoId = null;
             clearForm();
+            loadData();
             return true;
 
         } catch (Exception e) {
@@ -170,11 +230,30 @@ public class ClientePanel extends BasePanel {
         enderecoField.setText("");
     }
 
-    private void preencherFormulario(Cliente cliente) {
-        nomeField.setText(cliente.getNome());
-        cpfField.setText(cliente.getCpf());
-        telefoneField.setText(cliente.getTelefone() != null ? cliente.getTelefone() : "");
-        emailField.setText(cliente.getEmail() != null ? cliente.getEmail() : "");
-        enderecoField.setText(cliente.getEndereco() != null ? cliente.getEndereco() : "");
+    private void buscarCliente() {
+        String termo = buscaField.getText().trim();
+        tableModel.setRowCount(0);
+        try {
+            List<Cliente> clientes;
+            if (termo.isEmpty()) {
+                clientes = context.clienteCrud.listarTodos();
+            } else {
+                clientes = context.clienteCrud.buscarPorFiltro(termo);
+            }
+            for (Cliente cliente : clientes) {
+                Object[] row = {
+                    false,
+                    cliente.getId(),
+                    cliente.getNome(),
+                    cliente.getCpf(),
+                    cliente.getEndereco(),
+                    cliente.getEmail(),
+                    cliente.getTelefone()
+                };
+                tableModel.addRow(row);
+            }
+        } catch (Exception e) {
+            showError("Erro ao buscar clientes: " + e.getMessage());
+        }
     }
 }

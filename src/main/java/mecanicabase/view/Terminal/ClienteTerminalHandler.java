@@ -3,6 +3,7 @@ package mecanicabase.view.Terminal;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
+
 import mecanicabase.controller.ClienteController;
 import mecanicabase.model.usuarios.Cliente;
 
@@ -64,7 +65,7 @@ public class ClienteTerminalHandler {
         System.out.print("CPF: ");
         String cpf = scanner.nextLine();
 
-        Cliente cliente = controller.criar(nome, endereco, telefone, email, cpf);
+        Cliente cliente = controller.criar(nome, telefone, endereco, email, cpf);
         System.out.println("✅ Cliente criado com ID: " + cliente.getId());
     }
 
@@ -157,7 +158,7 @@ public class ClienteTerminalHandler {
 
         Cliente atualizado = controller.atualizar(
                 selecionado.getId().toString(),
-                nome, endereco, telefone, email, cpf
+                nome, telefone, endereco, email, cpf // <-- ordem correta!
         );
 
         if (atualizado != null) {

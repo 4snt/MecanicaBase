@@ -142,7 +142,9 @@ public abstract class BasePanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = row;
         gbc.anchor = GridBagConstraints.WEST;
-        panel.add(new JLabel(labelText + ":"), gbc);
+        JLabel label = new JLabel(labelText + ":");
+        label.setForeground(java.awt.Color.WHITE); // Corrige cor da label
+        panel.add(label, gbc);
 
         gbc.gridx = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;

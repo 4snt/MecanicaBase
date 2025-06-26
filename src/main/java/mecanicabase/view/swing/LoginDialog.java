@@ -125,10 +125,6 @@ public class LoginDialog extends JDialog {
         String usuario = usuarioField.getText().trim();
         String senha = new String(senhaField.getPassword());
 
-        System.out.println("[DEBUG] Tipo de usuário selecionado: " + tipoUsuario);
-        System.out.println("[DEBUG] E-mail informado: " + usuario);
-        System.out.println("[DEBUG] Senha informada: " + senha);
-
         if (usuario.isEmpty() || senha.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "Por favor, preencha usuário e senha.",

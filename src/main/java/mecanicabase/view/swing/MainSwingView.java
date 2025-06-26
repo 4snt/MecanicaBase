@@ -17,9 +17,9 @@ import mecanicabase.view.swing.panels.AgendamentoPanel;
 import mecanicabase.view.swing.panels.ClientePanel;
 import mecanicabase.view.swing.panels.ColaboradorPanel;
 import mecanicabase.view.swing.panels.FinanceiroPanel;
-import mecanicabase.view.swing.panels.OficinaPanel;
-import mecanicabase.view.swing.panels.OrdemServicoPanel;
+import mecanicabase.view.swing.panels.PecaPanel;
 import mecanicabase.view.swing.panels.ServicoPanel;
+import mecanicabase.view.swing.panels.VeiculoPanel;
 
 /**
  * Classe principal da interface Swing que substitui o JavaFX. Gerencia o menu
@@ -35,19 +35,19 @@ public class MainSwingView extends JFrame {
 
     public static final String CARD_MENU = "menu";
     public static final String CARD_CLIENTES = "clientes";
-    public static final String CARD_OFICINA = "oficina";
     public static final String CARD_SERVICOS = "servicos";
     public static final String CARD_AGENDAMENTOS = "agendamentos";
     public static final String CARD_ORDENS = "ordens";
     public static final String CARD_COLABORADORES = "colaboradores";
     public static final String CARD_FINANCEIRO = "financeiro";
 
-    private OficinaPanel oficinaPanel;
     private ServicoPanel servicoPanel;
     private AgendamentoPanel agendamentoPanel;
-    private OrdemServicoPanel ordemServicoPanel;
     private ColaboradorPanel colaboradorPanel;
     private FinanceiroPanel financeiroPanel;
+
+    private boolean oficinaSubmenuVisivel = false;
+    private JPanel oficinaSubmenuPanel;
 
     public MainSwingView(ApplicationContext context) {
         super();
@@ -78,10 +78,6 @@ public class MainSwingView extends JFrame {
         ClientePanel clientePanel = new ClientePanel(context);
         cardsPanel.add(clientePanel, CARD_CLIENTES);
 
-        // Painel de oficina
-        oficinaPanel = new OficinaPanel(context);
-        cardsPanel.add(oficinaPanel, CARD_OFICINA);
-
         // Painel de serviços
         servicoPanel = new ServicoPanel(context);
         cardsPanel.add(servicoPanel, CARD_SERVICOS);
@@ -89,10 +85,6 @@ public class MainSwingView extends JFrame {
         // Painel de agendamentos
         agendamentoPanel = new AgendamentoPanel(context);
         cardsPanel.add(agendamentoPanel, CARD_AGENDAMENTOS);
-
-        // Painel de ordens de serviço
-        ordemServicoPanel = new OrdemServicoPanel(context);
-        cardsPanel.add(ordemServicoPanel, CARD_ORDENS);
 
         // Painel de colaboradores
         colaboradorPanel = new ColaboradorPanel(context);
@@ -105,6 +97,14 @@ public class MainSwingView extends JFrame {
         // Painel do menu principal (dashboard)
         JPanel mainPanel = criarDashboard();
         cardsPanel.add(mainPanel, CARD_MENU);
+
+        // Painel de veículos
+        VeiculoPanel veiculoPanel = new VeiculoPanel(context);
+        cardsPanel.add(veiculoPanel, "veiculos");
+
+        // Painel de peças
+        PecaPanel pecaPanel = new PecaPanel(context);
+        cardsPanel.add(pecaPanel, "pecas");
 
         // Barra lateral
         sidebarPanel = criarSidebar();
@@ -130,7 +130,13 @@ public class MainSwingView extends JFrame {
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Clientes", this::abrirClientes), gbc);
         gbc.gridy = ++row;
-        sidebar.add(createSidebarButton("Oficina", this::abrirOficina), gbc);
+        // Botão Oficina com submenu
+        JButton oficinaBtn = createSidebarButton("Oficina", this::toggleOficinaSubmenu);
+        sidebar.add(oficinaBtn, gbc);
+        gbc.gridy = ++row;
+        oficinaSubmenuPanel = criarOficinaSubmenuPanel();
+        oficinaSubmenuPanel.setVisible(false);
+        sidebar.add(oficinaSubmenuPanel, gbc);
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Serviços", this::abrirServicos), gbc);
         gbc.gridy = ++row;
@@ -147,15 +153,39 @@ public class MainSwingView extends JFrame {
         return sidebar;
     }
 
-    private JButton createSidebarButton(String text, Runnable action) {
-        JButton button = new JButton(text);
-        button.setFocusPainted(false);
-        button.setBackground(new java.awt.Color(60, 63, 65));
-        button.setForeground(java.awt.Color.WHITE);
-        button.setFont(button.getFont().deriveFont(16f));
-        button.setPreferredSize(new java.awt.Dimension(180, 40));
-        button.addActionListener(e -> action.run());
-        return button;
+    private JPanel criarOficinaSubmenuPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(new java.awt.Color(50, 50, 60));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 30, 2, 10);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        int row = 0;
+        JButton veiculosBtn = createSidebarButton("Veículos", this::abrirVeiculos);
+        veiculosBtn.setFont(veiculosBtn.getFont().deriveFont(14f));
+        panel.add(veiculosBtn, gbc);
+        gbc.gridy = ++row;
+        JButton pecasBtn = createSidebarButton("Peças", this::abrirPecas);
+        pecasBtn.setFont(pecasBtn.getFont().deriveFont(14f));
+        panel.add(pecasBtn, gbc);
+        return panel;
+    }
+
+    private void toggleOficinaSubmenu() {
+        oficinaSubmenuVisivel = !oficinaSubmenuVisivel;
+        oficinaSubmenuPanel.setVisible(oficinaSubmenuVisivel);
+        sidebarPanel.revalidate();
+        sidebarPanel.repaint();
+    }
+
+    private void abrirVeiculos() {
+        cardLayout.show(cardsPanel, "veiculos");
+    }
+
+    private void abrirPecas() {
+        cardLayout.show(cardsPanel, "pecas");
     }
 
     private JPanel criarDashboard() {
@@ -169,10 +199,6 @@ public class MainSwingView extends JFrame {
     // Métodos de navegação
     private void abrirClientes() {
         cardLayout.show(cardsPanel, CARD_CLIENTES);
-    }
-
-    private void abrirOficina() {
-        cardLayout.show(cardsPanel, CARD_OFICINA);
     }
 
     private void abrirServicos() {
@@ -207,5 +233,17 @@ public class MainSwingView extends JFrame {
     }
 
     private void configureWindow() {
+    }
+
+    // Adicionar método utilitário createSidebarButton
+    private JButton createSidebarButton(String text, Runnable action) {
+        JButton button = new JButton(text);
+        button.setFocusPainted(false);
+        button.setBackground(new java.awt.Color(60, 63, 65));
+        button.setForeground(java.awt.Color.WHITE);
+        button.setFont(button.getFont().deriveFont(16f));
+        button.setPreferredSize(new java.awt.Dimension(180, 40));
+        button.addActionListener(e -> action.run());
+        return button;
     }
 }

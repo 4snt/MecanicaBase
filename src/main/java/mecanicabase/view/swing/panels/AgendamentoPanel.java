@@ -1,28 +1,52 @@
 package mecanicabase.view.swing.panels;
 
-import javax.swing.table.DefaultTableModel;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import mecanicabase.controller.AgendamentoController;
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.model.financeiro.Agendamento;
+import mecanicabase.model.financeiro.OrdemDeServico;
+import mecanicabase.view.swing.AgendaView;
+import mecanicabase.view.swing.dialogs.NovoAgendamentoDialog;
 
 /**
- * Painel Swing para gerenciamento de agendamentos.
+ * Painel Swing para gerenciamento de agendamentos com agenda visual.
  */
 public class AgendamentoPanel extends BasePanel {
 
+    private final AgendaView agendaView;
+    private final JPanel buttonPanel;
+
     public AgendamentoPanel(ApplicationContext context) {
-        super(context, "Gestão de Agendamentos");
+        super(context, "Agendamentos");
+        setLayout(new BorderLayout());
+        agendaView = new AgendaView(context);
+        add(agendaView, BorderLayout.CENTER);
+        buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        setupButtons();
+        add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+    @Override
+    protected void initializeComponents(String title) {
+        // Título
+        JLabel titleLabel = new JLabel(title, javax.swing.SwingConstants.CENTER);
+        titleLabel.setFont(titleLabel.getFont().deriveFont(18f));
+        titleLabel.setForeground(java.awt.Color.WHITE);
+        setLayout(new BorderLayout());
+        setBackground(new java.awt.Color(40, 40, 50));
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(titleLabel, BorderLayout.NORTH);
+        // Agenda visual já é adicionada no construtor
+        // Painel de botões já é adicionado no construtor
     }
 
     @Override
     protected void setupTable() {
-        String[] columns = {"ID", "Cliente", "Data", "Hora", "Descrição", "Status"};
-        tableModel = new DefaultTableModel(columns, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-        table = new javax.swing.JTable(tableModel);
-        table.getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        // Não há tabela neste painel
     }
 
     @Override
@@ -30,67 +54,63 @@ public class AgendamentoPanel extends BasePanel {
         buttonPanel.add(createButton("Novo Agendamento", this::novoAgendamento));
         buttonPanel.add(createButton("Editar", this::editarAgendamento));
         buttonPanel.add(createButton("Cancelar", this::cancelarAgendamento));
-        buttonPanel.add(createButton("Atualizar", this::loadData));
+        buttonPanel.add(createButton("Atualizar", this::atualizarAgenda));
     }
 
     @Override
     protected void setupForm() {
-        // Implementação futura com campos para agendamento
+        // Não há formulário padrão neste painel
     }
 
     @Override
-    protected void loadData() {
-        tableModel.setRowCount(0);
-
-        try {
-            context.agendamentoCrud.listarTodos().forEach(agendamento -> {
-                // Obtendo o nome do cliente via veículo, se possível
-                String clienteNome = "N/A";
-                if (agendamento.getVeiculo() != null && agendamento.getVeiculo().getCliente() != null) {
-                    clienteNome = agendamento.getVeiculo().getCliente().getNome();
-                }
-
-                Object[] row = {
-                    agendamento.getId(),
-                    clienteNome,
-                    agendamento.getData() != null ? agendamento.getData().toLocalDate().toString() : "N/A",
-                    agendamento.getData() != null ? agendamento.getData().toLocalTime().toString() : "N/A",
-                    agendamento.getDescricaoProblema(),
-                    agendamento.getStatus() != null ? agendamento.getStatus().name() : "N/A"
-                };
-                tableModel.addRow(row);
-            });
-        } catch (Exception e) {
-            showError("Erro ao carregar agendamentos: " + e.getMessage());
-        }
+    public void loadData() {
+        atualizarAgenda();
     }
 
     private void novoAgendamento() {
-        showMessage("Funcionalidade em desenvolvimento - Novo Agendamento");
+        NovoAgendamentoDialog dialog = new NovoAgendamentoDialog(null, context);
+        dialog.setVisible(true);
+        if (dialog.isConfirmado()) {
+            try {
+                // Cria OS vinculada
+                OrdemDeServico ordem = context.ordemCrud.criar(true, dialog.getCliente().getId());
+                // Cria agendamento com alocação
+                AgendamentoController agendamentoController = new AgendamentoController(context.agendamentoCrud);
+                Agendamento agendamento = agendamentoController.criarAgendamentoComAlocacao(
+                        dialog.getDataHora(),
+                        dialog.getServico(),
+                        dialog.getDescricaoProblema(),
+                        dialog.getVeiculo(),
+                        ordem
+                );
+                JOptionPane.showMessageDialog(this, "Agendamento criado com sucesso!\nID: " + agendamento.getId());
+                atualizarAgenda();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Erro ao criar agendamento: " + ex.getMessage());
+            }
+        }
     }
 
     private void editarAgendamento() {
-        if (!hasSelection()) {
-            showMessage("Selecione um agendamento para editar.");
-            return;
-        }
-        showMessage("Funcionalidade em desenvolvimento - Editar Agendamento");
+        JOptionPane.showMessageDialog(this, "Funcionalidade em desenvolvimento - Editar Agendamento");
     }
 
     private void cancelarAgendamento() {
-        if (!hasSelection()) {
-            showMessage("Selecione um agendamento para cancelar.");
-            return;
-        }
+        JOptionPane.showMessageDialog(this, "Funcionalidade em desenvolvimento - Cancelar Agendamento");
+    }
 
-        if (confirmAction("Tem certeza que deseja cancelar este agendamento?")) {
-            showMessage("Funcionalidade em desenvolvimento - Cancelar Agendamento");
-        }
+    private void atualizarAgenda() {
+        agendaView.repaint();
     }
 
     @Override
     protected boolean saveFormData() {
-        // Implementação futura
+        // Não há formulário padrão neste painel
         return false;
+    }
+
+    @Override
+    protected void clearForm() {
+        // Não há formulário padrão neste painel
     }
 }

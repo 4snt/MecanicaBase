@@ -5,14 +5,14 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.infra.db.Database;
+import mecanicabase.view.swing.panels.AdministradorPanel;
 import mecanicabase.view.swing.panels.AgendamentoPanel;
 import mecanicabase.view.swing.panels.ClientePanel;
 import mecanicabase.view.swing.panels.ColaboradorPanel;
@@ -28,7 +28,6 @@ import mecanicabase.view.swing.panels.VeiculoPanel;
 public class MainSwingView extends JFrame {
 
     private final ApplicationContext context;
-    private JPanel adminButtonsPanel;
     private JPanel cardsPanel; // Painel central com CardLayout
     private CardLayout cardLayout;
     private JPanel sidebarPanel;
@@ -45,9 +44,13 @@ public class MainSwingView extends JFrame {
     private AgendamentoPanel agendamentoPanel;
     private ColaboradorPanel colaboradorPanel;
     private FinanceiroPanel financeiroPanel;
+    private AdministradorPanel administradorPanel;
+    private mecanicabase.view.swing.panels.OrdemServicoPanel ordemServicoPanel = null;
 
     private boolean oficinaSubmenuVisivel = false;
     private JPanel oficinaSubmenuPanel;
+    private boolean colaboradoresSubmenuVisivel = false;
+    private JPanel colaboradoresSubmenuPanel;
 
     public MainSwingView(ApplicationContext context) {
         super();
@@ -67,6 +70,14 @@ public class MainSwingView extends JFrame {
         initializeComponents();
         setupLayout();
         configureWindow();
+
+        // Adiciona listener para salvar dados ao fechar a janela (após inicialização)
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                Database.save();
+            }
+        });
     }
 
     private void initializeComponents() {
@@ -82,7 +93,7 @@ public class MainSwingView extends JFrame {
         servicoPanel = new ServicoPanel(context);
         cardsPanel.add(servicoPanel, CARD_SERVICOS);
 
-        // Painel de agendamentos
+        // Painel de agendamentos (restaurado para AgendamentoPanel)
         agendamentoPanel = new AgendamentoPanel(context);
         cardsPanel.add(agendamentoPanel, CARD_AGENDAMENTOS);
 
@@ -105,6 +116,11 @@ public class MainSwingView extends JFrame {
         // Painel de peças
         PecaPanel pecaPanel = new PecaPanel(context);
         cardsPanel.add(pecaPanel, "pecas");
+
+        // Painel de administradores
+        administradorPanel = new AdministradorPanel(context);
+        cardsPanel.add(administradorPanel, "administradores");
+        // NÃO adicionar o painel de ordens de serviço aqui!
 
         // Barra lateral
         sidebarPanel = criarSidebar();
@@ -144,7 +160,13 @@ public class MainSwingView extends JFrame {
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Ordens de Serviço", this::abrirOrdens), gbc);
         gbc.gridy = ++row;
-        sidebar.add(createSidebarButton("Colaboradores", this::abrirColaboradores), gbc);
+        // Botão Colaboradores com submenu
+        JButton colaboradoresBtn = createSidebarButton("Colaboradores", this::toggleColaboradoresSubmenu);
+        sidebar.add(colaboradoresBtn, gbc);
+        gbc.gridy = ++row;
+        colaboradoresSubmenuPanel = criarColaboradoresSubmenuPanel();
+        colaboradoresSubmenuPanel.setVisible(false);
+        sidebar.add(colaboradoresSubmenuPanel, gbc);
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Financeiro", this::abrirFinanceiro), gbc);
         gbc.gridy = ++row;
@@ -173,6 +195,26 @@ public class MainSwingView extends JFrame {
         return panel;
     }
 
+    private JPanel criarColaboradoresSubmenuPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.setBackground(new java.awt.Color(50, 50, 60));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(2, 30, 2, 10);
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        int row = 0;
+        JButton funcionariosBtn = createSidebarButton("Funcionários", this::abrirColaboradoresFuncionarios);
+        funcionariosBtn.setFont(funcionariosBtn.getFont().deriveFont(14f));
+        panel.add(funcionariosBtn, gbc);
+        gbc.gridy = ++row;
+        JButton administradoresBtn = createSidebarButton("Administradores", this::abrirColaboradoresAdministradores);
+        administradoresBtn.setFont(administradoresBtn.getFont().deriveFont(14f));
+        panel.add(administradoresBtn, gbc);
+        return panel;
+    }
+
     private void toggleOficinaSubmenu() {
         oficinaSubmenuVisivel = !oficinaSubmenuVisivel;
         oficinaSubmenuPanel.setVisible(oficinaSubmenuVisivel);
@@ -180,11 +222,30 @@ public class MainSwingView extends JFrame {
         sidebarPanel.repaint();
     }
 
+    private void toggleColaboradoresSubmenu() {
+        colaboradoresSubmenuVisivel = !colaboradoresSubmenuVisivel;
+        colaboradoresSubmenuPanel.setVisible(colaboradoresSubmenuVisivel);
+        sidebarPanel.revalidate();
+        sidebarPanel.repaint();
+    }
+
     private void abrirVeiculos() {
+        for (java.awt.Component comp : cardsPanel.getComponents()) {
+            if (comp instanceof VeiculoPanel) {
+                ((VeiculoPanel) comp).loadData();
+                break;
+            }
+        }
         cardLayout.show(cardsPanel, "veiculos");
     }
 
     private void abrirPecas() {
+        for (java.awt.Component comp : cardsPanel.getComponents()) {
+            if (comp instanceof PecaPanel) {
+                ((PecaPanel) comp).loadData();
+                break;
+            }
+        }
         cardLayout.show(cardsPanel, "pecas");
     }
 
@@ -198,27 +259,65 @@ public class MainSwingView extends JFrame {
 
     // Métodos de navegação
     private void abrirClientes() {
+        if (cardsPanel != null) {
+            for (java.awt.Component comp : cardsPanel.getComponents()) {
+                if (comp instanceof ClientePanel) {
+                    ((ClientePanel) comp).loadData();
+                    break;
+                }
+            }
+        }
         cardLayout.show(cardsPanel, CARD_CLIENTES);
     }
 
     private void abrirServicos() {
+        if (servicoPanel != null) {
+            servicoPanel.loadData();
+        }
         cardLayout.show(cardsPanel, CARD_SERVICOS);
     }
 
     private void abrirAgendamentos() {
+        if (agendamentoPanel != null) {
+            agendamentoPanel.loadData();
+        }
         cardLayout.show(cardsPanel, CARD_AGENDAMENTOS);
     }
 
-    private void abrirOrdens() {
-        cardLayout.show(cardsPanel, CARD_ORDENS);
-    }
-
-    private void abrirColaboradores() {
-        cardLayout.show(cardsPanel, CARD_COLABORADORES);
-    }
-
     private void abrirFinanceiro() {
+        if (financeiroPanel != null) {
+            financeiroPanel.loadData();
+        }
         cardLayout.show(cardsPanel, CARD_FINANCEIRO);
+    }
+
+    private void abrirColaboradoresFuncionarios() {
+        if (colaboradorPanel != null) {
+            colaboradorPanel.loadData();
+        }
+        cardLayout.show(cardsPanel, CARD_COLABORADORES);
+        // Não há mais abas, painel já mostra funcionários
+    }
+
+    private void abrirColaboradoresAdministradores() {
+        if (administradorPanel != null) {
+            administradorPanel.loadData();
+        }
+        cardLayout.show(cardsPanel, "administradores");
+    }
+
+    private void abrirOrdens() {
+        if (ordemServicoPanel == null) {
+            ordemServicoPanel = new mecanicabase.view.swing.panels.OrdemServicoPanel(
+                    context,
+                    context.ordemCrud,
+                    context.pecaCrud
+            );
+            cardsPanel.add(ordemServicoPanel, CARD_ORDENS);
+        } else {
+            ordemServicoPanel.loadData();
+        }
+        cardLayout.show(cardsPanel, CARD_ORDENS);
     }
 
     private void voltarMenu() {

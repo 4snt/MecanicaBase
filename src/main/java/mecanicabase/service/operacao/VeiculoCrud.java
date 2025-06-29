@@ -3,12 +3,17 @@ package mecanicabase.service.operacao;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 import mecanicabase.core.Crud;
 import mecanicabase.model.operacao.Sistema;
 import mecanicabase.model.operacao.StatusVeiculo;
 import mecanicabase.model.operacao.Veiculo;
 
 public class VeiculoCrud extends Crud<Veiculo> {
+
+    public VeiculoCrud() {
+        reindexar();
+    }
 
     @Override
     protected List<Veiculo> getInstancias() {

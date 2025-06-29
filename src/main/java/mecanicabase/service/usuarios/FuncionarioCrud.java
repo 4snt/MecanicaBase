@@ -2,6 +2,7 @@ package mecanicabase.service.usuarios;
 
 import java.util.List;
 import java.util.UUID;
+
 import mecanicabase.infra.crypto.JasyptCrypto;
 import mecanicabase.model.usuarios.Funcionario;
 import mecanicabase.model.usuarios.TipoFuncionario;
@@ -100,5 +101,13 @@ public class FuncionarioCrud extends UsuarioCrud<Funcionario> {
         }
 
         return true;
+    }
+
+    public java.util.Map<java.util.UUID, Funcionario> index() {
+        java.util.Map<java.util.UUID, Funcionario> index = new java.util.HashMap<>();
+        for (Funcionario f : getInstancias()) {
+            index.put(f.getId(), f);
+        }
+        return index;
     }
 }

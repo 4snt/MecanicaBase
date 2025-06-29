@@ -38,7 +38,7 @@ public class OficinaPanel extends BasePanel {
     }
 
     @Override
-    protected void loadData() {
+    public void loadData() {
         tableModel.setRowCount(0);
 
         // Adicionar módulos disponíveis
@@ -92,15 +92,15 @@ public class OficinaPanel extends BasePanel {
         }
 
         @Override
-        protected void loadData() {
+        public void loadData() {
             try {
                 tableModel.setRowCount(0);
                 context.pecaCrud.listarTodos().forEach(peca -> {
                     tableModel.addRow(new Object[]{
                         peca.getId(),
                         peca.getNome(),
-                        String.format("R$ %.2f", peca.getValor()), // Valor nunca é null
-                        peca.getQuantidade() // Quantidade nunca é null
+                        String.format("R$ %.2f", peca.getValor()),
+                        peca.getQuantidade()
                     });
                 });
             } catch (Exception e) {
@@ -145,7 +145,7 @@ public class OficinaPanel extends BasePanel {
         }
 
         @Override
-        protected void loadData() {
+        public void loadData() {
             try {
                 tableModel.setRowCount(0);
                 context.veiculoCrud.listarTodos().forEach(veiculo -> {

@@ -3,7 +3,6 @@ package mecanicabase;
 import javax.swing.SwingUtilities;
 
 import mecanicabase.infra.ApplicationContext;
-import mecanicabase.infra.EnvConfig;
 import mecanicabase.infra.db.Database;
 import mecanicabase.view.swing.MainSwingView;
 
@@ -13,16 +12,14 @@ public class MecanicaBase {
 
         Database.load();
 
-        boolean interfaceAtiva = EnvConfig.INSTANCE.get("INTERFACE", "true").equalsIgnoreCase("true");
+        boolean interfaceAtiva = mecanicabase.infra.EnvConfig.INSTANCE.getBoolean("INTERFACE", false);
 
         ApplicationContext context = new ApplicationContext();
-
         if (interfaceAtiva) {
             SwingUtilities.invokeLater(() -> {
                 new MainSwingView(context).setVisible(true);
             });
         } else {
-
             context.router.start();
         }
 

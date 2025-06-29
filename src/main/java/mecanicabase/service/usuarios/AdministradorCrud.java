@@ -1,7 +1,10 @@
 package mecanicabase.service.usuarios;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+
 import mecanicabase.infra.crypto.JasyptCrypto;
 import mecanicabase.model.usuarios.Administrador;
 
@@ -90,6 +93,14 @@ public class AdministradorCrud extends UsuarioCrud<Administrador> {
         }
 
         return true;
+    }
+
+    public Map<UUID, Administrador> index() {
+        Map<UUID, Administrador> index = new HashMap<>();
+        for (Administrador a : getInstancias()) {
+            index.put(a.getId(), a);
+        }
+        return index;
     }
 
 }

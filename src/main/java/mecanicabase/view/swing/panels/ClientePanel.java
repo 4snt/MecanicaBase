@@ -2,10 +2,8 @@ package mecanicabase.view.swing.panels;
 
 import java.util.List;
 import java.util.UUID;
-
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import mecanicabase.infra.ApplicationContext;
 import mecanicabase.model.usuarios.Cliente;
 
@@ -25,19 +23,11 @@ public class ClientePanel extends BasePanel {
 
     @Override
     protected void setupTable() {
-        String[] columns = {"Selecionar", "ID", "Nome", "CPF", "Telefone", "Endereço", "Email"};
+        String[] columns = {"ID", "Nome", "CPF", "Telefone", "Endereço", "Email"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 0; // Só o checkbox é editável
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 0) {
-                    return Boolean.class;
-                }
-                return String.class;
+                return false;
             }
         };
         table = new javax.swing.JTable(tableModel);
@@ -71,17 +61,16 @@ public class ClientePanel extends BasePanel {
     }
 
     @Override
-    protected void loadData() {
+    public void loadData() {
         tableModel.setRowCount(0);
         try {
             List<Cliente> clientes = context.clienteCrud.listarTodos();
             for (Cliente cliente : clientes) {
                 Object[] row = {
-                    false,
                     cliente.getId(),
                     cliente.getNome(),
                     cliente.getCpf(),
-                    cliente.getTelefone(), // Corrigido: Telefone antes de Endereço
+                    cliente.getTelefone(),
                     cliente.getEndereco(),
                     cliente.getEmail()
                 };
@@ -104,14 +93,14 @@ public class ClientePanel extends BasePanel {
             return;
         }
         int selectedRow = getSelectedRowIndex();
-        Object value = tableModel.getValueAt(selectedRow, 1); // Coluna 1 é o ID
+        Object value = tableModel.getValueAt(selectedRow, 0); // ID agora está na coluna 0
         clienteEditandoId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
 
-        String nome = (String) tableModel.getValueAt(selectedRow, 2);
-        String cpf = (String) tableModel.getValueAt(selectedRow, 3);
-        String telefone = (String) tableModel.getValueAt(selectedRow, 4);
-        String endereco = (String) tableModel.getValueAt(selectedRow, 5);
-        String email = (String) tableModel.getValueAt(selectedRow, 6);
+        String nome = (String) tableModel.getValueAt(selectedRow, 1);
+        String cpf = (String) tableModel.getValueAt(selectedRow, 2);
+        String telefone = (String) tableModel.getValueAt(selectedRow, 3);
+        String endereco = (String) tableModel.getValueAt(selectedRow, 4);
+        String email = (String) tableModel.getValueAt(selectedRow, 5);
 
         nomeField.setText(nome);
         cpfField.setText(cpf);
@@ -123,55 +112,27 @@ public class ClientePanel extends BasePanel {
     }
 
     private void excluirCliente() {
-        boolean algumSelecionado = false;
-        for (int i = 0; i < tableModel.getRowCount(); i++) {
-            Boolean checked = (Boolean) tableModel.getValueAt(i, 0);
-            if (checked != null && checked) {
-                algumSelecionado = true;
-                Object value = tableModel.getValueAt(i, 1);
-                try {
-                    System.out.println("Tentando excluir linha " + i + " - valor ID: " + value + " (" + (value != null ? value.getClass() : "null") + ")");
-                    UUID clienteId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
-                    System.out.println("UUID convertido: " + clienteId);
-                    boolean removido = context.clienteCrud.removerPorId(clienteId.toString());
-                    System.out.println("Removido? " + removido);
-                    if (!removido) {
-                        showError("Não foi possível remover o cliente de ID: " + clienteId);
-                    }
-                } catch (Exception e) {
-                    showError("Erro ao excluir cliente de ID: " + value + " - " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }
+        if (!hasSelection()) {
+            showMessage("Selecione um cliente para excluir.");
+            return;
         }
-        if (!algumSelecionado) {
-            if (!hasSelection()) {
-                showMessage("Selecione um cliente para excluir.");
-                return;
-            }
-            int selectedRow = getSelectedRowIndex();
-            Object value = tableModel.getValueAt(selectedRow, 1);
-            try {
-                System.out.println("Tentando excluir selecionado - valor ID: " + value + " (" + (value != null ? value.getClass() : "null") + ")");
-                if (value != null) {
-                    UUID clienteId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
-                    System.out.println("UUID convertido: " + clienteId);
-                    boolean removido = context.clienteCrud.removerPorId(clienteId.toString());
-                    System.out.println("Removido? " + removido);
-                    if (removido) {
-                        showMessage("Cliente excluído com sucesso!");
-                    } else {
-                        showError("Cliente não encontrado para exclusão.");
-                    }
+        int selectedRow = getSelectedRowIndex();
+        Object value = tableModel.getValueAt(selectedRow, 0); // ID agora está na coluna 0
+        try {
+            if (value != null) {
+                UUID clienteId = value instanceof UUID ? (UUID) value : UUID.fromString(value.toString());
+                boolean removido = context.clienteCrud.removerPorId(clienteId.toString());
+                if (removido) {
+                    showMessage("Cliente excluído com sucesso!");
                 } else {
-                    showError("ID do cliente é nulo.");
+                    showError("Cliente não encontrado para exclusão.");
                 }
-            } catch (Exception e) {
-                showError("Erro ao excluir cliente: " + e.getMessage());
-                e.printStackTrace();
+            } else {
+                showError("ID do cliente é nulo.");
             }
-        } else {
-            showMessage("Clientes selecionados excluídos!");
+        } catch (Exception e) {
+            showError("Erro ao excluir cliente: " + e.getMessage());
+            e.printStackTrace();
         }
         loadData();
     }
@@ -234,19 +195,15 @@ public class ClientePanel extends BasePanel {
         String termo = buscaField.getText().trim();
         tableModel.setRowCount(0);
         try {
-            List<Cliente> clientes;
-            if (termo.isEmpty()) {
-                clientes = context.clienteCrud.listarTodos();
-            } else {
-                clientes = context.clienteCrud.buscarPorFiltro(termo);
-            }
+            List<Cliente> clientes = termo.isEmpty()
+                    ? context.clienteCrud.listarTodos()
+                    : context.clienteCrud.buscarPorFiltro(termo);
             for (Cliente cliente : clientes) {
                 Object[] row = {
-                    false,
                     cliente.getId(),
                     cliente.getNome(),
                     cliente.getCpf(),
-                    cliente.getTelefone(), // Corrigido: Telefone antes de Endereço
+                    cliente.getTelefone(),
                     cliente.getEndereco(),
                     cliente.getEmail()
                 };

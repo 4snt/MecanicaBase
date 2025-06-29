@@ -3,8 +3,7 @@ package mecanicabase.infra;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
+
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class EnvConfig {
@@ -15,42 +14,43 @@ public class EnvConfig {
     private final File workingDir;
 
     private EnvConfig() {
-        this.workingDir = detectWorkingDir();
-        ensureEnvFile();
+        this.workingDir = new File(System.getProperty("user.dir"));
+        System.out.println("[EnvConfig] Working dir: " + workingDir.getAbsolutePath());
+
+        File envFile = new File(workingDir, ".env");
+        System.out.println("[EnvConfig] Procurando .env em: " + envFile.getAbsolutePath());
+
+        if (!envFile.exists()) {
+            createDefaultEnvFile(envFile);
+        }
+
         this.dotenv = Dotenv.configure()
                 .directory(workingDir.getAbsolutePath())
-                .ignoreIfMissing()
+                .filename(".env") // explicitamente define o nome
+                .ignoreIfMalformed() // loga erros de parsing
+                .ignoreIfMissing() // ignora se .env estiver ausente
                 .load();
     }
 
-    private File detectWorkingDir() {
-        try {
-            String path = Paths.get(
-                    EnvConfig.class.getProtectionDomain().getCodeSource().getLocation().toURI()
-            ).toFile().getParentFile().getAbsolutePath();
-            return new File(path);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void ensureEnvFile() {
-        File envFile = new File(workingDir, ".env");
-        if (!envFile.exists()) {
-            try (FileWriter writer = new FileWriter(envFile)) {
-                writer.write("# Arquivo .env criado automaticamente\n");
-                writer.write("MODO=PRODUCAO\n");
-            } catch (IOException ignored) {
-            }
+    private void createDefaultEnvFile(File envFile) {
+        try (FileWriter writer = new FileWriter(envFile)) {
+            writer.write("# .env criado automaticamente\n");
+            writer.write("MODO=PRODUCAO\n");
+        } catch (IOException e) {
+            System.err.println("[EnvConfig] Falha ao criar .env: " + e.getMessage());
         }
     }
 
     public String get(String key) {
-        return dotenv.get(key);
+        String value = dotenv.get(key);
+        System.out.println("[EnvConfig] " + key + " = " + value);
+        return value;
     }
 
     public String get(String key, String defaultValue) {
-        return dotenv.get(key, defaultValue);
+        String value = dotenv.get(key, defaultValue);
+        System.out.println("[EnvConfig] " + key + " = " + value + " (default: " + defaultValue + ")");
+        return value;
     }
 
     public boolean getBoolean(String key, boolean defaultValue) {
@@ -58,7 +58,9 @@ public class EnvConfig {
         if (value == null) {
             return defaultValue;
         }
-        return value.equalsIgnoreCase("true") || value.equalsIgnoreCase("1");
+        boolean result = value.equalsIgnoreCase("true") || value.equalsIgnoreCase("1");
+        System.out.println("[EnvConfig] " + key + " = " + value + " (interpreted as " + result + ")");
+        return result;
     }
 
     public boolean isRunningFromJar() {

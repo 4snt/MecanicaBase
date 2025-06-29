@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
-
 import mecanicabase.infra.ApplicationContext;
 
 /**
@@ -37,7 +35,7 @@ public abstract class BasePanel extends JPanel {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         initializeComponents(title);
         setupLayout();
-        loadData();
+        // NÃO chamar loadData() aqui!
     }
 
     protected void initializeComponents(String title) {
@@ -79,7 +77,7 @@ public abstract class BasePanel extends JPanel {
 
     protected abstract void setupForm();
 
-    protected abstract void loadData();
+    public abstract void loadData();
 
     protected JButton createButton(String text, Runnable action) {
         JButton button = new JButton(text);

@@ -101,4 +101,12 @@ public class PecaCrud extends Crud<Peca> {
             flyweightFactory.limpar();
         }
     }
+
+    public java.util.Map<java.util.UUID, Peca> index() {
+        java.util.Map<java.util.UUID, Peca> index = new java.util.HashMap<>();
+        for (Peca p : getInstancias()) {
+            index.put(p.getId(), p);
+        }
+        return index;
+    }
 }

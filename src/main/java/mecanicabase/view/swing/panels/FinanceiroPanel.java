@@ -40,9 +40,9 @@ public class FinanceiroPanel extends BasePanel {
     }
 
     @Override
-    protected void loadData() {
+    public void loadData() {
         tableModel.setRowCount(0);
-        
+
         // Adicionar módulos financeiros disponíveis
         tableModel.addRow(new Object[]{"Categorias de Despesa", "Gerenciamento de categorias de despesas"});
         tableModel.addRow(new Object[]{"Despesas", "Controle de despesas da oficina"});

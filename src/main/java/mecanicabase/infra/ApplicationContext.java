@@ -118,7 +118,6 @@ public class ApplicationContext {
         relatorioHandler = new GerarRelatorioTerminalHandler(scanner);
         balancoHandler = new GerarBalancoTerminalHandler(scanner);
 
-        // ✅ Instanciar Terminal Router
         router = new TerminalRouter(this);
     }
 }

@@ -1,0 +1,119 @@
+{
+  "entidades": {
+    "mecanicabase.model.operacao.Servico": [
+      {
+        "tipo": "Troca bateria",
+        "preco": 10000.0,
+        "descricao": "Troca bateria",
+        "duracao": 100,
+        "usaElevador": false,
+        "id": "68968b65-95c3-44fa-9f4d-e19cd404542f",
+        "criadoEm": "2025-06-28T18:30:44.3004318",
+        "atualizadoEm": "2025-06-28T18:30:44.3004318"
+      }
+    ],
+    "mecanicabase.model.financeiro.CategoriaDespesa": [],
+    "mecanicabase.model.operacao.Elevador": [
+      null,
+      null,
+      null,
+      {
+        "tipo": "ALINHAMENTO_E_BALANCEAMENTO",
+        "id": "413587cd-e0a4-4e0b-9cbe-47a99da0eb5d",
+        "criadoEm": "2025-06-26T12:02:51.9468041",
+        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "5fabf7cf-7e91-45b7-a005-bbbc6c2d58c3",
+        "criadoEm": "2025-06-26T12:02:51.9468041",
+        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+      },
+      {
+        "tipo": "GERAL",
+        "id": "5d10970c-298f-40a7-bb42-59ee9aae5b7f",
+        "criadoEm": "2025-06-26T12:02:51.9468041",
+        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+      }
+    ],
+    "mecanicabase.model.financeiro.ServicoItem": [],
+    "mecanicabase.model.usuarios.Administrador": [
+      {
+        "senha": "pelkP5tW0vu4wVUxJkbxfg\u003d\u003d",
+        "nome": "Admin",
+        "email": "Admin",
+        "id": "2bc7f7c9-9c19-4244-8933-0cc51a9c5d1a",
+        "criadoEm": "2025-06-26T12:02:51.9498042",
+        "atualizadoEm": "2025-06-26T12:02:51.9498042"
+      }
+    ],
+    "mecanicabase.model.financeiro.Despesa": [],
+    "mecanicabase.model.operacao.Peca": [
+      {
+        "nome": "Bateria de tesla",
+        "valor": 6900000.0,
+        "quantidade": 1,
+        "id": "75197039-b2e8-4b76-a044-0823bb5c5fc2",
+        "criadoEm": "2025-06-26T15:54:42.1666028",
+        "atualizadoEm": "2025-06-26T15:54:42.1675948"
+      }
+    ],
+    "mecanicabase.model.financeiro.PecaItem": [],
+    "mecanicabase.model.usuarios.Cliente": [
+      {
+        "veiculos": [
+          "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+          "d0844c54-400a-4bf4-a429-343b841a3feb"
+        ],
+        "nome": "Murilo",
+        "email": "murilO@email.com",
+        "cpf": "caDMcZhxYh8F9+uihJyA6FjkRppiYdrI",
+        "telefone": "31984567888",
+        "endereco": "Rua joraci",
+        "id": "232085e1-a137-49bd-a324-24fb8d004aa5",
+        "criadoEm": "2025-06-26T15:52:28.0113314",
+        "atualizadoEm": "2025-06-26T15:52:28.0113314"
+      }
+    ],
+    "mecanicabase.model.operacao.Veiculo": [
+      {
+        "modelo": "hb20",
+        "placa": "qpz-8999",
+        "anoFabricacao": 2019,
+        "cor": "Cinza",
+        "status": "RECEBIDO",
+        "clienteId": "232085e1-a137-49bd-a324-24fb8d004aa5",
+        "id": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+        "criadoEm": "2025-06-26T15:54:02.46",
+        "atualizadoEm": "2025-06-26T15:54:02.46"
+      },
+      {
+        "modelo": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "placa": "aaaaaaaa",
+        "anoFabricacao": 2010,
+        "cor": "aaaaaaa",
+        "status": "RECEBIDO",
+        "clienteId": "232085e1-a137-49bd-a324-24fb8d004aa5",
+        "id": "d0844c54-400a-4bf4-a429-343b841a3feb",
+        "criadoEm": "2025-06-28T19:12:47.3891226",
+        "atualizadoEm": "2025-06-28T19:12:47.3891226"
+      }
+    ],
+    "mecanicabase.model.usuarios.Funcionario": [
+      {
+        "funcao": "MECANICO_ESPECIALISTA",
+        "salario": 3000.0,
+        "senha": "yUfsZUmK40cHApV9atk5EQ\u003d\u003d",
+        "nome": "Luis Claudio",
+        "email": "luis@email.com",
+        "cpf": "CAIdWdmCWNkDNVaCUBuozQNOf5h2ZSJnfZEsWK2fULOSpicQW4y93Uz8TCN3leMW",
+        "telefone": "31984567800",
+        "endereco": "Rua do nunca",
+        "id": "d4a29b25-d291-444e-916f-26876f747083",
+        "criadoEm": "2025-06-27T08:13:06.8610207",
+        "atualizadoEm": "2025-06-27T08:13:06.8610207"
+      }
+    ],
+    "mecanicabase.model.financeiro.Agendamento": []
+  }
+}

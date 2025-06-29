@@ -125,4 +125,12 @@ public class OrdemDeServicoCrud extends Crud<OrdemDeServico> {
 
         return pecaItem;
     }
+
+    public java.util.Map<java.util.UUID, OrdemDeServico> index() {
+        java.util.Map<java.util.UUID, OrdemDeServico> index = new java.util.HashMap<>();
+        for (OrdemDeServico os : getInstancias()) {
+            index.put(os.getId(), os);
+        }
+        return index;
+    }
 }

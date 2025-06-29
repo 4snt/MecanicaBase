@@ -1,108 +1,143 @@
 package mecanicabase.view.swing.panels;
 
+import java.util.List;
+import java.util.UUID;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.model.financeiro.OrdemDeServico;
+import mecanicabase.model.financeiro.StatusOrdemDeServico;
+import mecanicabase.model.operacao.Peca;
+import mecanicabase.service.financeiro.OrdemDeServicoCrud;
+import mecanicabase.service.operacao.PecaCrud;
 
-/**
- * Painel Swing para gerenciamento de ordens de serviço.
- */
 public class OrdemServicoPanel extends BasePanel {
 
-    public OrdemServicoPanel(ApplicationContext context) {
+    private final OrdemDeServicoCrud crud;
+    private final PecaCrud pecaCrud;
+
+    public OrdemServicoPanel(ApplicationContext context, OrdemDeServicoCrud crud, PecaCrud pecaCrud) {
         super(context, "Gestão de Ordens de Serviço");
+        this.crud = crud;
+        this.pecaCrud = pecaCrud;
+    }
+
+    @Override
+    protected void setupForm() {
+        // Nenhum formulário necessário neste painel
     }
 
     @Override
     protected void setupTable() {
-        String[] columns = {"ID", "Cliente", "Veículo", "Data", "Status", "Total"};
+        String[] columns = {"ID", "Status", "Total"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        table = new javax.swing.JTable(tableModel);
-        table.getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        table = new JTable(tableModel);
+        table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     @Override
     protected void setupButtons() {
-        buttonPanel.add(createButton("Nova OS", this::novaOrdemServico));
-        buttonPanel.add(createButton("Editar", this::editarOrdemServico));
-        buttonPanel.add(createButton("Finalizar", this::finalizarOrdemServico));
-        buttonPanel.add(createButton("Atualizar", this::loadData));
-    }
-
-    @Override
-    protected void setupForm() {
-        // Implementação futura com campos para ordem de serviço
-    }
-
-    @Override
-    protected void loadData() {
-        tableModel.setRowCount(0);
-
-        try {
-            context.ordemCrud.listarTodos().forEach(ordem -> {
-                // Buscar nome do cliente pelo ID
-                String clienteNome = "N/A";
-                if (ordem.getClienteId() != null) {
-                    var cliente = context.clienteCrud.buscarPorId(ordem.getClienteId());
-                    if (cliente != null && cliente.getNome() != null) {
-                        clienteNome = cliente.getNome();
-                    }
-                }
-
-                // Buscar placa do veículo pelo primeiro agendamento (se houver)
-                String placaVeiculo = "N/A";
-                if (!ordem.getAgendamentos().isEmpty()) {
-                    var agendamento = ordem.getAgendamentos().get(0);
-                    if (agendamento.getVeiculo() != null) {
-                        placaVeiculo = agendamento.getVeiculo().getPlaca();
-                    }
-                }
-
-                Object[] row = {
-                    ordem.getId(),
-                    clienteNome,
-                    placaVeiculo,
-                    ordem.getFinalizadoEm() != null ? ordem.getFinalizadoEm().toString() : "N/A",
-                    ordem.getStatus() != null ? ordem.getStatus().toString() : "N/A",
-                    "R$ 0,00" // Valor total: ajuste se houver método/calculo
-                };
-                tableModel.addRow(row);
-            });
-        } catch (Exception e) {
-            showError("Erro ao carregar ordens de serviço: " + e.getMessage());
-        }
-    }
-
-    private void novaOrdemServico() {
-        showMessage("Funcionalidade em desenvolvimento - Nova Ordem de Serviço");
-    }
-
-    private void editarOrdemServico() {
-        if (!hasSelection()) {
-            showMessage("Selecione uma ordem de serviço para editar.");
-            return;
-        }
-        showMessage("Funcionalidade em desenvolvimento - Editar Ordem de Serviço");
-    }
-
-    private void finalizarOrdemServico() {
-        if (!hasSelection()) {
-            showMessage("Selecione uma ordem de serviço para finalizar.");
-            return;
-        }
-
-        if (confirmAction("Tem certeza que deseja finalizar esta ordem de serviço?")) {
-            showMessage("Funcionalidade em desenvolvimento - Finalizar Ordem de Serviço");
-        }
+        buttonPanel.add(createButton("Adicionar Peça", this::adicionarPeca));
+        buttonPanel.add(createButton("Finalizar OS", this::finalizarOrdem));
     }
 
     @Override
     protected boolean saveFormData() {
-        // Implementação futura
+        // Não há formulário neste painel
         return false;
+    }
+
+    @Override
+    public void loadData() {
+        tableModel.setRowCount(0);
+        List<OrdemDeServico> ordens = crud.listarTodos();
+        for (OrdemDeServico ordem : ordens) {
+            tableModel.addRow(new Object[]{
+                ordem.getId(),
+                ordem.getStatus(),
+                "R$ 0,00" // substitua aqui se quiser calcular o total com base nas peças
+            });
+        }
+    }
+
+    private void adicionarPeca() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            showError("Selecione uma OS.");
+            return;
+        }
+        UUID osId = (UUID) tableModel.getValueAt(selectedRow, 0);
+        OrdemDeServico os = crud.buscarPorId(osId);
+        if (os == null) {
+            showError("Ordem de serviço não encontrada.");
+            return;
+        }
+        List<Peca> pecas = pecaCrud.listarTodos();
+        if (pecas.isEmpty()) {
+            showError("Nenhuma peça cadastrada.");
+            return;
+        }
+        Peca selecionada = (Peca) JOptionPane.showInputDialog(
+                this,
+                "Selecione a peça:",
+                "Adicionar Peça",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                pecas.toArray(),
+                pecas.get(0)
+        );
+        if (selecionada == null) {
+            return;
+        }
+        String qtdStr = JOptionPane.showInputDialog(this, "Quantidade:");
+        if (qtdStr == null || qtdStr.isBlank()) {
+            return;
+        }
+        try {
+            int quantidade = Integer.parseInt(qtdStr.trim());
+            crud.venderPeca(os.getId(), selecionada.getId(), quantidade);
+            showMessage("Peça adicionada com sucesso!");
+            loadData();
+        } catch (Exception e) {
+            showError("Erro: " + e.getMessage());
+        }
+    }
+
+    private void finalizarOrdem() {
+        int selectedRow = table.getSelectedRow();
+        if (selectedRow == -1) {
+            showError("Selecione uma OS.");
+            return;
+        }
+        Object idObj = tableModel.getValueAt(selectedRow, 0);
+        UUID osId;
+        if (idObj instanceof UUID uuid) {
+            osId = uuid;
+        } else {
+            try {
+                osId = UUID.fromString(idObj.toString());
+            } catch (Exception e) {
+                showError("ID da OS inválido.");
+                return;
+            }
+        }
+        if (!confirmAction("Tem certeza que deseja finalizar esta ordem de serviço?")) {
+            return;
+        }
+        try {
+            crud.atualizar(osId.toString(), true, StatusOrdemDeServico.CONCLUIDO);
+            showMessage("Ordem de serviço finalizada!");
+            loadData();
+        } catch (RuntimeException e) {
+            showError("Erro ao finalizar: " + e.getMessage());
+        }
     }
 }

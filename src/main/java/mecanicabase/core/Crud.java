@@ -13,15 +13,13 @@ import java.util.UUID;
  * {@link #getInstancias()} estejam indexadas no mapa interno
  * {@code indexPorId}. Recomenda-se que subclasses chamem o método
  * {@link #reindexar()} no construtor.
- * </p>
- * <p>
+ *
  * Exemplo de uso no construtor da subclasse:
  * <pre>
  *   public MinhaEntidadeCrud() {
  *       reindexar();
  *   }
  * </pre>
- * </p>
  *
  * @param <T> Tipo da entidade
  */
@@ -107,5 +105,13 @@ public abstract class Crud<T> {
         // Se usar Map, reindexe se necessário:
         indexPorId.put(getId(entidade), entidade);
         return entidade;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " {"
+                + "totalInstancias=" + getInstancias().size()
+                + ", indexados=" + indexPorId.size()
+                + '}';
     }
 }

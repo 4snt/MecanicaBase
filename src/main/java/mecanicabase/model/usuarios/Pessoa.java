@@ -37,6 +37,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Retorna o nome da pessoa.
+     *
+     * @return Nome da pessoa
      */
     public String getNome() {
         return nome;
@@ -44,6 +46,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Define o nome da pessoa.
+     *
+     * @param nome Nome da pessoa
      */
     public void setNome(String nome) {
         this.nome = nome;
@@ -51,6 +55,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Retorna o email da pessoa.
+     *
+     * @return Email da pessoa
      */
     public String getEmail() {
         return email;
@@ -58,6 +64,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Define o email da pessoa.
+     *
+     * @param email Email da pessoa
      */
     public void setEmail(String email) {
         this.email = email;
@@ -65,6 +73,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Retorna o CPF da pessoa (criptografado).
+     *
+     * @return CPF criptografado
      */
     public String getCpf() {
         return cpf;
@@ -72,6 +82,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Define e criptografa o CPF da pessoa.
+     *
+     * @param cpf CPF da pessoa
      */
     public void setCpf(String cpf) {
         String cpfAnonimazado = JasyptCrypto.encrypt(cpf);
@@ -80,6 +92,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Retorna o telefone da pessoa.
+     *
+     * @return Telefone da pessoa
      */
     public String getTelefone() {
         return telefone;
@@ -87,6 +101,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Define o telefone da pessoa.
+     *
+     * @param telefone Telefone da pessoa
      */
     public void setTelefone(String telefone) {
         this.telefone = telefone;
@@ -94,6 +110,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Retorna o endereço da pessoa.
+     *
+     * @return Endereço da pessoa
      */
     public String getEndereco() {
         return endereco;
@@ -101,6 +119,8 @@ public abstract class Pessoa extends Entity {
 
     /**
      * Define o endereço da pessoa.
+     *
+     * @param endereco Endereço da pessoa
      */
     public void setEndereco(String endereco) {
         this.endereco = endereco;

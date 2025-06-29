@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
 import mecanicabase.core.Entity;
 import mecanicabase.model.operacao.Elevador;
 import mecanicabase.model.operacao.Servico;
@@ -33,8 +34,11 @@ public class Agendamento extends Entity implements Comparable<Agendamento> {
      *
      * @param data Data e hora do agendamento
      * @param descricaoProblema Descrição do problema
-     * @param cliente Cliente que solicitou
      * @param veiculo Veículo envolvido
+     * @param elevador Elevador utilizado
+     * @param funcionario Funcionário responsável
+     * @param servico Serviço a ser realizado
+     * @param ordemDeServico Ordem de serviço vinculada
      */
     public Agendamento(
             LocalDateTime data,

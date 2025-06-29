@@ -3,6 +3,7 @@ package mecanicabase.model.operacao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import mecanicabase.core.Entity;
 import mecanicabase.model.usuarios.Cliente;
 
@@ -106,6 +107,8 @@ public class Veiculo extends Entity {
 
     /**
      * Retorna uma representação textual do veículo.
+     *
+     * @return String formatada com os dados do veículo
      */
     @Override
     public String toString() {

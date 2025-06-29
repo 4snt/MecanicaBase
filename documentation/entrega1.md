@@ -12,17 +12,17 @@
   - [x] Alterar a senha de um Administrador.
         //src/main/java//usuariocrud => extende funcionario e administrador
   - [x] Verificar produto no estoque da loja.
-        // src/main/java//usecases/operacao/peca/BuscaPorIdPecaUseCase.java
+        src\main\java\mecanicabase\service\operacao\PecaCrud.java
   - [x] Realizar agendamentos.
-        // src/main/java//usecases/financeiro/agendamento/CriarAgendamentoUseCase.java
+        src\main\java\mecanicabase\controller\AgendamentoController.java
   - [x] Receber de fornecedores e atualizar automaticamente todas as ações do estoque da loja.
-        // src/main/java//usecases/operacao/peca/AtualizaPecaUseCase.java
+        src\main\java\mecanicabase\model\operacao\EntradaPeca.java
   - [x] Cancelar agendamentos (com retenção de 20% do valor).
-        // src/main/java//usecases/financeiro/agendamento/AtualizaAgendamentoUseCase.java
+        src\main\java\mecanicabase\service\financeiro\AgendamentoCrud.java
   - [x] Emitir relatório de vendas e serviços de um dia e de um mês.
-        // src/main/java//usecases/financeiro/relatorios/GerarRelatorioUseCase.java
+        src\main\java\mecanicabase\service\financeiro\relatorios\GerarRelatorioUseCase.java
   - [x] Gerar balanço mensal com estatísticas básicas de serviços e vendas.
-        // src/main/java//usecases/financeiro/relatorios/GerarBalancoUseCase.java
+        src\main\java\mecanicabase\service\financeiro\relatorios\GerarBalancoUseCase.java
 - [ ] Criar o **Diagrama de Classes COMPLETO** com atributos e métodos necessários para realizar todos os casos de uso do sistema.
 
 ## Questão 2

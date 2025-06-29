@@ -3,6 +3,7 @@ package mecanicabase.model.financeiro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import mecanicabase.core.Entity;
 import mecanicabase.model.operacao.Servico;
 
@@ -17,6 +18,13 @@ public class ServicoItem extends Entity {
     private float valorUnitario;
     private final UUID ordemDeServico;
 
+    /**
+     * Construtor da classe ServicoItem.
+     *
+     * @param servico UUID do serviço associado
+     * @param valorUnitario Valor unitário do serviço
+     * @param ordemDeServico UUID da ordem de serviço associada
+     */
     public ServicoItem(UUID servico, float valorUnitario, UUID ordemDeServico) {
         this.servico = servico;
         this.valorUnitario = valorUnitario;

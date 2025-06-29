@@ -3,16 +3,27 @@ package mecanicabase.infra;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import io.github.cdimascio.dotenv.Dotenv;
 
+/**
+ * Classe responsável por carregar e gerenciar variáveis de ambiente do sistema.
+ * Utiliza arquivos .env para configuração e permite acesso centralizado às
+ * variáveis.
+ */
 public class EnvConfig {
 
+    /**
+     * Instância singleton de EnvConfig.
+     */
     public static final EnvConfig INSTANCE = new EnvConfig();
 
     private final Dotenv dotenv;
     private final File workingDir;
 
+    /**
+     * Construtor privado. Inicializa o diretório de trabalho e carrega o
+     * arquivo .env.
+     */
     private EnvConfig() {
         this.workingDir = new File(System.getProperty("user.dir"));
         System.out.println("[EnvConfig] Working dir: " + workingDir.getAbsolutePath());
@@ -32,6 +43,11 @@ public class EnvConfig {
                 .load();
     }
 
+    /**
+     * Cria um arquivo .env padrão caso não exista.
+     *
+     * @param envFile arquivo .env a ser criado
+     */
     private void createDefaultEnvFile(File envFile) {
         try (FileWriter writer = new FileWriter(envFile)) {
             writer.write("# .env criado automaticamente\n");

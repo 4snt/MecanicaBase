@@ -73,4 +73,22 @@ public class Entity<T> {
     public LocalDateTime getAtualizadoEm() {
         return atualizadoEm;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + " {");
+        try {
+            for (var field : getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                sb.append(field.getName()).append("=").append(field.get(this)).append(", ");
+            }
+            sb.append("id=").append(getId()).append(", ");
+            sb.append("criadoEm=").append(getCriadoEm()).append(", ");
+            sb.append("atualizadoEm=").append(getAtualizadoEm());
+        } catch (IllegalAccessException e) {
+            sb.append("Erro ao gerar toString: ").append(e.getMessage());
+        }
+        sb.append(" }");
+        return sb.toString();
+    }
 }

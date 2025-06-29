@@ -7,6 +7,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import mecanicabase.core.Entity;
 
+/**
+ * Representa uma ordem de serviço, contendo cliente, status, datas e itens
+ * relacionados.
+ */
 public class OrdemDeServico extends Entity {
 
     // Lista estática para simular persistência das ordens de serviço
@@ -31,6 +35,11 @@ public class OrdemDeServico extends Entity {
     private final List<UUID> agendamentos;
 
     // Construtor que inicializa a ordem com o cliente e status padrão ABERTO
+    /**
+     * Construtor que inicializa a ordem com o cliente e status padrão ABERTO.
+     *
+     * @param clienteId ID do cliente associado
+     */
     public OrdemDeServico(UUID clienteId) {
         this.clienteId = clienteId;
         this.agendamentos = new ArrayList<>();

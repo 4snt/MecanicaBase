@@ -22,12 +22,33 @@ import mecanicabase.infra.ApplicationContext;
  */
 public abstract class BasePanel extends JPanel {
 
+    /**
+     * Contexto da aplicação
+     */
     protected final ApplicationContext context;
+    /**
+     * Tabela exibida no painel
+     */
     protected JTable table;
+    /**
+     * Modelo da tabela exibida no painel.
+     */
     protected DefaultTableModel tableModel;
+    /**
+     * Painel de botões
+     */
     protected JPanel buttonPanel;
+    /**
+     * Painel de formulário (inicialmente oculto)
+     */
     protected JPanel formPanel;
 
+    /**
+     * Construtor do painel base.
+     *
+     * @param context Contexto da aplicação
+     * @param title Título do painel
+     */
     public BasePanel(ApplicationContext context, String title) {
         this.context = context;
         setLayout(new BorderLayout());
@@ -67,6 +88,9 @@ public abstract class BasePanel extends JPanel {
         setupForm();
     }
 
+    /**
+     * Configura o layout do painel.
+     */
     protected void setupLayout() {
         // Pode ser customizado pelas subclasses
     }
@@ -79,25 +103,54 @@ public abstract class BasePanel extends JPanel {
 
     public abstract void loadData();
 
+    /**
+     * Cria um botão com ação associada.
+     *
+     * @param text Texto do botão
+     * @param action Ação a ser executada
+     * @return JButton criado
+     */
     protected JButton createButton(String text, Runnable action) {
         JButton button = new JButton(text);
         button.addActionListener(e -> action.run());
         return button;
     }
 
+    /**
+     * Exibe uma mensagem informativa para o usuário.
+     *
+     * @param message Mensagem a ser exibida
+     */
     protected void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
 
+    /**
+     * Exibe uma mensagem de erro para o usuário.
+     *
+     * @param message Mensagem de erro
+     */
     protected void showError(String message) {
         JOptionPane.showMessageDialog(this, message, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * Exibe uma caixa de confirmação para o usuário.
+     *
+     * @param message Mensagem a ser exibida
+     * @return true se confirmado, false caso contrário
+     */
     protected boolean confirmAction(String message) {
         return JOptionPane.showConfirmDialog(this, message, "Confirmar",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
     }
 
+    /**
+     * Exibe um diálogo de formulário.
+     *
+     * @param parent Janela pai
+     * @param title Título do diálogo
+     */
     protected void showFormDialog(JFrame parent, String title) {
         javax.swing.JDialog formFrame = new javax.swing.JDialog(parent, title, true);
         formFrame.setLayout(new BorderLayout());
@@ -124,14 +177,31 @@ public abstract class BasePanel extends JPanel {
         // Implementação padrão vazia - subclasses podem sobrescrever
     }
 
+    /**
+     * Retorna o índice da linha selecionada na tabela.
+     *
+     * @return Índice da linha selecionada
+     */
     protected int getSelectedRowIndex() {
         return table.getSelectedRow();
     }
 
+    /**
+     * Verifica se há uma linha selecionada na tabela.
+     *
+     * @return true se houver seleção, false caso contrário
+     */
     protected boolean hasSelection() {
         return getSelectedRowIndex() >= 0;
     }
 
+    /**
+     * Adiciona um campo de formulário ao painel.
+     *
+     * @param panel Painel alvo
+     * @param labelText Texto do rótulo
+     * @param field Componente do campo
+     */
     protected void addFormField(JPanel panel, String labelText,
             java.awt.Component field, int row) {
         GridBagConstraints gbc = new GridBagConstraints();

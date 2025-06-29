@@ -132,9 +132,9 @@ def main():
     ap.add_argument("--jar", default="target/plantuml/plantuml-1.2024.3.jar", help="plantuml.jar")
     args = ap.parse_args()
 
-    os.makedirs(args.outdir, exist_ok=True)
-    completo = os.path.join(args.outdir, "/documentation/diagrama_de_classe/pumls/uml_diagrama_completo.puml")
-    relacoes = os.path.join(args.outdir, "/documentation/diagrama_de_classe/pumls/uml_diagrama_relacoes.puml")
+    os.makedirs(os.path.join(args.outdir, "pumls"), exist_ok=True)
+    completo = os.path.join(args.outdir, "pumls", "uml_diagrama_completo.puml")
+    relacoes = os.path.join(args.outdir, "pumls", "uml_diagrama_relacoes.puml")
 
     classes, herancas, comps, dependencias = extrair_infos(args.src)
 

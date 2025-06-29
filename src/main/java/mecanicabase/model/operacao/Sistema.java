@@ -44,6 +44,7 @@ public class Sistema {
     /**
      * Insere um novo valor para total de veículos.
      *
+     * @param quantidade Novo total de veículos a ser definido
      * @return Novo total de veículos
      */
     public static int setTotalVeiculos(int quantidade) {

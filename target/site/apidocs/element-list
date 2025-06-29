@@ -15,6 +15,7 @@ mecanicabase.service.financeiro.relatorios
 mecanicabase.service.operacao
 mecanicabase.service.usuarios
 mecanicabase.view.swing
+mecanicabase.view.swing.dialogs
 mecanicabase.view.swing.panels
 mecanicabase.view.Terminal
 mecanicabase.view.Terminal.router

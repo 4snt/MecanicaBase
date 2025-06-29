@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
@@ -22,9 +23,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
+
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.usuarios.Funcionario;
 
 /**
@@ -91,15 +92,12 @@ public class AgendaView extends JPanel {
         JSpinner.DateEditor editor = new JSpinner.DateEditor(datePicker, "dd/MM/yyyy");
         datePicker.setEditor(editor);
         datePicker.setValue(java.sql.Date.valueOf(dataReferencia));
-        datePicker.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                Date selected = (Date) datePicker.getValue();
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(selected);
-                dataReferencia = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-                atualizarAgenda();
-            }
+        datePicker.addChangeListener(e -> {
+            Date selected = (Date) datePicker.getValue();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(selected);
+            dataReferencia = LocalDate.of(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
+            atualizarAgenda();
         });
         topo.add(datePicker);
 
@@ -168,14 +166,34 @@ public class AgendaView extends JPanel {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createTitledBorder(dia.getDayOfMonth() + " " + dia.getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault())));
         panel.setPreferredSize(new Dimension(140, 400));
-        // Horários 00:00 até 23:00
         JPanel horariosPanel = new JPanel(new GridLayout(24, 1));
         DateTimeFormatter horaFmt = DateTimeFormatter.ofPattern("HH:mm");
         LocalTime inicio = LocalTime.of(0, 0);
+        // Obter mecânico selecionado
+        Funcionario mecanicoSelecionado = (Funcionario) mecanicoCombo.getSelectedItem();
+        // Filtrar agendamentos do dia e do mecânico
+        List<Agendamento> agendamentosDia = Agendamento.instances.stream()
+                .filter(a -> a.getFuncionario() != null && mecanicoSelecionado != null && a.getFuncionario().getId().equals(mecanicoSelecionado.getId()))
+                .filter(a -> a.getData().toLocalDate().equals(dia))
+                .toList();
         for (int i = 0; i < 24; i++) {
             LocalTime hora = inicio.plusHours(i);
-            JLabel horaLabel = new JLabel(hora.format(horaFmt), SwingConstants.LEFT);
-            horaLabel.setFont(horaLabel.getFont().deriveFont(12f));
+            String texto = hora.format(horaFmt);
+            // Verifica se há agendamento neste horário
+            Agendamento ag = agendamentosDia.stream()
+                    .filter(a -> a.getData().getHour() == hora.getHour())
+                    .findFirst().orElse(null);
+            JLabel horaLabel;
+            if (ag != null) {
+                String servico = ag.getServico() != null ? ag.getServico().getTipo() : "(Serviço)";
+                String status = ag.getStatus() != null ? ag.getStatus().name() : "";
+                horaLabel = new JLabel(texto + " - " + servico + " [" + status + "]", SwingConstants.LEFT);
+                horaLabel.setForeground(java.awt.Color.RED);
+                horaLabel.setFont(horaLabel.getFont().deriveFont(12f).deriveFont(java.awt.Font.BOLD));
+            } else {
+                horaLabel = new JLabel(texto, SwingConstants.LEFT);
+                horaLabel.setFont(horaLabel.getFont().deriveFont(12f));
+            }
             horariosPanel.add(horaLabel);
         }
         JScrollPane scroll = new JScrollPane(horariosPanel);

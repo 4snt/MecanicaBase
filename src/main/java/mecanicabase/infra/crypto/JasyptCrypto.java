@@ -4,8 +4,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 /**
  * Classe utilitária para realizar operações de criptografia e descriptografia
- * usando Jasypt. Utiliza o algoritmo {@link PBEWithMD5AndDES} com uma chave
- * secreta configurada para criptografar e comparar senhas.
+ * usando Jasypt. Utiliza o algoritmo PBEWithMD5AndDES com uma chave secreta
+ * configurada para criptografar e comparar senhas.
  */
 public class JasyptCrypto {
 

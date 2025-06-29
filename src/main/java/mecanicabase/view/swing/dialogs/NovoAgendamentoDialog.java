@@ -31,6 +31,13 @@ public class NovoAgendamentoDialog extends JDialog {
     private String descricaoProblema;
     private boolean confirmado = false;
 
+    private JComboBox<Cliente> clienteCombo;
+    private JComboBox<Veiculo> veiculoCombo;
+    private JComboBox<Servico> servicoCombo;
+    private JComboBox<Funcionario> mecanicoCombo;
+    private javax.swing.JSpinner dataHoraSpinner;
+    private JTextField descricaoField;
+
     public NovoAgendamentoDialog(JFrame parent, ApplicationContext context) {
         super(parent, "Novo Agendamento", true);
         setSize(400, 400);
@@ -41,7 +48,7 @@ public class NovoAgendamentoDialog extends JDialog {
 
         // Cliente
         List<Cliente> clientes = context.clienteCrud.listarTodos();
-        JComboBox<Cliente> clienteCombo = new JComboBox<>(clientes.toArray(new Cliente[0]));
+        clienteCombo = new JComboBox<>(clientes.toArray(new Cliente[0]));
         clienteCombo.setRenderer(new DefaultListCellRenderer() {
             @Override
             public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -56,7 +63,7 @@ public class NovoAgendamentoDialog extends JDialog {
         form.add(clienteCombo);
 
         // Veículo
-        JComboBox<Veiculo> veiculoCombo = new JComboBox<>();
+        veiculoCombo = new JComboBox<>();
         veiculoCombo.setRenderer(new DefaultListCellRenderer() {
             @Override
             public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -85,7 +92,7 @@ public class NovoAgendamentoDialog extends JDialog {
 
         // Serviço
         List<Servico> servicos = context.servicoCrud.listarTodos();
-        JComboBox<Servico> servicoCombo = new JComboBox<>(servicos.toArray(new Servico[0]));
+        servicoCombo = new JComboBox<>(servicos.toArray(new Servico[0]));
         servicoCombo.setRenderer(new DefaultListCellRenderer() {
             @Override
             public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -99,9 +106,9 @@ public class NovoAgendamentoDialog extends JDialog {
         form.add(new JLabel("Serviço:"));
         form.add(servicoCombo);
 
-        // Mecânico (filtrado pelo tipo do serviço)
+        // Mecânico
         List<Funcionario> mecanicos = context.funcionarioCrud.listarTodos();
-        JComboBox<Funcionario> mecanicoCombo = new JComboBox<>();
+        mecanicoCombo = new JComboBox<>();
         mecanicoCombo.setRenderer(new DefaultListCellRenderer() {
             @Override
             public java.awt.Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -112,6 +119,7 @@ public class NovoAgendamentoDialog extends JDialog {
                 return this;
             }
         });
+
         Runnable atualizarMecanicos = () -> {
             mecanicoCombo.removeAllItems();
             Servico servicoSel = (Servico) servicoCombo.getSelectedItem();
@@ -127,6 +135,7 @@ public class NovoAgendamentoDialog extends JDialog {
                 }
             }
         };
+
         servicoCombo.addActionListener(e -> atualizarMecanicos.run());
         if (servicoCombo.getItemCount() > 0) {
             servicoCombo.setSelectedIndex(0);
@@ -135,17 +144,17 @@ public class NovoAgendamentoDialog extends JDialog {
         form.add(new JLabel("Mecânico:"));
         form.add(mecanicoCombo);
 
-        // DatePicker para data/hora
+        // Data e Hora
         form.add(new JLabel("Data e hora:"));
         java.util.Date now = new java.util.Date();
         javax.swing.SpinnerDateModel dateModel = new javax.swing.SpinnerDateModel(now, null, null, java.util.Calendar.MINUTE);
-        javax.swing.JSpinner dataHoraSpinner = new javax.swing.JSpinner(dateModel);
+        dataHoraSpinner = new javax.swing.JSpinner(dateModel);
         javax.swing.JSpinner.DateEditor dateEditor = new javax.swing.JSpinner.DateEditor(dataHoraSpinner, "dd/MM/yyyy HH:mm");
         dataHoraSpinner.setEditor(dateEditor);
         form.add(dataHoraSpinner);
 
         // Descrição
-        JTextField descricaoField = new JTextField();
+        descricaoField = new JTextField();
         form.add(new JLabel("Descrição do problema:"));
         form.add(descricaoField);
 
@@ -173,6 +182,7 @@ public class NovoAgendamentoDialog extends JDialog {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente!\n" + ex.getMessage());
             }
         });
+
         cancelBtn.addActionListener(e -> setVisible(false));
     }
 

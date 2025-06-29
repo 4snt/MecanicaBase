@@ -10,7 +10,7 @@ import mecanicabase.infra.crypto.JasyptCrypto;
  */
 public class Colaborador extends Pessoa implements Autenticavel {
 
-    private String senha;
+    protected String senha;
 
     public Colaborador(String nome, String email, String senha, String cpf, String telefone, String endereco) {
         super(nome, email, cpf, telefone, endereco);
@@ -27,7 +27,22 @@ public class Colaborador extends Pessoa implements Autenticavel {
         return JasyptCrypto.compareTo(senha, this.senha);
     }
 
+    @Override
     public void setSenha(String senha) {
         this.senha = JasyptCrypto.encrypt(senha);
     }
+
+    protected String getSenha() {
+        return this.senha;
+    }
+
+    @Override
+    public boolean trocarSenha(String senhaAntiga, String novaSenha) {
+        if (compararSenha(senhaAntiga)) {
+            setSenha(novaSenha);
+            return true;
+        }
+        return false;
+    }
+
 }

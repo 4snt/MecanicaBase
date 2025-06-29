@@ -5,11 +5,22 @@
         "tipo": "Troca bateria",
         "preco": 10000.0,
         "descricao": "Troca bateria",
-        "duracao": 100,
+        "duracao": 1000,
         "usaElevador": false,
         "id": "68968b65-95c3-44fa-9f4d-e19cd404542f",
         "criadoEm": "2025-06-28T18:30:44.3004318",
         "atualizadoEm": "2025-06-28T18:30:44.3004318"
+      },
+      {
+        "tipo": "Troca de bateria de carro comum",
+        "preco": 50.0,
+        "descricao": "Troca de bateria de carro comum",
+        "duracao": 30,
+        "tipoFuncionario": "MECANICO_ESPECIALISTA",
+        "usaElevador": false,
+        "id": "35414987-e298-4505-8378-450af89c3651",
+        "criadoEm": "2025-06-29T10:26:26.0908468",
+        "atualizadoEm": "2025-06-29T10:26:26.0908468"
       }
     ],
     "mecanicabase.model.financeiro.CategoriaDespesa": [],
@@ -39,7 +50,7 @@
     "mecanicabase.model.financeiro.ServicoItem": [],
     "mecanicabase.model.usuarios.Administrador": [
       {
-        "senha": "pelkP5tW0vu4wVUxJkbxfg\u003d\u003d",
+        "senha": "D45h4XaFGcwnJcrjHIMsEg\u003d\u003d",
         "nome": "Admin",
         "email": "Admin",
         "id": "2bc7f7c9-9c19-4244-8933-0cc51a9c5d1a",
@@ -112,8 +123,33 @@
         "id": "d4a29b25-d291-444e-916f-26876f747083",
         "criadoEm": "2025-06-27T08:13:06.8610207",
         "atualizadoEm": "2025-06-27T08:13:06.8610207"
+      },
+      {
+        "funcao": "VENDEDOR",
+        "salario": 1000.0,
+        "senha": "D9GasQpn4ZrOVQ89BVJHgOoddC3nJjJ2",
+        "nome": "Pavila",
+        "email": "pavila@email.com",
+        "cpf": "a4k+ST8jG3ognYOkRDn6oK3DckCTFJB3Abm9oj6n8rG3fufmI23ztcOIvqNGJ7XG",
+        "telefone": "31984567800",
+        "endereco": "Rua A",
+        "id": "1a839ac9-c942-46fc-9f77-6275c5eab66f",
+        "criadoEm": "2025-06-29T10:12:28.2938871",
+        "atualizadoEm": "2025-06-29T10:12:28.2938871"
       }
     ],
-    "mecanicabase.model.financeiro.Agendamento": []
+    "mecanicabase.model.financeiro.Agendamento": [
+      {
+        "data": "2025-06-30T10:30:00",
+        "descricaoProblema": "Problema demais",
+        "ordemDeServico": "8dd69f1a-1bbf-482e-af25-b2275a1e585a",
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
+        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+        "id": "6c0f225e-9da5-4a5c-a8a8-4bcc84d04d26",
+        "criadoEm": "2025-06-29T10:43:02.9755762",
+        "atualizadoEm": "2025-06-29T10:43:02.9755762"
+      }
+    ]
   }
 }

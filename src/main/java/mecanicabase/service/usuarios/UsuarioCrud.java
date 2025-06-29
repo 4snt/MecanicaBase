@@ -11,4 +11,8 @@ public abstract class UsuarioCrud<T extends Autenticavel> extends Crud<T> {
                 .findFirst()
                 .orElse(null);
     }
+
+    public boolean trocarSenha(T usuario, String senhaAntiga, String novaSenha) {
+        return usuario.trocarSenha(senhaAntiga, novaSenha);
+    }
 }

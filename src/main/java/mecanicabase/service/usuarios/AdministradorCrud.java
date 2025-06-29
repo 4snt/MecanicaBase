@@ -29,7 +29,7 @@ public class AdministradorCrud extends UsuarioCrud<Administrador> {
         String telefone = (String) params[4];
         String endereco = (String) params[5];
 
-        String cpf = JasyptCrypto.encrypt(cpfOriginal); // CPF pseudoanonimizado
+        String cpf = JasyptCrypto.encrypt(cpfOriginal);
 
         return new Administrador(nome, email, senha, cpf, telefone, endereco);
     }

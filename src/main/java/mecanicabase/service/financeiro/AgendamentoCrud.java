@@ -66,9 +66,8 @@ public class AgendamentoCrud extends Crud<Agendamento> {
         UUID funcionarioId = (UUID) params[4];
         UUID servicoId = (UUID) params[5];
         UUID ordemDeServicoId = (UUID) params[6];
-        StatusAgendamento status = (StatusAgendamento) params[7]; // novo param
+        StatusAgendamento status = (StatusAgendamento) params[7];
 
-        // Atualiza campos simples
         entidade.setData(data);
         entidade.setDescricaoProblema(descricao);
         entidade.setVeiculo(veiculoId);
@@ -77,7 +76,6 @@ public class AgendamentoCrud extends Crud<Agendamento> {
         entidade.setServico(servicoId);
         entidade.setOrdemDeServico(ordemDeServicoId);
 
-        // Lógica de negócio para status especial
         if (status != null) {
             if (status == StatusAgendamento.CANCELADO) {
                 ServicoItem servicoItem = new ServicoItem(
@@ -114,11 +112,20 @@ public class AgendamentoCrud extends Crud<Agendamento> {
             UUID elevadorId = (UUID) params[3];
             UUID funcionarioId = (UUID) params[4];
             UUID servicoId = (UUID) params[5];
-            UUID ordemDeServicoId = (UUID) params[6];
 
-            // Campos obrigatórios
             if (data == null || descricao == null || descricao.isBlank()
-                    || veiculoId == null || elevadorId == null || funcionarioId == null || servicoId == null) {
+                    || veiculoId == null || funcionarioId == null || servicoId == null) {
+                return false;
+            }
+
+            // ⚠️ Busca o serviço para validar se realmente exige elevador
+            var servico = mecanicabase.model.operacao.Servico.buscarPorId(servicoId);
+            if (servico == null) {
+                return false;
+            }
+
+            // ✅ Se o serviço exige elevador e nenhum foi passado → inválido
+            if (servico.usaElevador() && elevadorId == null) {
                 return false;
             }
 
@@ -126,12 +133,13 @@ public class AgendamentoCrud extends Crud<Agendamento> {
                 return false;
             }
 
-            // Conflito com agendamentos existentes
-            boolean elevadorOcupado = Agendamento.instances.stream()
-                    .anyMatch(a -> a.getElevador().getId().equals(elevadorId) && a.getData().equals(data));
+            boolean elevadorOcupado = elevadorId != null && Agendamento.instances.stream()
+                    .anyMatch(a -> a.getElevador() != null && a.getElevador().getId().equals(elevadorId)
+                    && a.getData().equals(data));
 
             boolean funcionarioOcupado = Agendamento.instances.stream()
-                    .anyMatch(a -> a.getFuncionario().getId().equals(funcionarioId) && a.getData().equals(data));
+                    .anyMatch(a -> a.getFuncionario() != null && a.getFuncionario().getId().equals(funcionarioId)
+                    && a.getData().equals(data));
 
             return !elevadorOcupado && !funcionarioOcupado;
 

@@ -86,6 +86,7 @@ public class AgendamentoPanel extends BasePanel {
                 JOptionPane.showMessageDialog(this, "Agendamento criado com sucesso!\nID: " + agendamento.getId());
                 atualizarAgenda();
             } catch (Exception ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(this, "Erro ao criar agendamento: " + ex.getMessage());
             }
         }

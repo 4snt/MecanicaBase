@@ -30,6 +30,8 @@ public class ColaboradorTerminalHandler {
             System.out.println("6 - Atualizar Administrador");
             System.out.println("7 - Remover Funcionário");
             System.out.println("8 - Remover Administrador");
+            System.out.println("9 - Trocar Senha Funcionário");
+            System.out.println("10 - Trocar Senha Administrador");
             System.out.println("0 - Voltar");
             System.out.print("Escolha: ");
 
@@ -51,6 +53,10 @@ public class ColaboradorTerminalHandler {
                     removerFuncionario();
                 case "8" ->
                     removerAdministrador();
+                case "9" ->
+                    trocarSenhaFuncionario();
+                case "10" ->
+                    trocarSenhaAdministrador();
                 case "0" -> {
                     return;
                 }
@@ -185,5 +191,45 @@ public class ColaboradorTerminalHandler {
         String id = scanner.nextLine();
         boolean removido = administradorCrud.removerPorId(id);
         System.out.println(removido ? "✅ Administrador removido." : "❌ Administrador não encontrado.");
+    }
+
+    private void trocarSenhaFuncionario() {
+        System.out.print("ID do funcionário: ");
+        String id = scanner.nextLine();
+        Funcionario f = funcionarioCrud.buscarPorId(id);
+        if (f == null) {
+            System.out.println("Funcionário não encontrado.");
+            return;
+        }
+        System.out.print("Senha atual: ");
+        String senhaAntiga = scanner.nextLine();
+        System.out.print("Nova senha: ");
+        String novaSenha = scanner.nextLine();
+        boolean sucesso = funcionarioCrud.trocarSenha(f, senhaAntiga, novaSenha);
+        if (sucesso) {
+            System.out.println("Senha alterada com sucesso!");
+        } else {
+            System.out.println("Senha atual incorreta.");
+        }
+    }
+
+    private void trocarSenhaAdministrador() {
+        System.out.print("ID do administrador: ");
+        String id = scanner.nextLine();
+        Administrador a = administradorCrud.buscarPorId(id);
+        if (a == null) {
+            System.out.println("Administrador não encontrado.");
+            return;
+        }
+        System.out.print("Senha atual: ");
+        String senhaAntiga = scanner.nextLine();
+        System.out.print("Nova senha: ");
+        String novaSenha = scanner.nextLine();
+        boolean sucesso = administradorCrud.trocarSenha(a, senhaAntiga, novaSenha);
+        if (sucesso) {
+            System.out.println("Senha alterada com sucesso!");
+        } else {
+            System.out.println("Senha atual incorreta.");
+        }
     }
 }

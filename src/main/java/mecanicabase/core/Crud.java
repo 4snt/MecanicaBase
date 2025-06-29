@@ -78,6 +78,10 @@ public abstract class Crud<T> {
 
     public T criar(boolean validar, Object... params) {
         if (validar && !validarCriacao(params)) {
+            System.out.println("⛔ [CRUD] Validação falhou ao criar entidade: " + getClass().getSimpleName());
+            for (int i = 0; i < params.length; i++) {
+                System.out.println("🔍 Param[" + i + "]: " + params[i]);
+            }
             throw new IllegalArgumentException("Validação falhou ao criar entidade.");
         }
 

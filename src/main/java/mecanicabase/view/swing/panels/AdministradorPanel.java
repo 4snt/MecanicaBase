@@ -59,6 +59,7 @@ public class AdministradorPanel extends BasePanel {
         buttonPanel.add(createButton("Novo Administrador", this::novoAdministrador));
         buttonPanel.add(createButton("Editar", this::editarAdministrador));
         buttonPanel.add(createButton("Desativar", this::desativarAdministrador));
+        buttonPanel.add(createButton("Trocar Senha", this::trocarSenhaAdministrador));
         buttonPanel.add(createButton("Atualizar", this::loadData));
         buscaField = new JTextField(15);
         buttonPanel.add(buscaField);
@@ -66,7 +67,7 @@ public class AdministradorPanel extends BasePanel {
     }
 
     private mecanicabase.model.usuarios.Administrador getAdministradorFromRow(int row) {
-        Object value = tableModel.getValueAt(row, 6);
+        Object value = tableModel.getValueAt(row, 5);
         if (value instanceof mecanicabase.model.usuarios.Administrador admin) {
             return admin;
         }
@@ -237,6 +238,39 @@ public class AdministradorPanel extends BasePanel {
         }
         if (senhaField != null) {
             senhaField.setText("");
+        }
+    }
+
+    private void trocarSenhaAdministrador() {
+        if (!hasSelection()) {
+            showMessage("Selecione um administrador para trocar a senha.");
+            return;
+        }
+        var admin = getAdministradorFromRow(getSelectedRowIndex());
+        if (admin == null) {
+            showError("Administrador não encontrado.");
+            return;
+        }
+        JPasswordField senhaAntigaField = new JPasswordField(20);
+        JPasswordField novaSenhaField = new JPasswordField(20);
+        Object[] message = {
+            "Senha atual:", senhaAntigaField,
+            "Nova senha:", novaSenhaField
+        };
+        int option = javax.swing.JOptionPane.showConfirmDialog(this, message, "Trocar Senha", javax.swing.JOptionPane.OK_CANCEL_OPTION);
+        if (option == javax.swing.JOptionPane.OK_OPTION) {
+            String senhaAntiga = new String(senhaAntigaField.getPassword());
+            String novaSenha = new String(novaSenhaField.getPassword());
+            if (senhaAntiga.isEmpty() || novaSenha.isEmpty()) {
+                showError("Preencha ambos os campos de senha.");
+                return;
+            }
+            boolean sucesso = context.administradorCrud.trocarSenha(admin, senhaAntiga, novaSenha);
+            if (sucesso) {
+                showMessage("Senha alterada com sucesso!");
+            } else {
+                showError("Senha atual incorreta.");
+            }
         }
     }
 }

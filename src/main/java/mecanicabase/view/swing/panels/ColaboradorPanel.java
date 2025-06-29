@@ -65,6 +65,7 @@ public class ColaboradorPanel extends BasePanel {
         buttonPanel.add(createButton("Novo Colaborador", this::novoColaborador));
         buttonPanel.add(createButton("Editar", this::editarColaborador));
         buttonPanel.add(createButton("Desativar", this::desativarColaborador));
+        buttonPanel.add(createButton("Trocar Senha", this::trocarSenhaColaborador));
         buttonPanel.add(createButton("Atualizar", this::loadData));
         buscaField = new JTextField(15);
         buttonPanel.add(buscaField);
@@ -121,7 +122,7 @@ public class ColaboradorPanel extends BasePanel {
     }
 
     private mecanicabase.model.usuarios.Funcionario getFuncionarioFromRow(int row) {
-        Object value = tableModel.getValueAt(row, 7); // Coluna oculta
+        Object value = tableModel.getValueAt(row, 6); // Corrigido para coluna 6
         if (value instanceof mecanicabase.model.usuarios.Funcionario f) {
             return f;
         }
@@ -179,6 +180,39 @@ public class ColaboradorPanel extends BasePanel {
             showError("Erro ao desativar colaborador: " + e.getMessage());
         }
         loadData();
+    }
+
+    private void trocarSenhaColaborador() {
+        if (!hasSelection()) {
+            showMessage("Selecione um colaborador para trocar a senha.");
+            return;
+        }
+        var f = getFuncionarioFromRow(getSelectedRowIndex());
+        if (f == null) {
+            showError("Colaborador não encontrado.");
+            return;
+        }
+        JPasswordField senhaAntigaField = new JPasswordField(20);
+        JPasswordField novaSenhaField = new JPasswordField(20);
+        Object[] message = {
+            "Senha atual:", senhaAntigaField,
+            "Nova senha:", novaSenhaField
+        };
+        int option = javax.swing.JOptionPane.showConfirmDialog(this, message, "Trocar Senha", javax.swing.JOptionPane.OK_CANCEL_OPTION);
+        if (option == javax.swing.JOptionPane.OK_OPTION) {
+            String senhaAntiga = new String(senhaAntigaField.getPassword());
+            String novaSenha = new String(novaSenhaField.getPassword());
+            if (senhaAntiga.isEmpty() || novaSenha.isEmpty()) {
+                showError("Preencha ambos os campos de senha.");
+                return;
+            }
+            boolean sucesso = context.funcionarioCrud.trocarSenha(f, senhaAntiga, novaSenha);
+            if (sucesso) {
+                showMessage("Senha alterada com sucesso!");
+            } else {
+                showError("Senha atual incorreta.");
+            }
+        }
     }
 
     @Override

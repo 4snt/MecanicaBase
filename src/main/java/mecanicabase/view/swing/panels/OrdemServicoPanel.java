@@ -2,10 +2,12 @@ package mecanicabase.view.swing.panels;
 
 import java.util.List;
 import java.util.UUID;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+
 import mecanicabase.infra.ApplicationContext;
 import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.StatusOrdemDeServico;
@@ -51,7 +53,6 @@ public class OrdemServicoPanel extends BasePanel {
 
     @Override
     protected boolean saveFormData() {
-        // Não há formulário neste painel
         return false;
     }
 
@@ -63,7 +64,7 @@ public class OrdemServicoPanel extends BasePanel {
             tableModel.addRow(new Object[]{
                 ordem.getId(),
                 ordem.getStatus(),
-                "R$ 0,00" // substitua aqui se quiser calcular o total com base nas peças
+                "R$ 0,00"
             });
         }
     }

@@ -28,8 +28,8 @@ jobs:
       - name: Build (mvn -Puml)
         run: mvn -B -Puml clean package
 
-      - name: Verificar arquivos gerados
-        run: ls -lh target
+      - name: Verificar artefatos
+        run: ls -R target
 
       - name: Extrair notas do CHANGELOG
         id: changelog
@@ -37,16 +37,15 @@ jobs:
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           VERSION="${TAG_NAME#v}"
           NOTES=$(awk "/^### ${VERSION//./\\.}/ {flag=1; next} /^### / {flag=0} flag" CHANGELOG.md)
-          [ -z "$NOTES" ] && NOTES="Notas não encontradas no CHANGELOG para $VERSION."
-          {
-            echo "release_notes<<EOF"
-            echo "$NOTES"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
+          [ -z \"$NOTES\" ] && NOTES="Notas não encontradas no CHANGELOG para $VERSION."
+          echo "release_notes<<EOF" >> $GITHUB_ENV
+          echo "$NOTES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Criar/atualizar Release
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ steps.changelog.outputs.release_notes }}
+          body: ${{ env.release_notes }}
           fail_on_unmatched_files: true
-          files: target/*.zip # altere conforme o nome real do artefato
+          files: |
+            target/MecanicaBase-dist.zip

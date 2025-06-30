@@ -1,39 +1,42 @@
-# Ignorar arquivos de build Java
+# ========== IGNORAR ARQUIVOS DE BUILD JAVA ==========
 build/
 dist/
 nbbuild/
 nbdist/
 
-# Ignora tudo em target exceto site/apidocs
-target/**
+# Ignorar todo o conteúdo da pasta target/
+target/
+
+# EXCEÇÕES: permitir apenas o arquivo ZIP final e o Javadoc
+!target/*.zip
 !target/site/
 !target/site/apidocs/
 !target/site/apidocs/**
-!target/*zip
-# Ignorar configurações privadas do NetBeans
+
+# ========== IGNORAR CONFIGURAÇÕES DO NETBEANS ==========
 nbproject/private/
 
-# Ignorar classes compiladas
+# ========== IGNORAR COMPILAÇÕES ==========
 *.class
 
-# Ignorar arquivos de log e temporários
+# ========== IGNORAR ARQUIVOS TEMPORÁRIOS E DE LOG ==========
 *.log
 *.tmp
 
-# Ignorar dependências Node.js
+# ========== IGNORAR DEPENDÊNCIAS NODE.JS ==========
 node_modules/
 
-# Ignorar arquivos JavaScript e TypeScript
+# ========== IGNORAR CÓDIGO JS/TS DE FRONTEND (caso tenha) ==========
 *.js
 *.jsx
 *.ts
 *.tsx
 
-# Ignorar arquivos de lock do Node
+# ========== IGNORAR LOCKFILES ==========
 package-lock.json
 yarn.lock
 
-# Ignorar artefatos do standard-version/semantic-release (caso existam)
+# ========== IGNORAR CONFIGS DE RELEASE ==========
 .npmrc
 .release-it.json
 .releaserc

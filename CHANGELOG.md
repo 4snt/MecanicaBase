@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/4snt/MecanicaBase/compare/v4.1.4...v5.0.0) (2025-06-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **teste:** a criação da Ordem de Serviço foi movida para dentro do try após o agendamento, podendo impactar fluxos que assumem OS criada antecipadamente.
+
+### Features
+
+* **agendamento, estoque:** implementar cancelamento e entrada de peça com atualização de estoque ([2b43b17](https://github.com/4snt/MecanicaBase/commit/2b43b17d1f9bf8277a0ed85959e3822bfa986d62))
+* **core:** implementar CPF seguro e ordenação com Comparator ([2eca6c7](https://github.com/4snt/MecanicaBase/commit/2eca6c7d533f81fc1e1f4ca21154d3d6fb169e79))
+* implementar cancelamento e conclusão de agendamento com exibição de ordens (Questões 5.7, 7.5 e 14) ([313e3df](https://github.com/4snt/MecanicaBase/commit/313e3df1a592f6233b158cde366e0c350b2b1681))
+* **swing:** aplicar nova interface de login com seleção de tipo de usuário ([e2a996c](https://github.com/4snt/MecanicaBase/commit/e2a996c2b08d200e15d976ff331a0480849e816d))
+* **teste:** finaliza classe RequisitosImplementadosTest com fluxo completo de atendimento ([4b3d158](https://github.com/4snt/MecanicaBase/commit/4b3d15888660cce2f8a4ab54f0bd725522fa277d))
+* **ui:** formulário de veículos com labels claras, filtro de cliente, e prevenção de placas duplicadas ([4687077](https://github.com/4snt/MecanicaBase/commit/468707794ef6cafcf5d6c2d2e3cdc8cee0f186e4))
+
+
+### Bug Fixes
+
+* **cliente-panel:** corrigida ordem dos campos telefone, endereço e email no formulário e tabela do ClientePanel para evitar troca de dados na edição e visualização ([bd2c3d8](https://github.com/4snt/MecanicaBase/commit/bd2c3d8a8c65b4a8bd9430aa172607ce62dd79b5))
+* **correção de bugs:** atualizações de cruds ([3888735](https://github.com/4snt/MecanicaBase/commit/38887357d627b96796e9da930f5122d58fef7a45))
+
 ### [4.1.4](https://github.com/4snt/MecanicaBase/compare/v4.1.3...v4.1.4) (2025-06-10)
 
 ### [4.1.3](https://github.com/4snt/MecanicaBase/compare/v4.1.2...v4.1.3) (2025-06-10)

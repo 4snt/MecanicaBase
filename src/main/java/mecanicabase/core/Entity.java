@@ -76,15 +76,30 @@ public class Entity<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + " {");
+        StringBuilder sb = new StringBuilder(getClass().getSimpleName() + " { ");
         try {
+            boolean first = true;
             for (var field : getClass().getDeclaredFields()) {
                 field.setAccessible(true);
-                sb.append(field.getName()).append("=").append(field.get(this)).append(", ");
+                String name = field.getName();
+                // Evita duplicar os campos já exibidos explicitamente
+                if (name.equals("id") || name.equals("criadoEm") || name.equals("atualizadoEm")) {
+                    continue;
+                }
+                if (!first) {
+                    sb.append(", ");
+                }
+                Object value = field.get(this);
+                sb.append(name).append("=").append(value != null ? value : "null");
+                first = false;
             }
-            sb.append("id=").append(getId()).append(", ");
-            sb.append("criadoEm=").append(getCriadoEm()).append(", ");
-            sb.append("atualizadoEm=").append(getAtualizadoEm());
+            // Adiciona os campos principais ao final
+            if (!first) {
+                sb.append(", ");
+            }
+            sb.append("id=").append(getId());
+            sb.append(", criadoEm=").append(getCriadoEm());
+            sb.append(", atualizadoEm=").append(getAtualizadoEm());
         } catch (IllegalAccessException e) {
             sb.append("Erro ao gerar toString: ").append(e.getMessage());
         }

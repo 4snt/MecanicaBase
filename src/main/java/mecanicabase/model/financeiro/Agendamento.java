@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-
 import mecanicabase.core.Entity;
 import mecanicabase.model.operacao.Elevador;
 import mecanicabase.model.operacao.Servico;
@@ -128,6 +127,10 @@ public class Agendamento extends Entity implements Comparable<Agendamento> {
     }
 
     public Elevador getElevador() {
+        if (this.elevador == null) {
+            return null;
+        }
+
         return Elevador.instances.stream()
                 .filter(e -> e.getId().equals(this.elevador))
                 .findFirst()
@@ -175,7 +178,7 @@ public class Agendamento extends Entity implements Comparable<Agendamento> {
                 descricaoProblema,
                 getFuncionario() != null ? getFuncionario().getNome() : "N/A",
                 getVeiculo() != null ? getVeiculo().getModelo() : "N/A",
-                getServico() != null ? getServico().getTipo() : "N/A",
+                (getServico() != null ? getServico().getTipo() : "N/A"),
                 status != null ? status.name() : "N/A"
         );
     }

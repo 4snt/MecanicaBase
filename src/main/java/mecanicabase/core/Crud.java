@@ -106,12 +106,4 @@ public abstract class Crud<T> {
         indexPorId.put(getId(entidade), entidade);
         return entidade;
     }
-
-    @Override
-    public String toString() {
-        return getClass().getSimpleName() + " {"
-                + "totalInstancias=" + getInstancias().size()
-                + ", indexados=" + indexPorId.size()
-                + '}';
-    }
 }

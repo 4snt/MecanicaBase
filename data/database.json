@@ -67,6 +67,14 @@
         "id": "75197039-b2e8-4b76-a044-0823bb5c5fc2",
         "criadoEm": "2025-06-26T15:54:42.1666028",
         "atualizadoEm": "2025-06-26T15:54:42.1675948"
+      },
+      {
+        "nome": "Filtro de Óleo",
+        "valor": 50.0,
+        "quantidade": 10,
+        "id": "aa7aa89b-f99e-446b-b52f-51f5a97a3433",
+        "criadoEm": "2025-06-30T07:54:29.3819675",
+        "atualizadoEm": "2025-06-30T07:54:29.3819675"
       }
     ],
     "mecanicabase.model.financeiro.PecaItem": [],

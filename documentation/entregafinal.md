@@ -19,13 +19,12 @@
 5. **Realizar agendamentos**  
    📁 Caminho: `src/main/java/mecanicabase/controller/AgendamentoController.java`  
    ✔️ Status: Implementado
-
-6. **Receber de fornecedores e atualizar automaticamente todas as ações do estoque da loja**  
-   📁 Caminho: `src/main/java/mecanicabase/model/operacao/EntradaPeca.java`  
+6. **Cancelar agendamentos (com retenção de 20% do valor)**  
+   📁 Caminho: `src/main/java/mecanicabase/service/financeiro/AgendamentoCrud.java`  
    ✔️ Status: Implementado
 
-7. **Cancelar agendamentos (com retenção de 20% do valor)**  
-   📁 Caminho: `src/main/java/mecanicabase/service/financeiro/AgendamentoCrud.java`  
+7. **Receber de fornecedores e atualizar automaticamente todas as ações do estoque da loja**  
+   📁 Caminho: `src/main/java/mecanicabase/model/operacao/EntradaPeca.java`  
    ✔️ Status: Implementado
 
 8. **Emitir relatório de vendas e serviços de um dia e de um mês**  
@@ -41,13 +40,13 @@
     ❌ Status: Em aberto
 
 11. **Sobrescrever o método `toString()` de todas as classes implementadas**  
-    📌 Implementar `@Override toString()` em todas as entidades  
-    ❌ Status: Pendente
-
+     📌 Implementar `@Override toString()` em todas as entidades  
+     ❌ Status: Pendented
+    // IMPLEMENTADO NAS ENTIDADES
 12. **Utilizar a palavra-chave `super` nos construtores das subclasses**  
-    📌 Exemplo: `super(...)` em `Administrador`, `Funcionario`, etc.  
-    ❌ Status: Parcial
-
+     📌 Exemplo: `super(...)` em `Administrador`, `Funcionario`, etc.  
+     ❌ Status: Parcial
+    // aplication context
 13. **Armazenar estaticamente os 3 elevadores da oficina (vetor fixo)**  
     📌 Criar: `Elevador[] elevadores = new Elevador[3];`  
     ❌ Status: Não implementado

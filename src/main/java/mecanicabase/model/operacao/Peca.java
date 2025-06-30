@@ -3,7 +3,6 @@ package mecanicabase.model.operacao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import mecanicabase.core.Entity;
 import mecanicabase.flyweight.Flyweight;
 
@@ -70,6 +69,10 @@ public class Peca extends Entity implements Flyweight {
         this.nome = nome;
         this.valor = valor;
         this.quantidade = quantidade;
+    }
+
+    public int getEstoque() {
+        return this.quantidade;
     }
 
     /**

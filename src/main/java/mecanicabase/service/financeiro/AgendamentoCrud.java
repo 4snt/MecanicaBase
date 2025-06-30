@@ -77,74 +77,27 @@ public class AgendamentoCrud extends Crud<Agendamento> {
         entidade.setOrdemDeServico(ordemDeServicoId);
 
         if (status != null) {
-            if (status == StatusAgendamento.CANCELADO) {
-                ServicoItem servicoItem = new ServicoItem(
-                        entidade.getServico().getId(),
-                        entidade.getServico().getPreco() * 0.2f,
-                        entidade.getOrdemDeServico().getId()
-                );
-                ServicoItem.instances.add(servicoItem);
-                entidade.getOrdemDeServico().addServico(servicoItem.getId());
-                entidade.getVeiculo().setStatus(StatusVeiculo.PRONTO);
-            }
+            float preco = status == StatusAgendamento.CANCELADO
+                    ? entidade.getServico().getPreco() * 0.2f
+                    : status == StatusAgendamento.CONCLUIDO
+                            ? entidade.getServico().getPreco()
+                            : -1f;
 
-            if (status == StatusAgendamento.CONCLUIDO) {
+            if (preco >= 0f) {
                 ServicoItem servicoItem = new ServicoItem(
                         entidade.getServico().getId(),
-                        entidade.getServico().getPreco(),
+                        preco,
                         entidade.getOrdemDeServico().getId()
                 );
                 ServicoItem.instances.add(servicoItem);
                 entidade.getOrdemDeServico().addServico(servicoItem.getId());
-                entidade.getVeiculo().setStatus(StatusVeiculo.PRONTO);
+
+                if (entidade.getVeiculo() != null) {
+                    entidade.getVeiculo().setStatus(StatusVeiculo.PRONTO);
+                }
             }
 
             entidade.setStatus(status);
-        }
-    }
-
-    @Override
-    protected boolean validarCriacao(Object... params) {
-        try {
-            LocalDateTime data = (LocalDateTime) params[0];
-            String descricao = (String) params[1];
-            UUID veiculoId = (UUID) params[2];
-            UUID elevadorId = (UUID) params[3];
-            UUID funcionarioId = (UUID) params[4];
-            UUID servicoId = (UUID) params[5];
-
-            if (data == null || descricao == null || descricao.isBlank()
-                    || veiculoId == null || funcionarioId == null || servicoId == null) {
-                return false;
-            }
-
-            // ⚠️ Busca o serviço para validar se realmente exige elevador
-            var servico = mecanicabase.model.operacao.Servico.buscarPorId(servicoId);
-            if (servico == null) {
-                return false;
-            }
-
-            // ✅ Se o serviço exige elevador e nenhum foi passado → inválido
-            if (servico.usaElevador() && elevadorId == null) {
-                return false;
-            }
-
-            if (data.isBefore(LocalDateTime.now())) {
-                return false;
-            }
-
-            boolean elevadorOcupado = elevadorId != null && Agendamento.instances.stream()
-                    .anyMatch(a -> a.getElevador() != null && a.getElevador().getId().equals(elevadorId)
-                    && a.getData().equals(data));
-
-            boolean funcionarioOcupado = Agendamento.instances.stream()
-                    .anyMatch(a -> a.getFuncionario() != null && a.getFuncionario().getId().equals(funcionarioId)
-                    && a.getData().equals(data));
-
-            return !elevadorOcupado && !funcionarioOcupado;
-
-        } catch (Exception e) {
-            return false;
         }
     }
 
@@ -155,22 +108,34 @@ public class AgendamentoCrud extends Crud<Agendamento> {
             UUID elevadorId = (UUID) params[3];
             UUID funcionarioId = (UUID) params[4];
 
-            if (data == null || elevadorId == null || funcionarioId == null) {
+            if (data == null || funcionarioId == null) {
                 return false;
             }
 
-            boolean elevadorOcupado = Agendamento.instances.stream()
-                    .anyMatch(a -> !a.getId().equals(atual.getId())
-                    && a.getElevador().getId().equals(elevadorId)
-                    && a.getData().equals(data));
+            // Valida elevador apenas se ele for obrigatório (ou seja, informado)
+            boolean elevadorOcupado = false;
+            if (elevadorId != null) {
+                elevadorOcupado = Agendamento.instances.stream()
+                        .anyMatch(a -> {
+                            if (a.getId().equals(atual.getId())) {
+                                return false;
+                            }
+                            if (a.getElevador() == null) {
+                                return false;
+                            }
+                            return a.getElevador().getId().equals(elevadorId) && a.getData().equals(data);
+                        });
+            }
 
+            // Funcionário sempre precisa ser validado
             boolean funcionarioOcupado = Agendamento.instances.stream()
                     .anyMatch(a -> !a.getId().equals(atual.getId())
+                    && a.getFuncionario() != null
                     && a.getFuncionario().getId().equals(funcionarioId)
                     && a.getData().equals(data));
 
+            // Somente retorna true se não houver conflitos com elevador nem funcionário
             return !elevadorOcupado && !funcionarioOcupado;
-
         } catch (Exception e) {
             return false;
         }

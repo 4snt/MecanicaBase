@@ -28,9 +28,6 @@ jobs:
       - name: Build (mvn -Puml)
         run: mvn -B -Puml clean package
 
-      - name: Verificar artefatos
-        run: ls -R target
-
       - name: Extrair notas do CHANGELOG
         id: changelog
         run: |

@@ -1,6 +1,6 @@
 {
   "name": "mecanicabase",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Projeto Java para gerenciamento de uma oficina mecânica. Criado com foco educacional e arquitetura limpa.",
   "scripts": {
     "uml": "mvn -q -Puml generate-resources",

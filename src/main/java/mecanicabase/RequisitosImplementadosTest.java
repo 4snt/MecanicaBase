@@ -4,13 +4,14 @@ import java.time.LocalDateTime;
 import mecanicabase.controller.AgendamentoController;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
-import mecanicabase.model.financeiro.StatusAgendamento;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Cliente;
 import mecanicabase.service.financeiro.AgendamentoCrud;
+import mecanicabase.service.financeiro.relatorios.GerarBalancoUseCase;
+import mecanicabase.service.financeiro.relatorios.GerarRelatorioUseCase;
 import mecanicabase.service.operacao.PecaCrud;
 import mecanicabase.service.usuarios.ClienteCrud;
 
@@ -133,6 +134,7 @@ public class RequisitosImplementadosTest {
     // Questão 5: Realizar agendamentos (exemplo simplificado)
     public static void testeQuestao5_7_Agendamento() {
         System.out.println("\n--- Questão 5: Agendamento ---");
+
         try {
             // Inicializar CRUDes e Controller
             var veiculoCrud = new mecanicabase.service.operacao.VeiculoCrud();
@@ -170,26 +172,15 @@ public class RequisitosImplementadosTest {
             System.out.println("   - Preço original: R$ " + agendamento.getServico().getPreco());
 
             // Cancelar agendamento
-            agendamentoCrud.atualizar(
-                    agendamento.getId().toString(),
-                    true,
-                    agendamento.getData(),
-                    agendamento.getDescricaoProblema(),
-                    agendamento.getVeiculo().getId(),
-                    agendamento.getElevador() != null ? agendamento.getElevador().getId() : null,
-                    agendamento.getFuncionario().getId(),
-                    agendamento.getServico().getId(),
-                    agendamento.getOrdemDeServico().getId(),
-                    StatusAgendamento.CANCELADO
-            );
-
-            float precoCancelamento = agendamento.getServico().getPreco() * 0.2f;
-
+            agendamentoCrud.cancelarAgendamento(agendamento.getId());
             System.out.println("❌ Agendamento cancelado: " + agendamento.getId());
-            System.out.printf("💰 Valor cobrado pelo cancelamento (20%%): R$ %.2f%n", precoCancelamento);
+
+            // Questão 14: Imprimir ordens do cliente
+            System.out.println("\n--- Questão 14: Ordens do Cliente ---");
+            ordemCrud.imprimirOrdensDoCliente(veiculo.getCliente().getId());
 
         } catch (Exception e) {
-            System.out.println("Erro ao criar/cancelar agendamento: " + e.getMessage());
+            System.out.println("Erro durante agendamento ou impressão das ordens: " + e.getMessage());
         }
     }
 
@@ -226,20 +217,39 @@ public class RequisitosImplementadosTest {
     // Questão 8: Emitir relatório de vendas e serviços
     public static void testeQuestao8_RelatorioVendasServicos() {
         System.out.println("\n--- Questão 8: Relatório de Vendas e Serviços ---");
-        // Supondo que exista GerarRelatorioUseCase
-        // GerarRelatorioUseCase relatorio = new GerarRelatorioUseCase();
-        // relatorio.gerarRelatorioDia(...);
-        // relatorio.gerarRelatorioMes(...);
-        System.out.println("(Exemplo) Implemente conforme sua lógica de relatório.");
+
+        try {
+            GerarRelatorioUseCase relatorio = new GerarRelatorioUseCase();
+
+            // Define intervalo de tempo do mês atual (pode ajustar conforme necessário)
+            LocalDateTime inicio = LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0);
+            LocalDateTime fim = LocalDateTime.now().withHour(23).withMinute(59);
+
+            String resultado = relatorio.use(inicio, fim);
+
+            System.out.println(resultado);
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar relatório: " + e.getMessage());
+        }
     }
 
     // Questão 9: Gerar balanço mensal
     public static void testeQuestao9_BalancoMensal() {
         System.out.println("\n--- Questão 9: Balanço Mensal ---");
-        // Supondo que exista GerarBalancoUseCase
-        // GerarBalancoUseCase balanco = new GerarBalancoUseCase();
-        // balanco.gerarBalancoMes(...);
-        System.out.println("(Exemplo) Implemente conforme sua lógica de balanço.");
+
+        try {
+            GerarBalancoUseCase balanco = new GerarBalancoUseCase();
+
+            // Define intervalo de tempo do mês atual
+            LocalDateTime inicio = LocalDateTime.now().plusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0);
+            LocalDateTime fim = inicio.plusMonths(1).minusDays(1).withHour(23).withMinute(59);
+
+            String resultado = balanco.use(inicio, fim);
+
+            System.out.println(resultado);
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar balanço: " + e.getMessage());
+        }
     }
 
     // Implemente outros métodos de teste conforme a necessidade do seu projeto.

@@ -47,7 +47,32 @@
         "atualizadoEm": "2025-06-26T12:02:51.9468041"
       }
     ],
-    "mecanicabase.model.financeiro.ServicoItem": [],
+    "mecanicabase.model.financeiro.ServicoItem": [
+      {
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "valorUnitario": 10.0,
+        "ordemDeServico": "fed8ca12-21b3-4a27-8c94-5f97b95200ba",
+        "id": "eda2c8d1-3641-45c1-9213-2b7656fa5718",
+        "criadoEm": "2025-06-30T08:52:22.7895033",
+        "atualizadoEm": "2025-06-30T08:52:22.7895033"
+      },
+      {
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "valorUnitario": 10.0,
+        "ordemDeServico": "2676cdb4-102a-469e-b500-0279ea35a36c",
+        "id": "d822736c-51b3-4021-9bdf-63e6271263b3",
+        "criadoEm": "2025-06-30T09:07:08.8563098",
+        "atualizadoEm": "2025-06-30T09:07:08.8563098"
+      },
+      {
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "valorUnitario": 10.0,
+        "ordemDeServico": "83b0701a-4d55-4ae7-9113-51c8e6433340",
+        "id": "8ed7ea15-4d26-418c-bed9-7b34bddd9256",
+        "criadoEm": "2025-06-30T10:13:01.1531678",
+        "atualizadoEm": "2025-06-30T10:13:01.1531678"
+      }
+    ],
     "mecanicabase.model.usuarios.Administrador": [
       {
         "senha": "D45h4XaFGcwnJcrjHIMsEg\u003d\u003d",
@@ -100,7 +125,7 @@
         "placa": "qpz-8999",
         "anoFabricacao": 2019,
         "cor": "Cinza",
-        "status": "RECEBIDO",
+        "status": "PRONTO",
         "clienteId": "232085e1-a137-49bd-a324-24fb8d004aa5",
         "id": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
         "criadoEm": "2025-06-26T15:54:02.46",
@@ -157,6 +182,42 @@
         "id": "6c0f225e-9da5-4a5c-a8a8-4bcc84d04d26",
         "criadoEm": "2025-06-29T10:43:02.9755762",
         "atualizadoEm": "2025-06-29T10:43:02.9755762"
+      },
+      {
+        "data": "2025-07-01T08:52:22.7845018",
+        "descricaoProblema": "Trocar bateria do carro",
+        "status": "CANCELADO",
+        "ordemDeServico": "fed8ca12-21b3-4a27-8c94-5f97b95200ba",
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
+        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+        "id": "b68a3497-e15f-429d-974c-d39939226f06",
+        "criadoEm": "2025-06-30T08:52:22.7855019",
+        "atualizadoEm": "2025-06-30T08:52:22.7855019"
+      },
+      {
+        "data": "2025-07-01T09:07:08.8492971",
+        "descricaoProblema": "Trocar bateria do carro",
+        "status": "CANCELADO",
+        "ordemDeServico": "2676cdb4-102a-469e-b500-0279ea35a36c",
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
+        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+        "id": "00baa6cd-9fc8-429a-9ef8-a12683e880cf",
+        "criadoEm": "2025-06-30T09:07:08.8512962",
+        "atualizadoEm": "2025-06-30T09:07:08.8512962"
+      },
+      {
+        "data": "2025-07-01T10:13:01.1461662",
+        "descricaoProblema": "Trocar bateria do carro",
+        "status": "CANCELADO",
+        "ordemDeServico": "83b0701a-4d55-4ae7-9113-51c8e6433340",
+        "servico": "35414987-e298-4505-8378-450af89c3651",
+        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
+        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
+        "id": "7cb2f3e1-c7a9-4393-ae1e-50c34a77091b",
+        "criadoEm": "2025-06-30T10:13:01.1481664",
+        "atualizadoEm": "2025-06-30T10:13:01.1481664"
       }
     ]
   }

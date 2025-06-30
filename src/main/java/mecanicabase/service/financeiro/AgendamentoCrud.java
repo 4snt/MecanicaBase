@@ -141,4 +141,21 @@ public class AgendamentoCrud extends Crud<Agendamento> {
         }
     }
 
+    public void cancelarAgendamento(UUID agendamentoId) {
+        Agendamento ag = buscarPorId(agendamentoId);
+        if (ag == null) {
+            throw new RuntimeException("Agendamento não encontrado");
+        }
+
+        atualizarInstancia(ag,
+                ag.getData(),
+                ag.getDescricaoProblema(),
+                ag.getVeiculo().getId(),
+                ag.getElevador() != null ? ag.getElevador().getId() : null,
+                ag.getFuncionario().getId(),
+                ag.getServico().getId(),
+                ag.getOrdemDeServico().getId(),
+                StatusAgendamento.CANCELADO
+        );
+    }
 }

@@ -78,7 +78,6 @@ public class OrdemDeServicoCrud extends Crud<OrdemDeServico> {
         }
     }
 
-    // ✅ Substitui o antigo use(UUID pecaItemId)
     public void removerPecaItem(UUID pecaItemId) {
         PecaItem pecaItem = PecaItem.buscarPorId(pecaItemId);
 
@@ -132,5 +131,54 @@ public class OrdemDeServicoCrud extends Crud<OrdemDeServico> {
             index.put(os.getId(), os);
         }
         return index;
+    }
+
+    public void imprimirOrdensDoCliente(UUID clienteId) {
+        System.out.println("📋 Ordens de Serviço do cliente ID: " + clienteId);
+        boolean encontrou = false;
+
+        for (OrdemDeServico os : getInstancias()) {
+            if (os.getClienteId().equals(clienteId)) {
+                encontrou = true;
+                System.out.printf("- Ordem ID: %s | Status: %s | Peças: %d%n",
+                        os.getId(), os.getStatus(), os.getPecas().size());
+
+                if (os.getAgendamentos().isEmpty()) {
+                    System.out.println("  Nenhum agendamento.");
+                } else {
+                    for (Agendamento ag : os.getAgendamentos()) {
+                        float preco = ag.getServico() != null ? ag.getServico().getPreco() : 0f;
+
+                        float precoOriginal = ag.getServico() != null ? ag.getServico().getPreco() : 0f;
+                        float precoFinal = precoOriginal;
+
+// Corrige se for cancelado ou concluído
+                        if (ag.getStatus() == StatusAgendamento.CANCELADO) {
+                            precoFinal = precoOriginal * 0.2f;
+                        } else if (ag.getStatus() == StatusAgendamento.CONCLUIDO) {
+                            precoFinal = precoOriginal;
+                        }
+
+// Print padrão + valor cobrado real
+                        System.out.printf(
+                                "    - Preço do serviço: R$ %.2f (valor cobrado: R$ %.2f)%n",
+                                precoOriginal, precoFinal
+                        );
+                        System.out.printf(
+                                "    - Problema: %s%n"
+                                + "    - Serviço: %s%n"
+                                + "    - Preço do serviço: R$ %.2f%n",
+                                ag.getDescricaoProblema(),
+                                ag.getServico() != null ? ag.getServico().getTipo() : "N/A",
+                                preco
+                        );
+                    }
+                }
+            }
+        }
+
+        if (!encontrou) {
+            System.out.println("Nenhuma ordem encontrada para este cliente.");
+        }
     }
 }

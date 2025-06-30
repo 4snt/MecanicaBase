@@ -59,21 +59,26 @@
 ### 11. Sobrescrever o método `toString()` em todas as classes
 
 📌 Usar `@Override` nas entidades  
+📁 `src\main\java\mecanicabase\core\Entity.java`
 ✔️ **Implementado nas entidades**
 
 ### 12. Utilizar `super(...)` nos construtores das subclasses
 
+📁 Caminho: `src/main/java/mecanicabase/model/usuarios/Colaborador.java`  
 📌 Ex: `Administrador`, `Funcionario`, `Colaborador`  
-✔️ **Parcialmente implementado**
+✔️ **Implementado**
 
 ### 13. Armazenar estaticamente os 3 elevadores da oficina
 
-📌 `Elevador[] elevadores = new Elevador[3];`  
-❌ **Não implementado**
+📁 Caminho: `src/main/java/mecanicabase/model/operacao/Elevador.java`  
+🛠️ Implementação: `public static final List<Elevador> instances = new ArrayList<>(Collections.nCopies(3, null));`  
+📌 Inicialização via método `Elevador.init()`  
+✔️ **Implementado**
 
 ### 14. Verificar e imprimir dados das ordens de serviço por cliente
 
-📌 Criar `imprimirOrdensDoCliente(Cliente c)`  
+📌 Criar `imprimirOrdensDoCliente(Cliente c)`
+📁 caminho: `src\main\java\mecanicabase\service\financeiro\OrdemDeServicoCrud.java`
 ✔️ **Implementado**
 
 ---

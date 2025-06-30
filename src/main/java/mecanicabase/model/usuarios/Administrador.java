@@ -34,14 +34,16 @@ public class Administrador extends Colaborador {
      * Inicializa o sistema com um administrador padrão.
      */
     public static void init() {
-        Administrador.instances.add(new Administrador(
-                "Admin",
-                "Admin",
-                "admin",
-                null,
-                null,
-                null
-        ));
+        if (Administrador.instances.isEmpty()) {
+            Administrador.instances.add(new Administrador(
+                    "Admin",
+                    "admin@email.com",
+                    "admin",
+                    "000.000.000-00", // CPF válido (mesmo que fictício)
+                    "(00) 00000-0000", // Telefone placeholder
+                    "Endereço Padrão" // Endereço placeholder
+            ));
+        }
     }
 
     /**
@@ -65,7 +67,7 @@ public class Administrador extends Colaborador {
                 getId(),
                 getNome(),
                 getEmail(),
-                getCpf() != null ? getCpf() : "N/A",
+                getCpfSeguro() != null ? getCpfSeguro() : "N/A",
                 getTelefone() != null ? getTelefone() : "N/A",
                 getEndereco() != null ? getEndereco() : "N/A"
         );

@@ -149,7 +149,7 @@ public class Funcionario extends Colaborador {
                 funcao != null ? funcao.name() : "N/A",
                 salario,
                 getEmail(),
-                getCpf(),
+                getCpfSeguro(),
                 getTelefone(),
                 getEndereco()
         );

@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "RequisitosImplementadosTest",
+      "request": "launch",
+      "mainClass": "mecanicabase.RequisitosImplementadosTest",
+      "projectName": "MecanicaBase"
+    },
+    {
+      "type": "java",
       "name": "MainSwingView",
       "request": "launch",
       "mainClass": "mecanicabase.view.swing.MainSwingView",

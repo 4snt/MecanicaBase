@@ -69,7 +69,7 @@ public class ClientePanel extends BasePanel {
                 Object[] row = {
                     cliente.getId(),
                     cliente.getNome(),
-                    cliente.getCpf(),
+                    cliente.getCpfSeguro(),
                     cliente.getTelefone(),
                     cliente.getEndereco(),
                     cliente.getEmail()
@@ -202,7 +202,7 @@ public class ClientePanel extends BasePanel {
                 Object[] row = {
                     cliente.getId(),
                     cliente.getNome(),
-                    cliente.getCpf(),
+                    cliente.getCpfSeguro(),
                     cliente.getTelefone(),
                     cliente.getEndereco(),
                     cliente.getEmail()

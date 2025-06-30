@@ -91,12 +91,19 @@
 - Testar no `main`.
 - Explicar como isso funciona.
 - Comparar com `for-each`.
+  ✔️ **Implementado**
 
 ### 16. Uso de `Comparator` + `Collections.sort()`
 
 - Criar `Comparator` para pessoa/cliente.
 - Usar `Collections.sort()` duas vezes com diferentes critérios.
 - Testar e apresentar resultado no `main`.
+
+---
+
+#### 📦 Implementação
+
+Foi criado um comparator genérico para abstrair ordenações por qualquer campo da entidade. Esse comparator está localizado em:src\main\java\mecanicabase\core\GenericComparator.java
 
 ### 17. Criar método `find()` com `Iterator` + `Comparator`
 

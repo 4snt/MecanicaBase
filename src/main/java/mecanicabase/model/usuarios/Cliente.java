@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import mecanicabase.core.GenericComparator;
 
 /**
  * Representa um cliente da oficina. Cada cliente pode estar associado a vários
  * veículos, referenciados por seus UUIDs. Herda atributos e comportamentos de
  * {@link Pessoa}.
  */
-public class Cliente extends Pessoa implements Comparable<Cliente> {
+public class Cliente extends Pessoa {
 
     /**
      * Lista estática que simula uma base de dados em memória contendo todos os
@@ -35,6 +36,7 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
     public Cliente(String nome, String telefone, String endereco, String email, String cpf) {
         super(nome, email, cpf, telefone, endereco);
         this.veiculos = new ArrayList<>();
+        System.out.println("[DEBUG Cliente] cpf recebido: '" + cpf + "'");
     }
 
     /**
@@ -75,20 +77,15 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
                 .orElse(null);
     }
 
-    // IMPLEMENTAÇÃO DO COMPARATOR
-    @Override
-    public int compareTo(Cliente outro) {
-        return this.getNome().compareToIgnoreCase(outro.getNome()); // Ordenação padrão por nome
-    }
-
+    // Comparadores usando GenericComparator (ordenar por nome, CPF e email)
     public static final Comparator<Cliente> porNome
-            = Comparator.comparing(Cliente::getNome, String.CASE_INSENSITIVE_ORDER);
+            = new GenericComparator<>(Cliente::getNome, String.CASE_INSENSITIVE_ORDER);
 
     public static final Comparator<Cliente> porCpf
-            = Comparator.comparing(Cliente::getCpf);
+            = new GenericComparator<>(Cliente::getCpfHash, Comparator.naturalOrder());
 
     public static final Comparator<Cliente> porEmail
-            = Comparator.comparing(Cliente::getEmail, String.CASE_INSENSITIVE_ORDER);
+            = new GenericComparator<>(Cliente::getEmail, String.CASE_INSENSITIVE_ORDER);
 
     @Override
     public String toString() {
@@ -97,7 +94,7 @@ public class Cliente extends Pessoa implements Comparable<Cliente> {
                 getId(),
                 getNome(),
                 getEmail(),
-                getCpf(),
+                getCpfSeguro(),
                 getTelefone(),
                 getEndereco(),
                 veiculos.size()

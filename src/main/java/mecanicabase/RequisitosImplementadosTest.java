@@ -1,7 +1,15 @@
 package mecanicabase;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Scanner;
 import mecanicabase.controller.AgendamentoController;
+import mecanicabase.core.GenericComparator;
+import mecanicabase.core.GenericFinder;
+import mecanicabase.core.GenericIterator;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.operacao.EntradaPeca;
@@ -9,6 +17,7 @@ import mecanicabase.model.operacao.Peca;
 import mecanicabase.model.operacao.Servico;
 import mecanicabase.model.operacao.Veiculo;
 import mecanicabase.model.usuarios.Cliente;
+import mecanicabase.model.usuarios.Funcionario;
 import mecanicabase.service.financeiro.AgendamentoCrud;
 import mecanicabase.service.financeiro.relatorios.GerarBalancoUseCase;
 import mecanicabase.service.financeiro.relatorios.GerarRelatorioUseCase;
@@ -252,5 +261,163 @@ public class RequisitosImplementadosTest {
         }
     }
 
-    // Implemente outros métodos de teste conforme a necessidade do seu projeto.
+    /**
+     * Questão 15: Demonstra o uso de Iterator e foreach em listas estáticas do
+     * sistema.
+     *
+     * <p>
+     * O método permite ao usuário escolher uma entidade (Cliente ou
+     * Funcionário) e, em seguida, percorre a lista correspondente usando dois
+     * métodos distintos:</p>
+     *
+     * <ul>
+     * <li><b>Iterator:</b> Uso explícito do Iterator com while + hasNext() +
+     * next()</li>
+     * <li><b>foreach:</b> Sintaxe simplificada que usa internamente o
+     * Iterator</li>
+     * </ul>
+     *
+     * <p>
+     * Ambas as abordagens imprimem os nomes dos elementos. A diferença é apenas
+     * sintática.</p>
+     *
+     * <p>
+     * 🚨 Essa demonstração é útil para entender a relação entre
+     * <code>Iterator</code> e o laço <code>foreach</code> em coleções que
+     * implementam a interface <code>Iterable</code>.</p>
+     *
+     * <p>
+     * 📌 Foreach é um açúcar sintático sobre o uso do Iterator. No fundo, ele
+     * também chama <code>iterator()</code> da coleção, executa
+     * <code>hasNext()</code> e <code>next()</code> implicitamente.</p>
+     */
+    public static void questao15() {
+        System.out.println("\n=== Questão 15: Iterator e foreach ===");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Escolha a entidade para percorrer:");
+        System.out.println("1. Clientes");
+        System.out.println("2. Funcionários");
+        System.out.println("3. Administradores");
+        System.out.println("4. Veículos");
+        System.out.println("5. Serviços");
+        System.out.println("6. Peças");
+        String escolha = scanner.nextLine();
+
+        switch (escolha) {
+            case "1" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        Cliente.instances,
+                        Cliente::getNome,
+                        "O `foreach` é uma forma simplificada de usar o Iterator. Por baixo dos panos, ele usa o `iterator()` da coleção."
+                );
+            case "2" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        Funcionario.instances,
+                        f -> f.getNome() + " (" + f.getFuncao() + ")",
+                        "`foreach` funciona apenas com coleções que implementam `Iterable`, como ArrayList."
+                );
+            case "3" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        mecanicabase.model.usuarios.Administrador.instances,
+                        a -> a.getNome(),
+                        "O `foreach` também pode ser usado para administradores."
+                );
+            case "4" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        Veiculo.instances,
+                        v -> v.getModelo() + " (" + v.getPlaca() + ")",
+                        "O `foreach` facilita a leitura dos veículos."
+                );
+            case "5" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        Servico.instances,
+                        s -> s.getTipo() + " (R$ " + s.getPreco() + ")",
+                        "O `foreach` é útil para listar serviços."
+                );
+            case "6" ->
+                GenericIterator.imprimirComIteratorEForeach(
+                        Peca.instances,
+                        p -> p.getNome() + " (Estoque: " + p.getEstoque() + ")",
+                        "O `foreach` facilita a visualização das peças."
+                );
+            default ->
+                System.out.println("Opção inválida.");
+        }
+    }
+
+    //Questão 16
+    public static void questao16() {
+        System.out.println("\n=== Questão 16: Ordenação com Comparator (sem Comparable) ===");
+
+        ClienteCrud clienteCrud = new ClienteCrud();
+
+        adicionarClienteSeNaoExistir(clienteCrud, "Carlos", "31911111111", "Rua A", "carlos@email.com", "111.111.111-11");
+        adicionarClienteSeNaoExistir(clienteCrud, "Ana", "31922222222", "Rua B", "ana@email.com", "222.222.222-22");
+        adicionarClienteSeNaoExistir(clienteCrud, "Bruno", "31933333333", "Rua C", "bruno@email.com", "333.333.333-33");
+
+        List<Cliente> copia = new ArrayList<>(Cliente.instances);
+
+        System.out.println("\n→ Lista original:");
+        copia.forEach(c -> System.out.println("- " + c.getNome() + " | " + c.getCpfSeguro()));
+
+        copia.sort(Cliente.porNome);
+        System.out.println("\n🔤 Ordenado por Nome:");
+        copia.forEach(c -> System.out.println("- " + c.getNome() + " | " + c.getCpfSeguro()));
+
+        copia.sort(Cliente.porCpf);
+        System.out.println("\n🔢 Ordenado por CPF:");
+        copia.forEach(c -> System.out.println("- " + c.getNome() + " | " + c.getCpfSeguro()));
+    }
+
+    // Função auxiliar para evitar duplicação
+    private static void adicionarClienteSeNaoExistir(ClienteCrud crud, String nome, String telefone, String endereco, String email, String cpf) {
+        boolean existe = Cliente.instances.stream().anyMatch(c -> c.getCpf().equals(cpf));
+        if (!existe) {
+            crud.criar(false, nome, telefone, endereco, email, cpf);
+        }
+    }
+
+// Questão 17: Busca com Iterator + Comparator
+    public static void questao17() {
+        System.out.println("\n=== Questão 17: Busca com Iterator + Comparator ===");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Informe o CPF do cliente a ser buscado: ");
+        String cpfBuscado = scanner.nextLine().trim();
+
+        // DEBUG: prints para rastrear valores de CPF
+        System.out.println("[DEBUG] Valor digitado para CPF: '" + cpfBuscado + "'");
+
+        List<Cliente> lista = new ArrayList<>(Cliente.instances);
+        Comparator<Cliente> comparadorCpf = new GenericComparator<>(Cliente::getCpfHash, Comparator.naturalOrder());
+
+        // ✅ Ordena antes de qualquer busca
+        lista.sort(comparadorCpf);
+
+        // DEBUG: Antes de criar a chave
+        System.out.println("[DEBUG] Criando chave Cliente para busca...");
+        Cliente chave = new Cliente("?", "?", "?", "?", cpfBuscado);
+        System.out.println("[DEBUG] CPF da chave: '" + chave.getCpf() + "'");
+        System.out.println("\n→ Procurando cliente com CPF: '" + chave.getCpf() + "' (tamanho: " + chave.getCpf().length() + ")");
+        System.out.println("→ CPFs na lista:");
+        for (Cliente c : lista) {
+            System.out.println("- '" + c.getCpf() + "' (tamanho: " + c.getCpf().length() + ")");
+        }
+
+        // Busca com Iterator + Comparator
+        Cliente encontrado = GenericFinder.find(lista, chave, comparadorCpf);
+        System.out.println("✔ Resultado com Iterator + Comparator: "
+                + (encontrado != null ? encontrado.getNome() : "não encontrado"));
+
+        // Busca com binarySearch (lista já ordenada)
+        int index = Collections.binarySearch(lista, chave, comparadorCpf);
+        Cliente encontradoBinary = index >= 0 ? lista.get(index) : null;
+        System.out.println("✔ Resultado com binarySearch(): "
+                + (encontradoBinary != null ? encontradoBinary.getNome() : "não encontrado"));
+
+        // Imprime a lista para conferência
+        System.out.println("\n📋 Lista ordenada por CPF:");
+        GenericIterator.imprimirComIteratorEForeach(lista, c -> c.getNome() + " | " + c.getCpf(), "Lista usada na busca binária");
+    }
 }

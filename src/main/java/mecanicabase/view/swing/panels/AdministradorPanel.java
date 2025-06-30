@@ -120,7 +120,7 @@ public class AdministradorPanel extends BasePanel {
         nomeField.setText(admin.getNome());
         emailField.setText(admin.getEmail());
         senhaField.setText(""); // senha não visível
-        cpfField.setText(""); // cpf criptografado
+        cpfField.setText(admin.getCpfSeguro());
         telefoneField.setText(admin.getTelefone());
         enderecoField.setText(admin.getEndereco());
         showFormDialog((javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this), "Editar Administrador");

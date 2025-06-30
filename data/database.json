@@ -1,28 +1,6 @@
 {
   "entidades": {
-    "mecanicabase.model.operacao.Servico": [
-      {
-        "tipo": "Troca bateria",
-        "preco": 10000.0,
-        "descricao": "Troca bateria",
-        "duracao": 1000,
-        "usaElevador": false,
-        "id": "68968b65-95c3-44fa-9f4d-e19cd404542f",
-        "criadoEm": "2025-06-28T18:30:44.3004318",
-        "atualizadoEm": "2025-06-28T18:30:44.3004318"
-      },
-      {
-        "tipo": "Troca de bateria de carro comum",
-        "preco": 50.0,
-        "descricao": "Troca de bateria de carro comum",
-        "duracao": 30,
-        "tipoFuncionario": "MECANICO_ESPECIALISTA",
-        "usaElevador": false,
-        "id": "35414987-e298-4505-8378-450af89c3651",
-        "criadoEm": "2025-06-29T10:26:26.0908468",
-        "atualizadoEm": "2025-06-29T10:26:26.0908468"
-      }
-    ],
+    "mecanicabase.model.operacao.Servico": [],
     "mecanicabase.model.financeiro.CategoriaDespesa": [],
     "mecanicabase.model.operacao.Elevador": [
       null,
@@ -30,195 +8,57 @@
       null,
       {
         "tipo": "ALINHAMENTO_E_BALANCEAMENTO",
-        "id": "413587cd-e0a4-4e0b-9cbe-47a99da0eb5d",
-        "criadoEm": "2025-06-26T12:02:51.9468041",
-        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+        "id": "087fe2e1-2273-4e97-ab9b-e1a19b6edbcc",
+        "criadoEm": "2025-06-30T12:44:58.4980563",
+        "atualizadoEm": "2025-06-30T12:44:58.4980563"
       },
       {
         "tipo": "GERAL",
-        "id": "5fabf7cf-7e91-45b7-a005-bbbc6c2d58c3",
-        "criadoEm": "2025-06-26T12:02:51.9468041",
-        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+        "id": "c2058891-9d1a-49b7-875c-fb1661ac4d8c",
+        "criadoEm": "2025-06-30T12:44:58.4980563",
+        "atualizadoEm": "2025-06-30T12:44:58.4980563"
       },
       {
         "tipo": "GERAL",
-        "id": "5d10970c-298f-40a7-bb42-59ee9aae5b7f",
-        "criadoEm": "2025-06-26T12:02:51.9468041",
-        "atualizadoEm": "2025-06-26T12:02:51.9468041"
+        "id": "f5982d5c-c940-42ed-ac90-73b52e031607",
+        "criadoEm": "2025-06-30T12:44:58.4980563",
+        "atualizadoEm": "2025-06-30T12:44:58.4980563"
       }
     ],
-    "mecanicabase.model.financeiro.ServicoItem": [
-      {
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "valorUnitario": 10.0,
-        "ordemDeServico": "fed8ca12-21b3-4a27-8c94-5f97b95200ba",
-        "id": "eda2c8d1-3641-45c1-9213-2b7656fa5718",
-        "criadoEm": "2025-06-30T08:52:22.7895033",
-        "atualizadoEm": "2025-06-30T08:52:22.7895033"
-      },
-      {
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "valorUnitario": 10.0,
-        "ordemDeServico": "2676cdb4-102a-469e-b500-0279ea35a36c",
-        "id": "d822736c-51b3-4021-9bdf-63e6271263b3",
-        "criadoEm": "2025-06-30T09:07:08.8563098",
-        "atualizadoEm": "2025-06-30T09:07:08.8563098"
-      },
-      {
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "valorUnitario": 10.0,
-        "ordemDeServico": "83b0701a-4d55-4ae7-9113-51c8e6433340",
-        "id": "8ed7ea15-4d26-418c-bed9-7b34bddd9256",
-        "criadoEm": "2025-06-30T10:13:01.1531678",
-        "atualizadoEm": "2025-06-30T10:13:01.1531678"
-      }
-    ],
+    "mecanicabase.model.financeiro.ServicoItem": [],
     "mecanicabase.model.usuarios.Administrador": [
       {
-        "senha": "D45h4XaFGcwnJcrjHIMsEg\u003d\u003d",
+        "senha": "OVwC8E4MIJRE9WzlZakq0g\u003d\u003d",
         "nome": "Admin",
-        "email": "Admin",
-        "id": "2bc7f7c9-9c19-4244-8933-0cc51a9c5d1a",
-        "criadoEm": "2025-06-26T12:02:51.9498042",
-        "atualizadoEm": "2025-06-26T12:02:51.9498042"
+        "email": "admin@email.com",
+        "cpfHash": "a68ad65994d4c6ec32db1c19be586ae8971ae969db842a289607f9c3dd2f627f",
+        "cpfCriptografado": "kay2429D5AJ8gaPQoth0EioM+Z6g8OnW",
+        "telefone": "(00) 00000-0000",
+        "endereco": "Endereço Padrão",
+        "id": "39ab8e29-62bb-44be-98cf-9d4f227c5462",
+        "criadoEm": "2025-06-30T12:44:58.5012718",
+        "atualizadoEm": "2025-06-30T12:44:58.5012718"
       }
     ],
     "mecanicabase.model.financeiro.Despesa": [],
-    "mecanicabase.model.operacao.Peca": [
-      {
-        "nome": "Bateria de tesla",
-        "valor": 6900000.0,
-        "quantidade": 1,
-        "id": "75197039-b2e8-4b76-a044-0823bb5c5fc2",
-        "criadoEm": "2025-06-26T15:54:42.1666028",
-        "atualizadoEm": "2025-06-26T15:54:42.1675948"
-      },
-      {
-        "nome": "Filtro de Óleo",
-        "valor": 50.0,
-        "quantidade": 10,
-        "id": "aa7aa89b-f99e-446b-b52f-51f5a97a3433",
-        "criadoEm": "2025-06-30T07:54:29.3819675",
-        "atualizadoEm": "2025-06-30T07:54:29.3819675"
-      }
-    ],
+    "mecanicabase.model.operacao.Peca": [],
     "mecanicabase.model.financeiro.PecaItem": [],
     "mecanicabase.model.usuarios.Cliente": [
       {
-        "veiculos": [
-          "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-          "d0844c54-400a-4bf4-a429-343b841a3feb"
-        ],
-        "nome": "Murilo",
-        "email": "murilO@email.com",
-        "cpf": "caDMcZhxYh8F9+uihJyA6FjkRppiYdrI",
-        "telefone": "31984567888",
-        "endereco": "Rua joraci",
-        "id": "232085e1-a137-49bd-a324-24fb8d004aa5",
-        "criadoEm": "2025-06-26T15:52:28.0113314",
-        "atualizadoEm": "2025-06-26T15:52:28.0113314"
-      }
-    ],
-    "mecanicabase.model.operacao.Veiculo": [
-      {
-        "modelo": "hb20",
-        "placa": "qpz-8999",
-        "anoFabricacao": 2019,
-        "cor": "Cinza",
-        "status": "PRONTO",
-        "clienteId": "232085e1-a137-49bd-a324-24fb8d004aa5",
-        "id": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-        "criadoEm": "2025-06-26T15:54:02.46",
-        "atualizadoEm": "2025-06-26T15:54:02.46"
-      },
-      {
-        "modelo": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "placa": "aaaaaaaa",
-        "anoFabricacao": 2010,
-        "cor": "aaaaaaa",
-        "status": "RECEBIDO",
-        "clienteId": "232085e1-a137-49bd-a324-24fb8d004aa5",
-        "id": "d0844c54-400a-4bf4-a429-343b841a3feb",
-        "criadoEm": "2025-06-28T19:12:47.3891226",
-        "atualizadoEm": "2025-06-28T19:12:47.3891226"
-      }
-    ],
-    "mecanicabase.model.usuarios.Funcionario": [
-      {
-        "funcao": "MECANICO_ESPECIALISTA",
-        "salario": 3000.0,
-        "senha": "yUfsZUmK40cHApV9atk5EQ\u003d\u003d",
-        "nome": "Luis Claudio",
-        "email": "luis@email.com",
-        "cpf": "CAIdWdmCWNkDNVaCUBuozQNOf5h2ZSJnfZEsWK2fULOSpicQW4y93Uz8TCN3leMW",
-        "telefone": "31984567800",
-        "endereco": "Rua do nunca",
-        "id": "d4a29b25-d291-444e-916f-26876f747083",
-        "criadoEm": "2025-06-27T08:13:06.8610207",
-        "atualizadoEm": "2025-06-27T08:13:06.8610207"
-      },
-      {
-        "funcao": "VENDEDOR",
-        "salario": 1000.0,
-        "senha": "D9GasQpn4ZrOVQ89BVJHgOoddC3nJjJ2",
-        "nome": "Pavila",
-        "email": "pavila@email.com",
-        "cpf": "a4k+ST8jG3ognYOkRDn6oK3DckCTFJB3Abm9oj6n8rG3fufmI23ztcOIvqNGJ7XG",
-        "telefone": "31984567800",
+        "veiculos": [],
+        "nome": "Ana Carolina",
+        "email": "ana@email.com",
+        "cpfHash": "9c9f57efe04f8f5a65b699db1c777238d5876b44cef240654c749dd09e1790ef",
+        "cpfCriptografado": "6TjOqG2vTl+lgUeA70z5HSTGvjqovBBE",
+        "telefone": "(00) 00000-0000",
         "endereco": "Rua A",
-        "id": "1a839ac9-c942-46fc-9f77-6275c5eab66f",
-        "criadoEm": "2025-06-29T10:12:28.2938871",
-        "atualizadoEm": "2025-06-29T10:12:28.2938871"
+        "id": "ddb493cb-849a-41c7-9de2-252fe20a0a8f",
+        "criadoEm": "2025-06-30T12:46:19.5120613",
+        "atualizadoEm": "2025-06-30T12:46:19.5120613"
       }
     ],
-    "mecanicabase.model.financeiro.Agendamento": [
-      {
-        "data": "2025-06-30T10:30:00",
-        "descricaoProblema": "Problema demais",
-        "ordemDeServico": "8dd69f1a-1bbf-482e-af25-b2275a1e585a",
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
-        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-        "id": "6c0f225e-9da5-4a5c-a8a8-4bcc84d04d26",
-        "criadoEm": "2025-06-29T10:43:02.9755762",
-        "atualizadoEm": "2025-06-29T10:43:02.9755762"
-      },
-      {
-        "data": "2025-07-01T08:52:22.7845018",
-        "descricaoProblema": "Trocar bateria do carro",
-        "status": "CANCELADO",
-        "ordemDeServico": "fed8ca12-21b3-4a27-8c94-5f97b95200ba",
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
-        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-        "id": "b68a3497-e15f-429d-974c-d39939226f06",
-        "criadoEm": "2025-06-30T08:52:22.7855019",
-        "atualizadoEm": "2025-06-30T08:52:22.7855019"
-      },
-      {
-        "data": "2025-07-01T09:07:08.8492971",
-        "descricaoProblema": "Trocar bateria do carro",
-        "status": "CANCELADO",
-        "ordemDeServico": "2676cdb4-102a-469e-b500-0279ea35a36c",
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
-        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-        "id": "00baa6cd-9fc8-429a-9ef8-a12683e880cf",
-        "criadoEm": "2025-06-30T09:07:08.8512962",
-        "atualizadoEm": "2025-06-30T09:07:08.8512962"
-      },
-      {
-        "data": "2025-07-01T10:13:01.1461662",
-        "descricaoProblema": "Trocar bateria do carro",
-        "status": "CANCELADO",
-        "ordemDeServico": "83b0701a-4d55-4ae7-9113-51c8e6433340",
-        "servico": "35414987-e298-4505-8378-450af89c3651",
-        "funcionario": "d4a29b25-d291-444e-916f-26876f747083",
-        "veiculo": "75cee087-a1f8-4dc8-9374-bcfa5ca665aa",
-        "id": "7cb2f3e1-c7a9-4393-ae1e-50c34a77091b",
-        "criadoEm": "2025-06-30T10:13:01.1481664",
-        "atualizadoEm": "2025-06-30T10:13:01.1481664"
-      }
-    ]
+    "mecanicabase.model.operacao.Veiculo": [],
+    "mecanicabase.model.usuarios.Funcionario": [],
+    "mecanicabase.model.financeiro.Agendamento": []
   }
 }

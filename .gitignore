@@ -4,17 +4,16 @@ dist/
 nbbuild/
 nbdist/
 
-# Ignorar todo o conteúdo da pasta target/
-target/
-
-# EXCEÇÕES: permitir apenas o arquivo ZIP final e o Javadoc
+# Ignorar todo o conteúdo da pasta target, exceto:
+target/**
 !target/*.zip
+!target/*.jar
 !target/site/
 !target/site/apidocs/
 !target/site/apidocs/**
 
-# ========== IGNORAR CONFIGURAÇÕES DO NETBEANS ==========
-nbproject/private/
+# ========== NÃO IGNORAR CONFIGURAÇÕES DO NETBEANS ==========
+# (Nada aqui, pois queremos manter as configs do NetBeans)
 
 # ========== IGNORAR COMPILAÇÕES ==========
 *.class
@@ -25,13 +24,6 @@ nbproject/private/
 
 # ========== IGNORAR DEPENDÊNCIAS NODE.JS ==========
 node_modules/
-
-# ========== IGNORAR CÓDIGO JS/TS DE FRONTEND (caso tenha) ==========
-*.js
-*.jsx
-*.ts
-*.tsx
-
 # ========== IGNORAR LOCKFILES ==========
 package-lock.json
 yarn.lock

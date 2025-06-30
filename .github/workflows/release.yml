@@ -28,6 +28,16 @@ jobs:
       - name: Build (mvn -Puml)
         run: mvn -B -Puml clean package
 
+      - name: Listar arquivos gerados
+        run: |
+          echo "📦 Arquivos dentro de target/"
+          ls -lah target || echo "⚠️ Pasta target não encontrada"
+          echo "🔍 Procurando o ZIP final:"
+          find . -name '*dist.zip'
+
+      - name: Copiar ZIP para raiz
+        run: cp target/MecanicaBase-dist.zip .
+
       - name: Extrair notas do CHANGELOG
         id: changelog
         run: |
@@ -45,4 +55,4 @@ jobs:
           body: ${{ env.release_notes }}
           fail_on_unmatched_files: true
           files: |
-            target/MecanicaBase-dist.zip
+            MecanicaBase-dist.zip

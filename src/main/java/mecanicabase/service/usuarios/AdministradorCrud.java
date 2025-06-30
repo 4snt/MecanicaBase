@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import mecanicabase.infra.crypto.JasyptCrypto;
 import mecanicabase.model.usuarios.Administrador;
 
 public class AdministradorCrud extends UsuarioCrud<Administrador> {
+
+    public AdministradorCrud() {
+        reindexar();
+    }
 
     @Override
     protected List<Administrador> getInstancias() {

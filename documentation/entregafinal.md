@@ -117,7 +117,3 @@ Foi criado um comparator genérico para abstrair ordenações por qualquer campo
 - Baixas no estoque ✅
 - Emissão de nota fiscal ✅  
   📌 Apresentar tudo funcionando no `main`
-
----
-
-🧠 **Bons estudos, guerreiro!** Bora fechar essas últimas pendências e botar pra rodar.

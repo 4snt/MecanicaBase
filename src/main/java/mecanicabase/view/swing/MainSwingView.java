@@ -11,12 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.infra.auth.Session;
 import mecanicabase.infra.db.Database;
+import mecanicabase.model.usuarios.Administrador;
 import mecanicabase.view.swing.panels.AdministradorPanel;
 import mecanicabase.view.swing.panels.AgendamentoPanel;
 import mecanicabase.view.swing.panels.ClientePanel;
 import mecanicabase.view.swing.panels.ColaboradorPanel;
 import mecanicabase.view.swing.panels.FinanceiroPanel;
+import mecanicabase.view.swing.panels.OrdemServicoPanel;
 import mecanicabase.view.swing.panels.PecaPanel;
 import mecanicabase.view.swing.panels.ServicoPanel;
 import mecanicabase.view.swing.panels.VeiculoPanel;
@@ -28,7 +31,7 @@ import mecanicabase.view.swing.panels.VeiculoPanel;
 public class MainSwingView extends JFrame {
 
     private final ApplicationContext context;
-    private JPanel cardsPanel; // Painel central com CardLayout
+    private JPanel cardsPanel;
     private CardLayout cardLayout;
     private JPanel sidebarPanel;
 
@@ -45,7 +48,7 @@ public class MainSwingView extends JFrame {
     private ColaboradorPanel colaboradorPanel;
     private FinanceiroPanel financeiroPanel;
     private AdministradorPanel administradorPanel;
-    private mecanicabase.view.swing.panels.OrdemServicoPanel ordemServicoPanel = null;
+    private OrdemServicoPanel ordemServicoPanel = null;
 
     private boolean oficinaSubmenuVisivel = false;
     private JPanel oficinaSubmenuPanel;
@@ -61,17 +64,14 @@ public class MainSwingView extends JFrame {
         setSize(1100, 700);
         setLocationRelativeTo(null);
 
-        // Exige login antes de inicializar componentes
         if (!LoginDialog.showLogin(this, context)) {
             System.exit(0);
         }
 
-        // Inicializa componentes após login bem-sucedido
         initializeComponents();
         setupLayout();
         configureWindow();
 
-        // Adiciona listener para salvar dados ao fechar a janela (após inicialização)
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -81,57 +81,37 @@ public class MainSwingView extends JFrame {
     }
 
     private void initializeComponents() {
-        // Painel de cards (conteúdo principal)
         cardLayout = new CardLayout();
         cardsPanel = new JPanel(cardLayout);
 
-        // Painel de clientes
-        ClientePanel clientePanel = new ClientePanel(context);
-        cardsPanel.add(clientePanel, CARD_CLIENTES);
-
-        // Painel de serviços
+        cardsPanel.add(new ClientePanel(context), CARD_CLIENTES);
         servicoPanel = new ServicoPanel(context);
         cardsPanel.add(servicoPanel, CARD_SERVICOS);
-
-        // Painel de agendamentos (restaurado para AgendamentoPanel)
         agendamentoPanel = new AgendamentoPanel(context);
         cardsPanel.add(agendamentoPanel, CARD_AGENDAMENTOS);
-
-        // Painel de colaboradores
         colaboradorPanel = new ColaboradorPanel(context);
         cardsPanel.add(colaboradorPanel, CARD_COLABORADORES);
-
-        // Painel de financeiro
         financeiroPanel = new FinanceiroPanel(context);
         cardsPanel.add(financeiroPanel, CARD_FINANCEIRO);
-
-        // Painel do menu principal (dashboard)
-        JPanel mainPanel = criarDashboard();
-        cardsPanel.add(mainPanel, CARD_MENU);
-
-        // Painel de veículos
-        VeiculoPanel veiculoPanel = new VeiculoPanel(context);
-        cardsPanel.add(veiculoPanel, "veiculos");
-
-        // Painel de peças
-        PecaPanel pecaPanel = new PecaPanel(context);
-        cardsPanel.add(pecaPanel, "pecas");
-
-        // Painel de administradores
+        cardsPanel.add(new VeiculoPanel(context), "veiculos");
+        cardsPanel.add(new PecaPanel(context), "pecas");
         administradorPanel = new AdministradorPanel(context);
         cardsPanel.add(administradorPanel, "administradores");
-        // NÃO adicionar o painel de ordens de serviço aqui!
+        cardsPanel.add(criarDashboard(), CARD_MENU);
 
-        // Barra lateral
-        sidebarPanel = criarSidebar();
+        boolean isAdmin = Session.getPessoaLogado() instanceof Administrador;
+        sidebarPanel = criarSidebar(isAdmin);
 
         add(sidebarPanel, BorderLayout.WEST);
         add(cardsPanel, BorderLayout.CENTER);
     }
 
-    private JPanel criarSidebar() {
-        JPanel sidebar = new JPanel();
-        sidebar.setLayout(new GridBagLayout());
+    /**
+     * Cria a barra lateral com os botões de navegação visíveis conforme o tipo
+     * de usuário.
+     */
+    private JPanel criarSidebar(boolean isAdmin) {
+        JPanel sidebar = new JPanel(new GridBagLayout());
         sidebar.setBackground(new java.awt.Color(40, 40, 50));
         sidebar.setPreferredSize(new java.awt.Dimension(220, 700));
 
@@ -140,15 +120,13 @@ public class MainSwingView extends JFrame {
         gbc.gridx = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
-
         int row = 0;
+
         sidebar.add(createSidebarButton("Dashboard", this::voltarMenu), gbc);
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Clientes", this::abrirClientes), gbc);
         gbc.gridy = ++row;
-        // Botão Oficina com submenu
-        JButton oficinaBtn = createSidebarButton("Oficina", this::toggleOficinaSubmenu);
-        sidebar.add(oficinaBtn, gbc);
+        sidebar.add(createSidebarButton("Oficina", this::toggleOficinaSubmenu), gbc);
         gbc.gridy = ++row;
         oficinaSubmenuPanel = criarOficinaSubmenuPanel();
         oficinaSubmenuPanel.setVisible(false);
@@ -159,25 +137,25 @@ public class MainSwingView extends JFrame {
         sidebar.add(createSidebarButton("Agendamentos", this::abrirAgendamentos), gbc);
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Ordens de Serviço", this::abrirOrdens), gbc);
-        gbc.gridy = ++row;
-        // Botão Colaboradores com submenu
-        JButton colaboradoresBtn = createSidebarButton("Colaboradores", this::toggleColaboradoresSubmenu);
-        sidebar.add(colaboradoresBtn, gbc);
-        gbc.gridy = ++row;
-        colaboradoresSubmenuPanel = criarColaboradoresSubmenuPanel();
-        colaboradoresSubmenuPanel.setVisible(false);
-        sidebar.add(colaboradoresSubmenuPanel, gbc);
-        gbc.gridy = ++row;
-        sidebar.add(createSidebarButton("Financeiro", this::abrirFinanceiro), gbc);
+
+        if (isAdmin) {
+            gbc.gridy = ++row;
+            sidebar.add(createSidebarButton("Colaboradores", this::toggleColaboradoresSubmenu), gbc);
+            gbc.gridy = ++row;
+            colaboradoresSubmenuPanel = criarColaboradoresSubmenuPanel();
+            colaboradoresSubmenuPanel.setVisible(false);
+            sidebar.add(colaboradoresSubmenuPanel, gbc);
+            gbc.gridy = ++row;
+            sidebar.add(createSidebarButton("Financeiro", this::abrirFinanceiro), gbc);
+        }
+
         gbc.gridy = ++row;
         sidebar.add(createSidebarButton("Sair", this::sair), gbc);
-
         return sidebar;
     }
 
     private JPanel criarOficinaSubmenuPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new java.awt.Color(50, 50, 60));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(2, 30, 2, 10);
@@ -185,19 +163,14 @@ public class MainSwingView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         int row = 0;
-        JButton veiculosBtn = createSidebarButton("Veículos", this::abrirVeiculos);
-        veiculosBtn.setFont(veiculosBtn.getFont().deriveFont(14f));
-        panel.add(veiculosBtn, gbc);
+        panel.add(createSidebarButton("Veículos", this::abrirVeiculos), gbc);
         gbc.gridy = ++row;
-        JButton pecasBtn = createSidebarButton("Peças", this::abrirPecas);
-        pecasBtn.setFont(pecasBtn.getFont().deriveFont(14f));
-        panel.add(pecasBtn, gbc);
+        panel.add(createSidebarButton("Peças", this::abrirPecas), gbc);
         return panel;
     }
 
     private JPanel criarColaboradoresSubmenuPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new java.awt.Color(50, 50, 60));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(2, 30, 2, 10);
@@ -205,13 +178,9 @@ public class MainSwingView extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
         int row = 0;
-        JButton funcionariosBtn = createSidebarButton("Funcionários", this::abrirColaboradoresFuncionarios);
-        funcionariosBtn.setFont(funcionariosBtn.getFont().deriveFont(14f));
-        panel.add(funcionariosBtn, gbc);
+        panel.add(createSidebarButton("Funcionários", this::abrirColaboradoresFuncionarios), gbc);
         gbc.gridy = ++row;
-        JButton administradoresBtn = createSidebarButton("Administradores", this::abrirColaboradoresAdministradores);
-        administradoresBtn.setFont(administradoresBtn.getFont().deriveFont(14f));
-        panel.add(administradoresBtn, gbc);
+        panel.add(createSidebarButton("Administradores", this::abrirColaboradoresAdministradores), gbc);
         return panel;
     }
 
@@ -231,8 +200,8 @@ public class MainSwingView extends JFrame {
 
     private void abrirVeiculos() {
         for (java.awt.Component comp : cardsPanel.getComponents()) {
-            if (comp instanceof VeiculoPanel) {
-                ((VeiculoPanel) comp).loadData();
+            if (comp instanceof VeiculoPanel vp) {
+                vp.loadData();
                 break;
             }
         }
@@ -241,8 +210,8 @@ public class MainSwingView extends JFrame {
 
     private void abrirPecas() {
         for (java.awt.Component comp : cardsPanel.getComponents()) {
-            if (comp instanceof PecaPanel) {
-                ((PecaPanel) comp).loadData();
+            if (comp instanceof PecaPanel pp) {
+                pp.loadData();
                 break;
             }
         }
@@ -257,14 +226,11 @@ public class MainSwingView extends JFrame {
         return panel;
     }
 
-    // Métodos de navegação
     private void abrirClientes() {
-        if (cardsPanel != null) {
-            for (java.awt.Component comp : cardsPanel.getComponents()) {
-                if (comp instanceof ClientePanel) {
-                    ((ClientePanel) comp).loadData();
-                    break;
-                }
+        for (java.awt.Component comp : cardsPanel.getComponents()) {
+            if (comp instanceof ClientePanel cp) {
+                cp.loadData();
+                break;
             }
         }
         cardLayout.show(cardsPanel, CARD_CLIENTES);
@@ -296,7 +262,6 @@ public class MainSwingView extends JFrame {
             colaboradorPanel.loadData();
         }
         cardLayout.show(cardsPanel, CARD_COLABORADORES);
-        // Não há mais abas, painel já mostra funcionários
     }
 
     private void abrirColaboradoresAdministradores() {
@@ -308,11 +273,7 @@ public class MainSwingView extends JFrame {
 
     private void abrirOrdens() {
         if (ordemServicoPanel == null) {
-            ordemServicoPanel = new mecanicabase.view.swing.panels.OrdemServicoPanel(
-                    context,
-                    context.ordemCrud,
-                    context.pecaCrud
-            );
+            ordemServicoPanel = new OrdemServicoPanel(context, context.ordemCrud, context.pecaCrud);
             cardsPanel.add(ordemServicoPanel, CARD_ORDENS);
         } else {
             ordemServicoPanel.loadData();
@@ -334,7 +295,6 @@ public class MainSwingView extends JFrame {
     private void configureWindow() {
     }
 
-    // Adicionar método utilitário createSidebarButton
     private JButton createSidebarButton(String text, Runnable action) {
         JButton button = new JButton(text);
         button.setFocusPainted(false);

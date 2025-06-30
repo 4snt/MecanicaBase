@@ -1,7 +1,118 @@
 {
   "entidades": {
-    "mecanicabase.model.operacao.Servico": [],
-    "mecanicabase.model.financeiro.CategoriaDespesa": [],
+    "mecanicabase.model.operacao.Servico": [
+      {
+        "tipo": "Troca de Óleo",
+        "preco": 120.0,
+        "descricao": "Substituição completa do óleo do motor",
+        "duracao": 30,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "usaElevador": false,
+        "id": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "criadoEm": "2025-06-30T14:34:53.6960382",
+        "atualizadoEm": "2025-06-30T14:34:53.6960382"
+      },
+      {
+        "tipo": "Alinhamento e Balanceamento",
+        "preco": 150.0,
+        "descricao": "Ajuste do alinhamento e balanceamento das rodas",
+        "duracao": 45,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "tipoElevador": "ALINHAMENTO_E_BALANCEAMENTO",
+        "usaElevador": true,
+        "id": "0bf9cd5e-1e59-48da-b961-aeb6d0a311f1",
+        "criadoEm": "2025-06-30T14:35:20.1340625",
+        "atualizadoEm": "2025-06-30T14:35:20.1340625"
+      },
+      {
+        "tipo": "Revisão Geral",
+        "preco": 300.0,
+        "descricao": "Inspeção completa do veículo",
+        "duracao": 60,
+        "tipoFuncionario": "MECANICO_INTERMEDIARIO",
+        "usaElevador": false,
+        "id": "d92fef98-2622-42e0-b68c-6838f0e95768",
+        "criadoEm": "2025-06-30T14:35:45.4459412",
+        "atualizadoEm": "2025-06-30T14:35:45.4459412"
+      },
+      {
+        "tipo": "Troca de Pastilhas de Freio",
+        "preco": 180.0,
+        "descricao": "Substituição das pastilhas de freio",
+        "duracao": 40,
+        "tipoFuncionario": "MECANICO_INTERMEDIARIO",
+        "tipoElevador": "GERAL",
+        "usaElevador": true,
+        "id": "c5fb51c1-3cfd-40f7-9274-3088357ec12b",
+        "criadoEm": "2025-06-30T14:36:13.3500425",
+        "atualizadoEm": "2025-06-30T14:36:13.3500425"
+      },
+      {
+        "tipo": "Troca de Bateria",
+        "preco": 30.0,
+        "descricao": "Instalação de nova bateria",
+        "duracao": 10,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "usaElevador": false,
+        "id": "fa8e6e5a-1b22-4a54-9127-980b64ac5549",
+        "criadoEm": "2025-06-30T14:36:35.9435493",
+        "atualizadoEm": "2025-06-30T14:36:35.9435493"
+      },
+      {
+        "tipo": "Troca de Pneu+Balanceamento",
+        "preco": 170.0,
+        "descricao": "Substituição de pneu com balanceamento",
+        "duracao": 35,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "tipoElevador": "ALINHAMENTO_E_BALANCEAMENTO",
+        "usaElevador": true,
+        "id": "c4aeb516-c0e1-46ab-adf6-e4c98c4235be",
+        "criadoEm": "2025-06-30T14:37:09.3658061",
+        "atualizadoEm": "2025-06-30T14:37:09.3658061"
+      },
+      {
+        "tipo": "Troca de Correia Dentada",
+        "preco": 250.0,
+        "descricao": "Substituição da correia do motor",
+        "duracao": 80,
+        "tipoFuncionario": "MECANICO_ESPECIALISTA",
+        "tipoElevador": "GERAL",
+        "usaElevador": true,
+        "id": "a4f06520-931a-482e-855a-7a0d43ad97a8",
+        "criadoEm": "2025-06-30T14:37:42.7819247",
+        "atualizadoEm": "2025-06-30T14:37:42.7819247"
+      },
+      {
+        "tipo": "Troca de Filtros",
+        "preco": 110.0,
+        "descricao": "Substituição dos filtros de óleo e ar",
+        "duracao": 30,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "usaElevador": false,
+        "id": "d728f84c-c2df-406e-b1d2-95f85895706d",
+        "criadoEm": "2025-06-30T14:38:12.1339975",
+        "atualizadoEm": "2025-06-30T14:38:12.1339975"
+      },
+      {
+        "tipo": "Revisão do Sistema de Ar",
+        "preco": 190.0,
+        "descricao": "Avaliação e manutenção do ar-condicionado",
+        "duracao": 45,
+        "tipoFuncionario": "MECANICO_BASICO",
+        "usaElevador": false,
+        "id": "fab5a6db-32ca-44d4-ac1c-41bb7ad8ecca",
+        "criadoEm": "2025-06-30T14:38:33.3498191",
+        "atualizadoEm": "2025-06-30T14:38:33.3498191"
+      }
+    ],
+    "mecanicabase.model.financeiro.CategoriaDespesa": [
+      {
+        "titulo": "Compra de filtros",
+        "id": "be0dd3e3-b6e2-45ed-ac85-2e0a28b4a928",
+        "criadoEm": "2025-06-30T15:08:04.4916493",
+        "atualizadoEm": "2025-06-30T15:08:04.4916493"
+      }
+    ],
     "mecanicabase.model.operacao.Elevador": [
       null,
       null,
@@ -40,8 +151,98 @@
         "atualizadoEm": "2025-06-30T12:44:58.5012718"
       }
     ],
-    "mecanicabase.model.financeiro.Despesa": [],
-    "mecanicabase.model.operacao.Peca": [],
+    "mecanicabase.model.financeiro.Despesa": [
+      {
+        "descricao": "Compra de filtros dia 30/06",
+        "valor": 1000.0,
+        "categoriaId": "be0dd3e3-b6e2-45ed-ac85-2e0a28b4a928",
+        "id": "cb651398-9b6c-4522-bd3c-69b82c363277",
+        "criadoEm": "2025-06-30T15:08:22.5860741",
+        "atualizadoEm": "2025-06-30T15:08:22.5860741"
+      }
+    ],
+    "mecanicabase.model.operacao.Peca": [
+      {
+        "nome": "Filtro de Óleo",
+        "valor": 30.0,
+        "quantidade": 20,
+        "id": "f85774ef-4ab7-44a1-96de-613271e348bc",
+        "criadoEm": "2025-06-30T14:52:05.4702874",
+        "atualizadoEm": "2025-06-30T14:52:05.4702874"
+      },
+      {
+        "nome": "Óleo Lubrificante 5W30",
+        "valor": 70.0,
+        "quantidade": 30,
+        "id": "fa9da37b-0792-447f-97cb-b2fb5458cbc2",
+        "criadoEm": "2025-06-30T14:52:16.3497936",
+        "atualizadoEm": "2025-06-30T14:52:16.3497936"
+      },
+      {
+        "nome": "Kit de Alinhamento",
+        "valor": 100.0,
+        "quantidade": 10,
+        "id": "8a6fff74-f128-468a-a9c2-3436f7e12a4f",
+        "criadoEm": "2025-06-30T14:52:27.094319",
+        "atualizadoEm": "2025-06-30T14:52:27.094319"
+      },
+      {
+        "nome": "Pastilhas de Freio Dianteiras",
+        "valor": 90.0,
+        "quantidade": 15,
+        "id": "f028597b-63b2-444a-bf3c-ece23dc47276",
+        "criadoEm": "2025-06-30T14:52:38.4863752",
+        "atualizadoEm": "2025-06-30T14:52:38.4863752"
+      },
+      {
+        "nome": "Bateria 60Ah Selada",
+        "valor": 300.0,
+        "quantidade": 5,
+        "id": "4245e497-f6f6-4c32-a391-f4b9bb89dec0",
+        "criadoEm": "2025-06-30T14:52:49.7254869",
+        "atualizadoEm": "2025-06-30T14:52:49.7254869"
+      },
+      {
+        "nome": "Pneu Aro 15",
+        "valor": 350.0,
+        "quantidade": 8,
+        "id": "19f306fa-4ae7-4dce-bc95-ede0aa67097c",
+        "criadoEm": "2025-06-30T14:53:04.6296286",
+        "atualizadoEm": "2025-06-30T14:53:04.6296286"
+      },
+      {
+        "nome": "Correia Dentada",
+        "valor": 120.0,
+        "quantidade": 12,
+        "id": "08982811-b4b6-48c3-9958-704517f617bc",
+        "criadoEm": "2025-06-30T14:53:15.4613494",
+        "atualizadoEm": "2025-06-30T14:53:15.4613494"
+      },
+      {
+        "nome": "Filtro de Ar do Motor",
+        "valor": 50.0,
+        "quantidade": 20,
+        "id": "02fdbfbc-4c05-4e56-9756-0f34399a99ce",
+        "criadoEm": "2025-06-30T14:53:31.1575592",
+        "atualizadoEm": "2025-06-30T14:53:31.1575592"
+      },
+      {
+        "nome": "Filtro de Cabine",
+        "valor": 40.0,
+        "quantidade": 20,
+        "id": "d4353b78-4944-4f5d-9c12-98ed19211ad8",
+        "criadoEm": "2025-06-30T14:53:46.9174474",
+        "atualizadoEm": "2025-06-30T14:53:46.9174474"
+      },
+      {
+        "nome": "Gas R134a para Ar Condicionado",
+        "valor": 60.0,
+        "quantidade": 10,
+        "id": "051942a4-da86-489f-ad03-97d92395aec8",
+        "criadoEm": "2025-06-30T14:53:57.9335816",
+        "atualizadoEm": "2025-06-30T14:53:57.9335816"
+      }
+    ],
     "mecanicabase.model.financeiro.PecaItem": [],
     "mecanicabase.model.usuarios.Cliente": [
       {
@@ -58,7 +259,50 @@
       }
     ],
     "mecanicabase.model.operacao.Veiculo": [],
-    "mecanicabase.model.usuarios.Funcionario": [],
+    "mecanicabase.model.usuarios.Funcionario": [
+      {
+        "funcao": "ATENDENTE",
+        "salario": 1000.0,
+        "senha": "cTaXpPpFKaJMt8MB1XSzJg\u003d\u003d",
+        "nome": "Pavila",
+        "email": "pavila@email.com",
+        "cpfHash": "24a0d16fb7acad49954baa8b95e07e95b4f983e3af1f1b849b50a2aa9f468ac6",
+        "cpfCriptografado": "q8i2lCAQpepIOnANXH4VABgPxfgBFQ1ed6UOighp6LnvYryuawcZq0DXeKa7KZ7Q",
+        "telefone": "31999998888",
+        "endereco": "Rua A",
+        "id": "cc1fd239-e77c-4aae-a182-9eb91635aa41",
+        "criadoEm": "2025-06-30T14:49:08.1598497",
+        "atualizadoEm": "2025-06-30T14:49:08.1598497"
+      },
+      {
+        "funcao": "MECANICO_BASICO",
+        "salario": 100.0,
+        "senha": "aiSyMcCjOgwMgOcdhmTCdA\u003d\u003d",
+        "nome": "João da Silva",
+        "email": "joao.basico@email.com",
+        "cpfHash": "51bc281d68efc2b2c3cbe8de538dd689f7df05387b70796686631d683fc52852",
+        "cpfCriptografado": "s9FbbK1haxQGk4nYyl1K9bHIY47dbvljuU1kLArab2bv03goz6w5Dx9ZsU0ae/uT",
+        "telefone": "31999998888",
+        "endereco": "Rua A",
+        "id": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "criadoEm": "2025-06-30T15:24:31.6594496",
+        "atualizadoEm": "2025-06-30T15:24:31.6594496"
+      },
+      {
+        "funcao": "MECANICO_BASICO",
+        "salario": 100.0,
+        "senha": "v2oBUljubB7dQiJMo0UnLA\u003d\u003d",
+        "nome": "Pedro Oliveira",
+        "email": "pedro.basico@email.com",
+        "cpfHash": "9b564982caebfcb6d29dbe38d80d896ffdd54ce4a7c6b5cb65bb58f4910ff7b4",
+        "cpfCriptografado": "tbNsOzXwwYJ9rgh/+xlRTzkkxqImP4QMRWj/N3bRQKsSskwnOf0KvXSQimiJdyuP",
+        "telefone": "31999998888",
+        "endereco": "Rua A",
+        "id": "56d67ff2-ff26-400c-9f49-e10513550aa5",
+        "criadoEm": "2025-06-30T15:25:22.3267322",
+        "atualizadoEm": "2025-06-30T15:25:22.3267322"
+      }
+    ],
     "mecanicabase.model.financeiro.Agendamento": []
   }
 }

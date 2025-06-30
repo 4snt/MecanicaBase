@@ -2,12 +2,15 @@ package mecanicabase.service.usuarios;
 
 import java.util.List;
 import java.util.UUID;
-
 import mecanicabase.infra.crypto.JasyptCrypto;
 import mecanicabase.model.usuarios.Funcionario;
 import mecanicabase.model.usuarios.TipoFuncionario;
 
 public class FuncionarioCrud extends UsuarioCrud<Funcionario> {
+
+    public FuncionarioCrud() {
+        reindexar();
+    }
 
     @Override
     protected List<Funcionario> getInstancias() {
@@ -110,4 +113,5 @@ public class FuncionarioCrud extends UsuarioCrud<Funcionario> {
         }
         return index;
     }
+
 }

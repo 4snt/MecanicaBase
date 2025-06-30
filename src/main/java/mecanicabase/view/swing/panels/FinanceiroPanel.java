@@ -2,10 +2,11 @@ package mecanicabase.view.swing.panels;
 
 import javax.swing.table.DefaultTableModel;
 import mecanicabase.infra.ApplicationContext;
+import mecanicabase.view.swing.dialogs.BalancoDialog;
+import mecanicabase.view.swing.dialogs.CategoriaDespesaDialog;
+import mecanicabase.view.swing.dialogs.DespesaDialog;
+import mecanicabase.view.swing.dialogs.RelatorioDialog;
 
-/**
- * Painel Swing para gerenciamento financeiro (apenas para administradores).
- */
 public class FinanceiroPanel extends BasePanel {
 
     public FinanceiroPanel(ApplicationContext context) {
@@ -36,14 +37,12 @@ public class FinanceiroPanel extends BasePanel {
 
     @Override
     protected void setupForm() {
-        // Formulário não necessário para este painel de navegação
+        // Não há formulário neste painel
     }
 
     @Override
     public void loadData() {
         tableModel.setRowCount(0);
-
-        // Adicionar módulos financeiros disponíveis
         tableModel.addRow(new Object[]{"Categorias de Despesa", "Gerenciamento de categorias de despesas"});
         tableModel.addRow(new Object[]{"Despesas", "Controle de despesas da oficina"});
         tableModel.addRow(new Object[]{"Relatórios", "Relatórios de vendas e serviços"});
@@ -51,24 +50,23 @@ public class FinanceiroPanel extends BasePanel {
     }
 
     private void gerenciarCategorias() {
-        showMessage("Funcionalidade em desenvolvimento - Categorias de Despesa");
+        new CategoriaDespesaDialog(context).setVisible(true);
     }
 
     private void gerenciarDespesas() {
-        showMessage("Funcionalidade em desenvolvimento - Gestão de Despesas");
+        new DespesaDialog(context).setVisible(true);
     }
 
     private void gerarRelatorios() {
-        showMessage("Funcionalidade em desenvolvimento - Relatórios de Vendas");
+        new RelatorioDialog().setVisible(true); // corrigido
     }
 
     private void gerarBalanco() {
-        showMessage("Funcionalidade em desenvolvimento - Balanço Financeiro");
+        new BalancoDialog().setVisible(true); // corrigido
     }
 
     @Override
     protected boolean saveFormData() {
-        // Não aplicável para este painel
         return false;
     }
 }

@@ -1,20 +1,29 @@
 package mecanicabase.model.usuarios;
 
 /**
- * Enumeração que representa os tipos de funções que um funcionário pode
- * exercer.
+ * Enumeração que representa os cargos que um funcionário pode exercer na
+ * oficina.
  */
 public enum TipoFuncionario {
     /**
-     * Mecânico específico para tarefas simples ou determinadas.
+     * Responsável por tarefas simples como trocas de óleo e pneus.
      */
-    MECANICO_ESPECIFICO,
+    MECANICO_BASICO,
     /**
-     * Mecânico especialista para serviços mais complexos e especializados.
+     * Executa serviços técnicos mais avançados como correia dentada e freios.
+     */
+    MECANICO_INTERMEDIARIO,
+    /**
+     * Especialista em diagnósticos e serviços complexos como motor e injeção
+     * eletrônica.
      */
     MECANICO_ESPECIALISTA,
     /**
-     * Funcionário responsável por vendas e atendimento ao cliente.
+     * Responsável pelo atendimento ao cliente e vendas de serviços.
      */
-    VENDEDOR,
+    ATENDENTE,
+    /**
+     * Gerencia a equipe, controla ordens e supervisiona os serviços.
+     */
+    SUPERVISOR
 }

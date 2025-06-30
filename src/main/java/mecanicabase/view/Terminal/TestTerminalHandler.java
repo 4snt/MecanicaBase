@@ -25,6 +25,7 @@ public class TestTerminalHandler {
             System.out.println("15. Questão 15: Iterator e foreach");
             System.out.println("16. Questão 16: Comparator + Collections.sort()");
             System.out.println("17. Questão 17: find com Iterator + Comparator + binarySearch()");
+            System.out.println("18. Questão 18: Simulação completa de atendimento a 10 clientes");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
             String op = scanner.nextLine();
@@ -49,6 +50,8 @@ public class TestTerminalHandler {
                     RequisitosImplementadosTest.questao16();
                 case "17" ->
                     RequisitosImplementadosTest.questao17();
+                case "18" ->
+                    RequisitosImplementadosTest.testeQuestao18_FluxoCompleto();
                 case "0" -> {
                     System.out.println("Saindo do modo teste.");
                     return;

@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -16,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-
 import mecanicabase.infra.ApplicationContext;
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Colaborador;
@@ -136,10 +134,8 @@ public class LoginDialog extends JDialog {
             Colaborador colaborador = null;
 
             if ("Funcionário".equals(tipoUsuario)) {
-                System.out.println("[DEBUG] Chamando context.funcionarioCrud.login()");
                 colaborador = context.funcionarioCrud.login(usuario, senha);
             } else if ("Administrador".equals(tipoUsuario)) {
-                System.out.println("[DEBUG] Chamando context.administradorCrud.login()");
                 colaborador = context.administradorCrud.login(usuario, senha);
             }
 

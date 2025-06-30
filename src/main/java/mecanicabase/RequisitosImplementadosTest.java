@@ -12,6 +12,8 @@ import mecanicabase.core.GenericFinder;
 import mecanicabase.core.GenericIterator;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
+import mecanicabase.model.financeiro.StatusAgendamento;
+import mecanicabase.model.financeiro.StatusOrdemDeServico;
 import mecanicabase.model.operacao.EntradaPeca;
 import mecanicabase.model.operacao.Peca;
 import mecanicabase.model.operacao.Servico;
@@ -53,7 +55,7 @@ public class RequisitosImplementadosTest {
         System.out.println("\n--- Questão 2 e 3: Funcionário e Administrador ---");
         // Funcionário
         var funcionarioCrud = new mecanicabase.service.usuarios.FuncionarioCrud();
-        var funcionario = funcionarioCrud.criar(true, "Maria", mecanicabase.model.usuarios.TipoFuncionario.MECANICO_ESPECIFICO, "maria@email.com", "321", "321.654.987-00", "88888-0000", "Rua 2", 2500.0f);
+        var funcionario = funcionarioCrud.criar(true, "Maria", mecanicabase.model.usuarios.TipoFuncionario.MECANICO_BASICO, "maria@email.com", "321", "321.654.987-00", "88888-0000", "Rua 2", 2500.0f);
 
         System.out.println("Funcionário criado:");
         imprimirFuncionarioDetalhado(funcionario);
@@ -419,5 +421,94 @@ public class RequisitosImplementadosTest {
         // Imprime a lista para conferência
         System.out.println("\n📋 Lista ordenada por CPF:");
         GenericIterator.imprimirComIteratorEForeach(lista, c -> c.getNome() + " | " + c.getCpf(), "Lista usada na busca binária");
+    }
+
+    // Questão 18 – Fluxo Completo de Atendimento
+    public static void testeQuestao18_FluxoCompleto() {
+        System.out.println("\n=== Questão 18: Fluxo Completo de Atendimento ===");
+
+        var clienteCrud = new ClienteCrud();
+        var veiculoCrud = new mecanicabase.service.operacao.VeiculoCrud();
+        var servicoCrud = new mecanicabase.service.operacao.ServicoCrud();
+        var ordemCrud = new mecanicabase.service.financeiro.OrdemDeServicoCrud();
+        var agendamentoCrud = new AgendamentoCrud();
+        var agendamentoController = new AgendamentoController(agendamentoCrud);
+
+        // Seleciona o primeiro serviço disponível
+        Servico servico = servicoCrud.listarTodos().stream().findFirst().orElse(null);
+        if (servico == null) {
+            System.out.println("❌ Nenhum serviço cadastrado.");
+            return;
+        }
+
+        String[] nomes = {
+            "Ana Clara", "Bruno Silva", "Carlos Eduardo", "Daniela Souza", "Eduardo Lima",
+            "Fernanda Rocha", "Gustavo Alves", "Helena Martins", "Igor Dias", "Juliana Castro"
+        };
+
+        for (int i = 0; i < nomes.length; i++) {
+            String nome = nomes[i];
+            String cpf = "111.111.111-1" + i;
+            String telefone = "99999-000" + i;
+            String endereco = "Rua Teste " + i;
+            String email = "cliente" + i + "@email.com";
+            String modelo = "Modelo X" + i;
+            String placa = "ABC-123" + i;
+            int anoFabricacao = 2020 + (i % 5);
+            String cor = "Preto";
+
+            try {
+                // Cria cliente e veículo
+                Cliente cliente = clienteCrud.criar(false, nome, telefone, endereco, email, cpf);
+                Veiculo veiculo = veiculoCrud.criar(false, cor, anoFabricacao, placa, modelo, cliente.getId());
+
+                // Define dados do agendamento
+                LocalDateTime data = LocalDateTime.now().plusDays(i);
+                String problema = "Revisão completa do carro " + i;
+
+                // Cria OS apenas se o agendamento for bem-sucedido
+                OrdemDeServico ordem = ordemCrud.criar(true, cliente.getId());
+
+                Agendamento agendamento = agendamentoController.criarAgendamentoComAlocacao(
+                        data, servico, problema, veiculo, ordem
+                );
+
+                System.out.println("✅ Cliente " + i + " agendado com sucesso:");
+                System.out.println("   - Agendamento ID: " + agendamento.getId());
+                System.out.println("   - Serviço: " + agendamento.getServico().getTipo());
+                System.out.println("   - Funcionário: " + agendamento.getFuncionario().getNome());
+
+                // Marca o agendamento como concluído
+                agendamentoCrud.atualizar(
+                        agendamento.getId().toString(),
+                        true, // valida
+                        agendamento.getData(),
+                        agendamento.getDescricaoProblema(),
+                        agendamento.getVeiculo().getId(),
+                        agendamento.getElevador() != null ? agendamento.getElevador().getId() : null,
+                        agendamento.getFuncionario().getId(),
+                        agendamento.getServico().getId(),
+                        agendamento.getOrdemDeServico().getId(),
+                        StatusAgendamento.CONCLUIDO
+                );
+
+                // Finaliza a Ordem de Serviço
+                ordemCrud.atualizar(
+                        ordem.getId().toString(), // ✅ conversão para String
+                        true,
+                        cliente.getId(),
+                        StatusOrdemDeServico.CONCLUIDO
+                );
+
+            } catch (Exception e) {
+                System.out.println("⚠️ Erro ao atender cliente " + nome + ": " + e.getMessage());
+            }
+        }
+
+        System.out.println("\n📄 Gerando relatório final de serviços realizados:");
+        testeQuestao8_RelatorioVendasServicos();
+
+        System.out.println("\n📊 Gerando balanço final:");
+        testeQuestao9_BalancoMensal();
     }
 }

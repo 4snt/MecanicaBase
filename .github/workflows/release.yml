@@ -1,9 +1,9 @@
-name: Build & Release
+name: Criar Release no GitHub
 
 on:
   push:
     tags:
-      - "v*"
+      - "v*" # Ex: v3.0.3
 
 permissions:
   contents: write
@@ -13,46 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout do repositório
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup JDK 17 + cache Maven
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-          cache: maven
-
-      - name: Build (mvn -Puml)
-        run: mvn -B -Puml clean package
-
-      - name: Listar arquivos gerados
-        run: |
-          echo "📦 Arquivos dentro de target/"
-          ls -lah target || echo "⚠️ Pasta target não encontrada"
-          echo "🔍 Procurando o ZIP final:"
-          find . -name '*dist.zip'
-
-      - name: Copiar ZIP para raiz
-        run: cp target/MecanicaBase-dist.zip .
-
-      - name: Extrair notas do CHANGELOG
+      - name: Extrair notas da versão atual do CHANGELOG.md
         id: changelog
         run: |
-          TAG_NAME="${GITHUB_REF#refs/tags/}"
-          VERSION="${TAG_NAME#v}"
-          NOTES=$(awk "/^### ${VERSION//./\\.}/ {flag=1; next} /^### / {flag=0} flag" CHANGELOG.md)
-          [ -z \"$NOTES\" ] && NOTES="Notas não encontradas no CHANGELOG para $VERSION."
-          echo "release_notes<<EOF" >> $GITHUB_ENV
-          echo "$NOTES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          TAG_NAME="${GITHUB_REF#refs/tags/}"   # v3.0.3
+          VERSION="${TAG_NAME#v}"               # 3.0.3
 
-      - name: Criar/atualizar Release
+          echo "Extraindo seção para $VERSION..."
+
+          # Extrai entre o cabeçalho da versão e o próximo
+          NOTES=$(awk "/^### ${VERSION//./\\.}/ {flag=1; next} /^### / {flag=0} flag" CHANGELOG.md)
+
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Criar Release no GitHub
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ env.release_notes }}
-          fail_on_unmatched_files: true
-          files: |
-            MecanicaBase-dist.zip
+          body: ${{ steps.changelog.outputs.release_notes }}

@@ -3,10 +3,10 @@ name: Build & Release
 on:
   push:
     tags:
-      - "v*" # ex.: v4.1.2
+      - "v*"
 
 permissions:
-  contents: write # criar/atualizar Release
+  contents: write
 
 jobs:
   release:
@@ -28,9 +28,8 @@ jobs:
       - name: Build (mvn -Puml)
         run: mvn -B -Puml clean package
 
-      # (opcional) debug: liste o que foi gerado
-      - name: Listar artefatos gerados
-        run: ls -lh target | head -20
+      - name: Verificar arquivos gerados
+        run: ls -lh target
 
       - name: Extrair notas do CHANGELOG
         id: changelog
@@ -40,7 +39,7 @@ jobs:
           NOTES=$(awk "/^### ${VERSION//./\\.}/ {flag=1; next} /^### / {flag=0} flag" CHANGELOG.md)
           [ -z "$NOTES" ] && NOTES="Notas não encontradas no CHANGELOG para $VERSION."
           {
-            echo "release_notes<<'EOF'"
+            echo "release_notes<<EOF"
             echo "$NOTES"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
@@ -49,5 +48,5 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           body: ${{ steps.changelog.outputs.release_notes }}
-          fail_on_unmatched_files: true # falha se não achar o ZIP
-          files: target/*-dist.zip # <-- só o ZIP
+          fail_on_unmatched_files: true
+          files: target/*.zip # altere conforme o nome real do artefato

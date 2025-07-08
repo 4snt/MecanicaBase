@@ -6,8 +6,10 @@ import mecanicabase.model.usuarios.Cliente;
 import mecanicabase.service.usuarios.ClienteCrud;
 
 /**
- * Controller responsável por gerenciar as operações relacionadas a clientes.
- * Atua como intermediário entre a UI e a lógica de CRUD.
+ * Controller responsável por operações relacionadas a clientes.
+ * <p>
+ * Documentação detalhada será adicionada futuramente.
+ * </p>
  */
 public class ClienteController {
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.OrdemDeServico;
+import mecanicabase.model.financeiro.ServicoItem;
 import mecanicabase.model.financeiro.StatusOrdemDeServico;
 import mecanicabase.model.operacao.Elevador;
 import mecanicabase.model.operacao.Servico;
@@ -13,8 +14,10 @@ import mecanicabase.model.usuarios.Funcionario;
 import mecanicabase.service.financeiro.AgendamentoCrud;
 
 /**
- * Controller responsável por criar agendamentos com lógica de alocação
- * automática.
+ * Controller responsável por operações relacionadas a agendamentos.
+ * <p>
+ * Documentação detalhada será adicionada futuramente.
+ * </p>
  */
 public class AgendamentoController {
 
@@ -86,6 +89,13 @@ public class AgendamentoController {
                 servico.getId(),
                 ordemDeServico.getId()
         );
+        ServicoItem servicoItem = new ServicoItem(
+                servico.getId(),
+                servico.getPreco(),
+                ordemDeServico.getId()
+        );
+        ServicoItem.instances.add(servicoItem);
+        ordemDeServico.addServico(servicoItem.getId());
 
         ordemDeServico.addAgendamento(agendamento.getId());
         return agendamento;

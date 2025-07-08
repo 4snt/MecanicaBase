@@ -6,6 +6,7 @@ import mecanicabase.core.Entity;
 import mecanicabase.model.financeiro.Agendamento;
 import mecanicabase.model.financeiro.CategoriaDespesa;
 import mecanicabase.model.financeiro.Despesa;
+import mecanicabase.model.financeiro.OrdemDeServico;
 import mecanicabase.model.financeiro.PecaItem;
 import mecanicabase.model.financeiro.ServicoItem;
 import mecanicabase.model.operacao.Elevador;
@@ -33,7 +34,7 @@ public class EntityRegistry {
                 Agendamento.class, CategoriaDespesa.class, Despesa.class,
                 PecaItem.class, ServicoItem.class,
                 Elevador.class, Peca.class, Servico.class, Veiculo.class,
-                Administrador.class, Funcionario.class, Cliente.class
+                Administrador.class, Funcionario.class, Cliente.class, OrdemDeServico.class
         );
     }
 }

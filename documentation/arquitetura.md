@@ -205,11 +205,14 @@ Com a adoção de um CRUD genérico (`Crud<T>`), a estrutura foi drasticamente s
 - Banco de dados simulado via `database.json` (requisito da disciplina)
 
 ```
-src/
-└── main/
+├───main
+│   ├───assembly
+│   │       assembly.xml
+│   │
 │   └───java
 │       └───mecanicabase
 │           │   MecanicaBase.java
+│           │   RequisitosImplementadosTest.java
 │           │
 │           ├───controller
 │           │       AgendamentoController.java
@@ -220,16 +223,37 @@ src/
 │           │       Autenticavel.java
 │           │       Crud.java
 │           │       Entity.java
+│           │       GenericComparator.java
+│           │       GenericFinder.java
+│           │       GenericIterator.java
+│           │       ListIterator.java
+│           │
+│           ├───flyweight
+│           │       Flyweight.java
+│           │       PecaFlyweightFactory.java
+│           │       UnsharedConcreteFlyweight.java
 │           │
 │           ├───infra
+│           │   │   ApplicationContext.java
+│           │   │   EnvConfig.java
+│           │   │
 │           │   ├───auth
 │           │   │       Session.java
 │           │   │
+│           │   ├───benchmark
+│           │   │       BenchmarkPecasAplicadas.java
+│           │   │
 │           │   ├───crypto
+│           │   │       HashUtil.java
 │           │   │       JasyptCrypto.java
 │           │   │
 │           │   └───db
 │           │           Database.java
+│           │           DatabaseFileHelper.java
+│           │           DatabaseJsonHelper.java
+│           │           DatabasePathHelper.java
+│           │           EntityLoader.java
+│           │           EntityRegistry.java
 │           │
 │           ├───model
 │           │   ├───financeiro
@@ -283,10 +307,30 @@ src/
 │           │           UsuarioCrud.java
 │           │
 │           └───view
-│               ├───javafx
-│               │       main.css
-│               │       Main.fxml
-│               │       MainView.java
+│               ├───swing
+│               │   │   AgendaView.java
+│               │   │   LoginDialog.java
+│               │   │   MainSwingView.java
+│               │   │
+│               │   ├───dialogs
+│               │   │       BalancoDialog.java
+│               │   │       CategoriaDespesaDialog.java
+│               │   │       DespesaDialog.java
+│               │   │       NovoAgendamentoDialog.java
+│               │   │       RelatorioDialog.java
+│               │   │
+│               │   └───panels
+│               │           AdministradorPanel.java
+│               │           AgendamentoPanel.java
+│               │           BasePanel.java
+│               │           ClientePanel.java
+│               │           ColaboradorPanel.java
+│               │           FinanceiroPanel.java
+│               │           OficinaPanel.java
+│               │           OrdemServicoPanel.java
+│               │           PecaPanel.java
+│               │           ServicoPanel.java
+│               │           VeiculoPanel.java
 │               │
 │               └───Terminal
 │                   │   AgendamentoTerminalHandler.java
@@ -301,6 +345,7 @@ src/
 │                   │   OrdemDeServicoTerminalHandler.java
 │                   │   PecaTerminalHandler.java
 │                   │   ServicoTerminalHandler.java
+│                   │   TestTerminalHandler.java
 │                   │   VeiculoTerminalHandler.java
 │                   │
 │                   └───router
@@ -308,6 +353,7 @@ src/
 │
 └───test
     └───java
+        └───mecanicabase
 ```
 
 ---

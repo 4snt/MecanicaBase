@@ -73,7 +73,7 @@ public class RequisitosImplementadosTest {
 
         // Administrador
         var adminCrud = new mecanicabase.service.usuarios.AdministradorCrud();
-        var admin = adminCrud.criar(true, "Admin", "admin@email.com", "senha123", "000.000.000-00", "99999-9999", "Rua Admin");
+        var admin = adminCrud.criar(true, "AdminTeste", "adminteste@email.com", "senha123", "000.000.000-00", "99999-9999", "Rua Admin");
 
         System.out.println("Administrador criado:");
         imprimirAdministradorDetalhado(admin);
@@ -494,7 +494,7 @@ public class RequisitosImplementadosTest {
 
                 // Finaliza a Ordem de Serviço
                 ordemCrud.atualizar(
-                        ordem.getId().toString(), // ✅ conversão para String
+                        ordem.getId().toString(),
                         true,
                         cliente.getId(),
                         StatusOrdemDeServico.CONCLUIDO

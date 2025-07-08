@@ -13,6 +13,12 @@ import mecanicabase.infra.ApplicationContext;
 import mecanicabase.infra.auth.Session;
 import mecanicabase.model.usuarios.Administrador;
 
+/**
+ * Controller responsável pela lógica da view principal da aplicação.
+ * <p>
+ * Documentação detalhada será adicionada futuramente.
+ * </p>
+ */
 public class MainViewController {
 
     @FXML

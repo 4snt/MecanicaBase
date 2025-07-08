@@ -113,6 +113,182 @@
         "atualizadoEm": "2025-06-30T15:08:04.4916493"
       }
     ],
+    "mecanicabase.model.financeiro.OrdemDeServico": [
+      {
+        "clienteId": "ddb493cb-849a-41c7-9de2-252fe20a0a8f",
+        "status": "ABERTO",
+        "servicos": [
+          "a0c70c5a-2eba-485e-9819-35b37fbd469f"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "86ed2aeb-5ba4-4423-9c44-e3484963fd77"
+        ],
+        "id": "a6b74e9b-9558-4d32-94bb-0b5050a82e33",
+        "criadoEm": "2025-07-07T17:07:47.9531936",
+        "atualizadoEm": "2025-07-07T17:07:47.9531936"
+      },
+      {
+        "clienteId": "ec8999e0-1a98-4a33-8111-07b57bed9ed6",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3218127",
+        "servicos": [
+          "aeedff7e-9d19-4e8a-b3b0-55222e7979f1",
+          "7a78daf9-58be-4587-ba33-81e5e0e88abc"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "0e6624ee-1b9f-48d4-b66b-c78a823ec860"
+        ],
+        "id": "dd09f63c-2471-4cab-a7e5-5387a8cd1cb2",
+        "criadoEm": "2025-07-07T17:36:29.3137907",
+        "atualizadoEm": "2025-07-07T17:36:29.3137907"
+      },
+      {
+        "clienteId": "ba3d2b15-7b64-40af-83af-475663f3849a",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3238417",
+        "servicos": [
+          "3ba8d155-f3d6-4321-95dd-ea909a3cff4d",
+          "9bd4a7db-36c0-489e-9751-b81ccb19d99b"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "3a3bac52-aae1-4946-84a5-2ace1df179a5"
+        ],
+        "id": "94e03ae3-f022-4700-ac38-a1da17b4cd24",
+        "criadoEm": "2025-07-07T17:36:29.3238417",
+        "atualizadoEm": "2025-07-07T17:36:29.3238417"
+      },
+      {
+        "clienteId": "33c0d416-c3f3-4cc7-9a21-b982acaf92f4",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3273683",
+        "servicos": [
+          "4363371b-eb79-4967-90b6-a532ff9c07a8",
+          "d7e900ea-27e6-442f-a8e2-b17ad51ed971"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "d035dc74-36cf-4f8e-9f47-d42bf0388da4"
+        ],
+        "id": "e81efa5c-8ed4-463c-96cb-164b37790d9c",
+        "criadoEm": "2025-07-07T17:36:29.326371",
+        "atualizadoEm": "2025-07-07T17:36:29.326371"
+      },
+      {
+        "clienteId": "b244f033-e6b5-4023-95eb-dc0c9a85f0b5",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3293689",
+        "servicos": [
+          "d0cb9fd2-774e-4c8f-bd1d-d2c141c6c51f",
+          "9a7d2142-17a1-4842-8898-b269da86b841"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "65282dd3-0214-44a1-8bb4-ae253564d7b8"
+        ],
+        "id": "bcec546c-3a73-479e-9240-490cb7ccfc9d",
+        "criadoEm": "2025-07-07T17:36:29.3283682",
+        "atualizadoEm": "2025-07-07T17:36:29.3283682"
+      },
+      {
+        "clienteId": "086504e1-7b40-4a2a-a2e7-b00a7f461c7b",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.330368",
+        "servicos": [
+          "aab38e72-2409-4bb8-a77d-f53175ffdccd",
+          "60c3549e-a102-4267-a67d-a7e64449ce74"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "16ef3e57-8d21-4f5e-8b10-df5803a236e8"
+        ],
+        "id": "8608e99e-eba4-4e52-801c-eb404a008be4",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "clienteId": "708d564a-5171-4f6d-ad73-0ede96e6fc80",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3313673",
+        "servicos": [
+          "bb5d48e4-3fcd-4a55-8b77-a37f291689c3",
+          "d4ffdee5-9304-4ec8-addf-80999429c1ef"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "ad0e1b5d-e1ff-42d0-967d-d1a79d130269"
+        ],
+        "id": "30248f75-1240-443b-9e2b-a3defce45347",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "clienteId": "0c89605c-e331-416c-8e7f-a64a744417c8",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3323692",
+        "servicos": [
+          "65f661b6-4412-4a48-a85f-21c35caf9805",
+          "42171076-257d-4025-ba83-1f3d3d3d18b6"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "9e78440a-9ac5-4ffa-ad8c-e07c10e5c1a7"
+        ],
+        "id": "07509466-7696-40a9-8db7-f5ffc98a5f82",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "clienteId": "43c520c0-da19-47d7-8673-2e0f0c0dd373",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3333677",
+        "servicos": [
+          "fbcae987-f5b2-4d62-b0fe-db9c4b5d0990",
+          "381544ea-a541-4b7a-9516-3499b1463a9a"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "8c25fb6a-f826-4404-b9ac-51cf97e7cf04"
+        ],
+        "id": "d7e7092c-bb8c-4494-be48-3dcc4a80fb2e",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "clienteId": "5b19219a-9c8e-4045-a898-9655590e3ca7",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3363431",
+        "servicos": [
+          "3d246676-b802-4cc8-8519-0bdfc2da13ef",
+          "1e6a2d56-8765-47c4-b4c6-dcfd74bde1ae"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "6996b2d5-5990-4979-97d3-dfcca07b4db0"
+        ],
+        "id": "6c54ee67-5457-477a-a9b3-1dc661b4c9d4",
+        "criadoEm": "2025-07-07T17:36:29.3348324",
+        "atualizadoEm": "2025-07-07T17:36:29.3348324"
+      },
+      {
+        "clienteId": "80d9551b-ff8b-4a5c-9429-b36e45adc6a2",
+        "status": "CONCLUIDO",
+        "finalizadoEm": "2025-07-07T17:36:29.3388569",
+        "servicos": [
+          "b4909ffa-6b4b-4752-9ffa-81b988ef0770",
+          "5c9f9b98-c3b1-4306-b6ba-25d82801af18"
+        ],
+        "pecas": [],
+        "agendamentos": [
+          "6e89bc41-2e78-4db6-baf1-e195edc6e726"
+        ],
+        "id": "d601078a-0ad9-48ed-8bb6-c0abfb5714aa",
+        "criadoEm": "2025-07-07T17:36:29.3373446",
+        "atualizadoEm": "2025-07-07T17:36:29.3373446"
+      }
+    ],
     "mecanicabase.model.operacao.Elevador": [
       null,
       null,
@@ -136,7 +312,455 @@
         "atualizadoEm": "2025-06-30T12:44:58.4980563"
       }
     ],
-    "mecanicabase.model.financeiro.ServicoItem": [],
+    "mecanicabase.model.financeiro.Despesa": [
+      {
+        "descricao": "Compra de filtros dia 30/06",
+        "valor": 1000.0,
+        "categoriaId": "be0dd3e3-b6e2-45ed-ac85-2e0a28b4a928",
+        "id": "cb651398-9b6c-4522-bd3c-69b82c363277",
+        "criadoEm": "2025-06-30T15:08:22.5860741",
+        "atualizadoEm": "2025-06-30T15:08:22.5860741"
+      }
+    ],
+    "mecanicabase.model.usuarios.Cliente": [
+      {
+        "veiculos": [
+          "89c8fd3b-de86-4078-9009-11cf760513e3"
+        ],
+        "nome": "Ana Carolina",
+        "email": "ana@email.com",
+        "cpfHash": "9c9f57efe04f8f5a65b699db1c777238d5876b44cef240654c749dd09e1790ef",
+        "cpfCriptografado": "6TjOqG2vTl+lgUeA70z5HSTGvjqovBBE",
+        "telefone": "(00) 00000-0000",
+        "endereco": "Rua A",
+        "id": "ddb493cb-849a-41c7-9de2-252fe20a0a8f",
+        "criadoEm": "2025-06-30T12:46:19.5120613",
+        "atualizadoEm": "2025-06-30T12:46:19.5120613"
+      },
+      {
+        "veiculos": [],
+        "nome": "Ana Clara",
+        "email": "cliente0@email.com",
+        "cpfHash": "5a69f4c600673c96b9e09314e96b3da379755d11882ac46935442c3e6f1d09e0",
+        "cpfCriptografado": "Bqi1QfmJcQluwYRMgQrWtpjqQM/xPEzC",
+        "telefone": "99999-0000",
+        "endereco": "Rua Teste 0",
+        "id": "ec8999e0-1a98-4a33-8111-07b57bed9ed6",
+        "criadoEm": "2025-07-07T17:36:29.3122816",
+        "atualizadoEm": "2025-07-07T17:36:29.3122816"
+      },
+      {
+        "veiculos": [],
+        "nome": "Bruno Silva",
+        "email": "cliente1@email.com",
+        "cpfHash": "70601ec4abd36e052ff5a57f85d11849641d1caebe88135025067808c5a5d6d4",
+        "cpfCriptografado": "TLnxKCu3zFahYTMCTpj5t8umsBixESz4",
+        "telefone": "99999-0001",
+        "endereco": "Rua Teste 1",
+        "id": "ba3d2b15-7b64-40af-83af-475663f3849a",
+        "criadoEm": "2025-07-07T17:36:29.3218127",
+        "atualizadoEm": "2025-07-07T17:36:29.3218127"
+      },
+      {
+        "veiculos": [],
+        "nome": "Carlos Eduardo",
+        "email": "cliente2@email.com",
+        "cpfHash": "cb15179bd0943ff8b30af3bda3727458a5e2405507634f2d3c5f89b64c4d7ba3",
+        "cpfCriptografado": "24tkFkPdOS+K9JAT6YbVjnEEs01yEWkk",
+        "telefone": "99999-0002",
+        "endereco": "Rua Teste 2",
+        "id": "33c0d416-c3f3-4cc7-9a21-b982acaf92f4",
+        "criadoEm": "2025-07-07T17:36:29.3238417",
+        "atualizadoEm": "2025-07-07T17:36:29.3238417"
+      },
+      {
+        "veiculos": [],
+        "nome": "Daniela Souza",
+        "email": "cliente3@email.com",
+        "cpfHash": "aa7275f48f477b25a6018a65205636f191cf515c0f953a3ce474d50c5f85d73b",
+        "cpfCriptografado": "m1nqNJxNwCbaKtXG8Xkdf8hD7jT3fxFG",
+        "telefone": "99999-0003",
+        "endereco": "Rua Teste 3",
+        "id": "b244f033-e6b5-4023-95eb-dc0c9a85f0b5",
+        "criadoEm": "2025-07-07T17:36:29.3273683",
+        "atualizadoEm": "2025-07-07T17:36:29.3273683"
+      },
+      {
+        "veiculos": [],
+        "nome": "Eduardo Lima",
+        "email": "cliente4@email.com",
+        "cpfHash": "8267715b7649f5eba2875f888f6fe4da9e640869c4a7ad63ff6ce8c2bc306ea0",
+        "cpfCriptografado": "LpYKFO1FXICQ70jeqzvFgxQFPyjeHqqX",
+        "telefone": "99999-0004",
+        "endereco": "Rua Teste 4",
+        "id": "086504e1-7b40-4a2a-a2e7-b00a7f461c7b",
+        "criadoEm": "2025-07-07T17:36:29.3293689",
+        "atualizadoEm": "2025-07-07T17:36:29.3293689"
+      },
+      {
+        "veiculos": [],
+        "nome": "Fernanda Rocha",
+        "email": "cliente5@email.com",
+        "cpfHash": "460e48f1dd3f66e30e7dfb569793b0601dcb6f41ba1b9a4065196cf0da30714f",
+        "cpfCriptografado": "1S+HfD84b7rOfNAyrHTD+Sm0e7j+yJpF",
+        "telefone": "99999-0005",
+        "endereco": "Rua Teste 5",
+        "id": "708d564a-5171-4f6d-ad73-0ede96e6fc80",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "veiculos": [],
+        "nome": "Gustavo Alves",
+        "email": "cliente6@email.com",
+        "cpfHash": "fbf29bb5bb0e19bbcfab3ab32ddefe8a30cacaff25b8eed20edd901c987fa1ba",
+        "cpfCriptografado": "37XEgalZ70t3Qdu+/IRSXUhOrlq32i/3",
+        "telefone": "99999-0006",
+        "endereco": "Rua Teste 6",
+        "id": "0c89605c-e331-416c-8e7f-a64a744417c8",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "veiculos": [],
+        "nome": "Helena Martins",
+        "email": "cliente7@email.com",
+        "cpfHash": "56a4fb7d7c44ed6ebd62cab0e1ba9dde9c44c0deca387d56ba244942b9286e79",
+        "cpfCriptografado": "MGzHylf1/PejLWXUS7KSxNcNvubEiqUZ",
+        "telefone": "99999-0007",
+        "endereco": "Rua Teste 7",
+        "id": "43c520c0-da19-47d7-8673-2e0f0c0dd373",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "veiculos": [],
+        "nome": "Igor Dias",
+        "email": "cliente8@email.com",
+        "cpfHash": "e9a78efeb71cdf2cc9b62f67f4ffd6c657474243393b13d2b39a2d7e004d64d1",
+        "cpfCriptografado": "70UFRUWGxymcLjQI6m/t3Pi8O7y9Iiug",
+        "telefone": "99999-0008",
+        "endereco": "Rua Teste 8",
+        "id": "5b19219a-9c8e-4045-a898-9655590e3ca7",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "veiculos": [],
+        "nome": "Juliana Castro",
+        "email": "cliente9@email.com",
+        "cpfHash": "30aea56e8fa651f6176fd3ceddc83e86d832cddc8246a7d4b566d01fd35dd0c8",
+        "cpfCriptografado": "eOo+OgQTCDMEJRAv7urBjfe8cbvv5KX7",
+        "telefone": "99999-0009",
+        "endereco": "Rua Teste 9",
+        "id": "80d9551b-ff8b-4a5c-9429-b36e45adc6a2",
+        "criadoEm": "2025-07-07T17:36:29.3363431",
+        "atualizadoEm": "2025-07-07T17:36:29.3363431"
+      }
+    ],
+    "mecanicabase.model.financeiro.Agendamento": [
+      {
+        "data": "2025-07-08T14:30:00",
+        "descricaoProblema": "Oleo",
+        "ordemDeServico": "a6b74e9b-9558-4d32-94bb-0b5050a82e33",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "89c8fd3b-de86-4078-9009-11cf760513e3",
+        "id": "86ed2aeb-5ba4-4423-9c44-e3484963fd77",
+        "criadoEm": "2025-07-07T17:07:47.9651077",
+        "atualizadoEm": "2025-07-07T17:07:47.9651077"
+      },
+      {
+        "data": "2025-07-07T17:36:29.3137907",
+        "descricaoProblema": "Revisão completa do carro 0",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "dd09f63c-2471-4cab-a7e5-5387a8cd1cb2",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "a74d5355-0c4f-4cd3-968e-9107786f6d31",
+        "id": "0e6624ee-1b9f-48d4-b66b-c78a823ec860",
+        "criadoEm": "2025-07-07T17:36:29.3152981",
+        "atualizadoEm": "2025-07-07T17:36:29.3152981"
+      },
+      {
+        "data": "2025-07-08T17:36:29.323319",
+        "descricaoProblema": "Revisão completa do carro 1",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "94e03ae3-f022-4700-ac38-a1da17b4cd24",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "e71d3ef3-097b-4997-b73b-ab76ab935d26",
+        "id": "3a3bac52-aae1-4946-84a5-2ace1df179a5",
+        "criadoEm": "2025-07-07T17:36:29.3238417",
+        "atualizadoEm": "2025-07-07T17:36:29.3238417"
+      },
+      {
+        "data": "2025-07-09T17:36:29.326371",
+        "descricaoProblema": "Revisão completa do carro 2",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "e81efa5c-8ed4-463c-96cb-164b37790d9c",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "0896c516-6f42-4255-bfc8-fabc8b8c53a1",
+        "id": "d035dc74-36cf-4f8e-9f47-d42bf0388da4",
+        "criadoEm": "2025-07-07T17:36:29.326371",
+        "atualizadoEm": "2025-07-07T17:36:29.326371"
+      },
+      {
+        "data": "2025-07-10T17:36:29.3283682",
+        "descricaoProblema": "Revisão completa do carro 3",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "bcec546c-3a73-479e-9240-490cb7ccfc9d",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "dd10df33-5b88-4e5b-9f78-852b2107b76a",
+        "id": "65282dd3-0214-44a1-8bb4-ae253564d7b8",
+        "criadoEm": "2025-07-07T17:36:29.3283682",
+        "atualizadoEm": "2025-07-07T17:36:29.3283682"
+      },
+      {
+        "data": "2025-07-11T17:36:29.330368",
+        "descricaoProblema": "Revisão completa do carro 4",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "8608e99e-eba4-4e52-801c-eb404a008be4",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "9ee58cf6-2d99-4e4a-83e4-3b51211b8c48",
+        "id": "16ef3e57-8d21-4f5e-8b10-df5803a236e8",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "data": "2025-07-12T17:36:29.3313673",
+        "descricaoProblema": "Revisão completa do carro 5",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "30248f75-1240-443b-9e2b-a3defce45347",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "ad382e48-ee15-40e9-9a9b-4b7b0f8ee49c",
+        "id": "ad0e1b5d-e1ff-42d0-967d-d1a79d130269",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "data": "2025-07-13T17:36:29.3323692",
+        "descricaoProblema": "Revisão completa do carro 6",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "07509466-7696-40a9-8db7-f5ffc98a5f82",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "aaee323c-7073-4925-908a-7ca5cf776a18",
+        "id": "9e78440a-9ac5-4ffa-ad8c-e07c10e5c1a7",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "data": "2025-07-14T17:36:29.3333677",
+        "descricaoProblema": "Revisão completa do carro 7",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "d7e7092c-bb8c-4494-be48-3dcc4a80fb2e",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "6507ad29-c880-4c5a-a6f5-86283df20bcd",
+        "id": "8c25fb6a-f826-4404-b9ac-51cf97e7cf04",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "data": "2025-07-15T17:36:29.3348324",
+        "descricaoProblema": "Revisão completa do carro 8",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "6c54ee67-5457-477a-a9b3-1dc661b4c9d4",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "16a431b8-7d13-4b4f-a0a3-baccdde18834",
+        "id": "6996b2d5-5990-4979-97d3-dfcca07b4db0",
+        "criadoEm": "2025-07-07T17:36:29.3348324",
+        "atualizadoEm": "2025-07-07T17:36:29.3348324"
+      },
+      {
+        "data": "2025-07-16T17:36:29.3373446",
+        "descricaoProblema": "Revisão completa do carro 9",
+        "status": "CONCLUIDO",
+        "ordemDeServico": "d601078a-0ad9-48ed-8bb6-c0abfb5714aa",
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "funcionario": "86fbe9d0-a122-4d75-ac73-40edfdf16bc6",
+        "veiculo": "4ca16b49-0156-4e43-863d-44bf02700978",
+        "id": "6e89bc41-2e78-4db6-baf1-e195edc6e726",
+        "criadoEm": "2025-07-07T17:36:29.3373446",
+        "atualizadoEm": "2025-07-07T17:36:29.3373446"
+      }
+    ],
+    "mecanicabase.model.financeiro.ServicoItem": [
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "a6b74e9b-9558-4d32-94bb-0b5050a82e33",
+        "id": "a0c70c5a-2eba-485e-9819-35b37fbd469f",
+        "criadoEm": "2025-07-07T17:07:47.9651077",
+        "atualizadoEm": "2025-07-07T17:07:47.9651077"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "dd09f63c-2471-4cab-a7e5-5387a8cd1cb2",
+        "id": "aeedff7e-9d19-4e8a-b3b0-55222e7979f1",
+        "criadoEm": "2025-07-07T17:36:29.3152981",
+        "atualizadoEm": "2025-07-07T17:36:29.3152981"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "dd09f63c-2471-4cab-a7e5-5387a8cd1cb2",
+        "id": "7a78daf9-58be-4587-ba33-81e5e0e88abc",
+        "criadoEm": "2025-07-07T17:36:29.3218127",
+        "atualizadoEm": "2025-07-07T17:36:29.3218127"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "94e03ae3-f022-4700-ac38-a1da17b4cd24",
+        "id": "3ba8d155-f3d6-4321-95dd-ea909a3cff4d",
+        "criadoEm": "2025-07-07T17:36:29.3238417",
+        "atualizadoEm": "2025-07-07T17:36:29.3238417"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "94e03ae3-f022-4700-ac38-a1da17b4cd24",
+        "id": "9bd4a7db-36c0-489e-9751-b81ccb19d99b",
+        "criadoEm": "2025-07-07T17:36:29.3238417",
+        "atualizadoEm": "2025-07-07T17:36:29.3238417"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "e81efa5c-8ed4-463c-96cb-164b37790d9c",
+        "id": "4363371b-eb79-4967-90b6-a532ff9c07a8",
+        "criadoEm": "2025-07-07T17:36:29.326371",
+        "atualizadoEm": "2025-07-07T17:36:29.326371"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "e81efa5c-8ed4-463c-96cb-164b37790d9c",
+        "id": "d7e900ea-27e6-442f-a8e2-b17ad51ed971",
+        "criadoEm": "2025-07-07T17:36:29.3273683",
+        "atualizadoEm": "2025-07-07T17:36:29.3273683"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "bcec546c-3a73-479e-9240-490cb7ccfc9d",
+        "id": "d0cb9fd2-774e-4c8f-bd1d-d2c141c6c51f",
+        "criadoEm": "2025-07-07T17:36:29.3283682",
+        "atualizadoEm": "2025-07-07T17:36:29.3283682"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "bcec546c-3a73-479e-9240-490cb7ccfc9d",
+        "id": "9a7d2142-17a1-4842-8898-b269da86b841",
+        "criadoEm": "2025-07-07T17:36:29.3293689",
+        "atualizadoEm": "2025-07-07T17:36:29.3293689"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "8608e99e-eba4-4e52-801c-eb404a008be4",
+        "id": "aab38e72-2409-4bb8-a77d-f53175ffdccd",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "8608e99e-eba4-4e52-801c-eb404a008be4",
+        "id": "60c3549e-a102-4267-a67d-a7e64449ce74",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "30248f75-1240-443b-9e2b-a3defce45347",
+        "id": "bb5d48e4-3fcd-4a55-8b77-a37f291689c3",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "30248f75-1240-443b-9e2b-a3defce45347",
+        "id": "d4ffdee5-9304-4ec8-addf-80999429c1ef",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "07509466-7696-40a9-8db7-f5ffc98a5f82",
+        "id": "65f661b6-4412-4a48-a85f-21c35caf9805",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "07509466-7696-40a9-8db7-f5ffc98a5f82",
+        "id": "42171076-257d-4025-ba83-1f3d3d3d18b6",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "d7e7092c-bb8c-4494-be48-3dcc4a80fb2e",
+        "id": "fbcae987-f5b2-4d62-b0fe-db9c4b5d0990",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "d7e7092c-bb8c-4494-be48-3dcc4a80fb2e",
+        "id": "381544ea-a541-4b7a-9516-3499b1463a9a",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "6c54ee67-5457-477a-a9b3-1dc661b4c9d4",
+        "id": "3d246676-b802-4cc8-8519-0bdfc2da13ef",
+        "criadoEm": "2025-07-07T17:36:29.3348324",
+        "atualizadoEm": "2025-07-07T17:36:29.3348324"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "6c54ee67-5457-477a-a9b3-1dc661b4c9d4",
+        "id": "1e6a2d56-8765-47c4-b4c6-dcfd74bde1ae",
+        "criadoEm": "2025-07-07T17:36:29.3353358",
+        "atualizadoEm": "2025-07-07T17:36:29.3353358"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "d601078a-0ad9-48ed-8bb6-c0abfb5714aa",
+        "id": "b4909ffa-6b4b-4752-9ffa-81b988ef0770",
+        "criadoEm": "2025-07-07T17:36:29.3373446",
+        "atualizadoEm": "2025-07-07T17:36:29.3373446"
+      },
+      {
+        "servico": "44586fc8-fe88-4911-adc3-036418b2a329",
+        "valorUnitario": 120.0,
+        "ordemDeServico": "d601078a-0ad9-48ed-8bb6-c0abfb5714aa",
+        "id": "5c9f9b98-c3b1-4306-b6ba-25d82801af18",
+        "criadoEm": "2025-07-07T17:36:29.3378494",
+        "atualizadoEm": "2025-07-07T17:36:29.3378494"
+      }
+    ],
     "mecanicabase.model.usuarios.Administrador": [
       {
         "senha": "OVwC8E4MIJRE9WzlZakq0g\u003d\u003d",
@@ -151,21 +775,11 @@
         "atualizadoEm": "2025-06-30T12:44:58.5012718"
       }
     ],
-    "mecanicabase.model.financeiro.Despesa": [
-      {
-        "descricao": "Compra de filtros dia 30/06",
-        "valor": 1000.0,
-        "categoriaId": "be0dd3e3-b6e2-45ed-ac85-2e0a28b4a928",
-        "id": "cb651398-9b6c-4522-bd3c-69b82c363277",
-        "criadoEm": "2025-06-30T15:08:22.5860741",
-        "atualizadoEm": "2025-06-30T15:08:22.5860741"
-      }
-    ],
     "mecanicabase.model.operacao.Peca": [
       {
         "nome": "Filtro de Óleo",
         "valor": 30.0,
-        "quantidade": 20,
+        "quantidade": 19,
         "id": "f85774ef-4ab7-44a1-96de-613271e348bc",
         "criadoEm": "2025-06-30T14:52:05.4702874",
         "atualizadoEm": "2025-06-30T14:52:05.4702874"
@@ -241,24 +855,150 @@
         "id": "051942a4-da86-489f-ad03-97d92395aec8",
         "criadoEm": "2025-06-30T14:53:57.9335816",
         "atualizadoEm": "2025-06-30T14:53:57.9335816"
-      }
-    ],
-    "mecanicabase.model.financeiro.PecaItem": [],
-    "mecanicabase.model.usuarios.Cliente": [
+      },
       {
-        "veiculos": [],
-        "nome": "Ana Carolina",
-        "email": "ana@email.com",
-        "cpfHash": "9c9f57efe04f8f5a65b699db1c777238d5876b44cef240654c749dd09e1790ef",
-        "cpfCriptografado": "6TjOqG2vTl+lgUeA70z5HSTGvjqovBBE",
-        "telefone": "(00) 00000-0000",
-        "endereco": "Rua A",
-        "id": "ddb493cb-849a-41c7-9de2-252fe20a0a8f",
-        "criadoEm": "2025-06-30T12:46:19.5120613",
-        "atualizadoEm": "2025-06-30T12:46:19.5120613"
+        "nome": "Filtro de Óleo",
+        "valor": 50.0,
+        "quantidade": 10,
+        "id": "65aff876-e0ae-47cd-8aa9-ae5e790c652c",
+        "criadoEm": "2025-07-07T17:36:08.4614528",
+        "atualizadoEm": "2025-07-07T17:36:08.4614528"
       }
     ],
-    "mecanicabase.model.operacao.Veiculo": [],
+    "mecanicabase.model.financeiro.PecaItem": [
+      {
+        "peca": "f85774ef-4ab7-44a1-96de-613271e348bc",
+        "quantidade": 1,
+        "valorUnitario": 30.0,
+        "ordemDeServico": "a5639272-4144-44b6-9b38-1c2eabc33e21",
+        "id": "1ddf4d71-b1f8-4835-872b-16b9cc35efed",
+        "criadoEm": "2025-07-07T16:46:18.7171516",
+        "atualizadoEm": "2025-07-07T16:46:18.7171516"
+      }
+    ],
+    "mecanicabase.model.operacao.Veiculo": [
+      {
+        "modelo": "HB-20",
+        "placa": "QPZ-2555",
+        "anoFabricacao": 2010,
+        "cor": "Cinza",
+        "status": "RECEBIDO",
+        "clienteId": "ddb493cb-849a-41c7-9de2-252fe20a0a8f",
+        "id": "89c8fd3b-de86-4078-9009-11cf760513e3",
+        "criadoEm": "2025-07-07T16:44:34.1477983",
+        "atualizadoEm": "2025-07-07T16:44:34.1477983"
+      },
+      {
+        "modelo": "Modelo X0",
+        "placa": "ABC-1230",
+        "anoFabricacao": 2020,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "ec8999e0-1a98-4a33-8111-07b57bed9ed6",
+        "id": "a74d5355-0c4f-4cd3-968e-9107786f6d31",
+        "criadoEm": "2025-07-07T17:36:29.3137907",
+        "atualizadoEm": "2025-07-07T17:36:29.3137907"
+      },
+      {
+        "modelo": "Modelo X1",
+        "placa": "ABC-1231",
+        "anoFabricacao": 2021,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "ba3d2b15-7b64-40af-83af-475663f3849a",
+        "id": "e71d3ef3-097b-4997-b73b-ab76ab935d26",
+        "criadoEm": "2025-07-07T17:36:29.323319",
+        "atualizadoEm": "2025-07-07T17:36:29.323319"
+      },
+      {
+        "modelo": "Modelo X2",
+        "placa": "ABC-1232",
+        "anoFabricacao": 2022,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "33c0d416-c3f3-4cc7-9a21-b982acaf92f4",
+        "id": "0896c516-6f42-4255-bfc8-fabc8b8c53a1",
+        "criadoEm": "2025-07-07T17:36:29.326371",
+        "atualizadoEm": "2025-07-07T17:36:29.326371"
+      },
+      {
+        "modelo": "Modelo X3",
+        "placa": "ABC-1233",
+        "anoFabricacao": 2023,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "b244f033-e6b5-4023-95eb-dc0c9a85f0b5",
+        "id": "dd10df33-5b88-4e5b-9f78-852b2107b76a",
+        "criadoEm": "2025-07-07T17:36:29.3283682",
+        "atualizadoEm": "2025-07-07T17:36:29.3283682"
+      },
+      {
+        "modelo": "Modelo X4",
+        "placa": "ABC-1234",
+        "anoFabricacao": 2024,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "086504e1-7b40-4a2a-a2e7-b00a7f461c7b",
+        "id": "9ee58cf6-2d99-4e4a-83e4-3b51211b8c48",
+        "criadoEm": "2025-07-07T17:36:29.330368",
+        "atualizadoEm": "2025-07-07T17:36:29.330368"
+      },
+      {
+        "modelo": "Modelo X5",
+        "placa": "ABC-1235",
+        "anoFabricacao": 2020,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "708d564a-5171-4f6d-ad73-0ede96e6fc80",
+        "id": "ad382e48-ee15-40e9-9a9b-4b7b0f8ee49c",
+        "criadoEm": "2025-07-07T17:36:29.3313673",
+        "atualizadoEm": "2025-07-07T17:36:29.3313673"
+      },
+      {
+        "modelo": "Modelo X6",
+        "placa": "ABC-1236",
+        "anoFabricacao": 2021,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "0c89605c-e331-416c-8e7f-a64a744417c8",
+        "id": "aaee323c-7073-4925-908a-7ca5cf776a18",
+        "criadoEm": "2025-07-07T17:36:29.3323692",
+        "atualizadoEm": "2025-07-07T17:36:29.3323692"
+      },
+      {
+        "modelo": "Modelo X7",
+        "placa": "ABC-1237",
+        "anoFabricacao": 2022,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "43c520c0-da19-47d7-8673-2e0f0c0dd373",
+        "id": "6507ad29-c880-4c5a-a6f5-86283df20bcd",
+        "criadoEm": "2025-07-07T17:36:29.3333677",
+        "atualizadoEm": "2025-07-07T17:36:29.3333677"
+      },
+      {
+        "modelo": "Modelo X8",
+        "placa": "ABC-1238",
+        "anoFabricacao": 2023,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "5b19219a-9c8e-4045-a898-9655590e3ca7",
+        "id": "16a431b8-7d13-4b4f-a0a3-baccdde18834",
+        "criadoEm": "2025-07-07T17:36:29.3348324",
+        "atualizadoEm": "2025-07-07T17:36:29.3348324"
+      },
+      {
+        "modelo": "Modelo X9",
+        "placa": "ABC-1239",
+        "anoFabricacao": 2024,
+        "cor": "Preto",
+        "status": "ENTREGUE",
+        "clienteId": "80d9551b-ff8b-4a5c-9429-b36e45adc6a2",
+        "id": "4ca16b49-0156-4e43-863d-44bf02700978",
+        "criadoEm": "2025-07-07T17:36:29.3373446",
+        "atualizadoEm": "2025-07-07T17:36:29.3373446"
+      }
+    ],
     "mecanicabase.model.usuarios.Funcionario": [
       {
         "funcao": "ATENDENTE",
@@ -302,7 +1042,6 @@
         "criadoEm": "2025-06-30T15:25:22.3267322",
         "atualizadoEm": "2025-06-30T15:25:22.3267322"
       }
-    ],
-    "mecanicabase.model.financeiro.Agendamento": []
+    ]
   }
 }
